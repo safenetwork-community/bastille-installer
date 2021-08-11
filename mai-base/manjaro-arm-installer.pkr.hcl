@@ -6,7 +6,7 @@ source "qemu" "example" {
     disk_size         = "2G"  
     format            = "qcow2"  
     accelerator       = "kvm"  
-    http_directory    = "https://app.vagrantup.com/safenetwork-community/boxes/manjaro-arm-installer"  
+    http_directory    = "http"  
     ssh_username      = "safe"  
     ssh_password      = "safe"  
     ssh_timeout       = "20m"  
