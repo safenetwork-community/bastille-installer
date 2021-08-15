@@ -1,20 +1,67 @@
-source "qemu" "example" {  
-    iso_url           = "https://mirror.rackspace.com/archlinux/iso/2021.08.01/archlinux-2021.08.01-x86_64.iso"  
-    iso_checksum      = "md5:cd9073fbdca8e85d2aad18aa8047ae77"  
-    output_directory  = "output_manjaro-arm-installer"  
-    shutdown_command  = "echo 'packer' | sudo -S shutdown -P now"  
-    disk_size         = "2G"  
-    format            = "qcow2"  
-    accelerator       = "kvm"  
-    http_directory    = "http"  
-    ssh_username      = "safe"  
-    ssh_password      = "safe"  
-    ssh_timeout       = "20m"  
-    vm_name           = "manjaro-arm-installer"  
-    net_device        = "virtio-net"  
-    disk_interface    = "virtio"  
-    boot_wait         = "10s"  
-    boot_command      = ["<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/centos6-ks.cfg<enter><wait>"]
+variable "country" {
+  type    = string
+  default = "US"
 }
 
-build {  sources = ["source.qemu.example"]}
+variable "headless" {
+  type    = string
+  default = "false"
+}
+
+variable "ssh_timeout" {
+  type    = string
+  default = "20m"
+}
+
+variable "write_zeros" {
+  type    = string
+  default = "true"
+}
+
+locals {
+  iso_checksum_url = "https://mirrors.kernel.org/archlinux/iso/${formatdate("YYYY.MM", timestamp())}.01/sha1sums.txt"
+  iso_url          = "https://mirrors.kernel.org/archlinux/iso/${formatdate("YYYY.MM", timestamp())}.01/archlinux-${formatdate("YYYY.MM", timestamp())}.01-x86_64.iso"
+  vm_name          = "manjaro-arm-installer" 
+}
+
+
+source "qemu" "main" {  
+    accelerator            = "kvm"  
+    boot_command           = [
+                            "<enter><wait15><wait15><wait15><wait15>",
+                            "/usr/bin/curl -O http://{{ .HTTPIP }}:{{ .HTTPPort }}/enable-ssh.sh<enter><wait5>",
+                            "/usr/bin/curl -O http://{{ .HTTPIP }}:{{ .HTTPPort }}/poweroff.timer<enter><wait5>",
+                            "/usr/bin/bash ./enable-ssh.sh<enter>"
+                           ]
+    boot_wait              = "5s"  
+    cpus                    = 1
+    disk_interface         = "virtio"  
+    disk_size              = 2048  
+    format                 = "qcow2"  
+    headless               = "${var.headless}"
+    http_directory         = "srv"  
+    iso_checksum           = "file:${local.iso_checksum_url}"
+    iso_url                = "${local.iso_url}"
+    memory                 = 768
+    net_device             = "virtio-net"  
+    output_directory       = "output_manjaro-arm-installer"    
+    ssh_username           = "vagrant"  
+    ssh_password           = "vagrant"  
+    ssh_timeout            = "${var.ssh_timeout}"
+    shutdown_command       = ""
+    vm_name                = "${local.vm_name}"  
+}
+
+build { 
+  name = "manjaro-arm-installer"
+  sources = ["source.qemu.main"]
+
+  provisioner "shell" {
+    execute_command = "{{ .Vars }} WRITE_ZEROS=${var.write_zeros} sudo -E -S bash '{{ .Path }}'"
+    script          = "scripts/cleanup.sh"
+  }
+
+  post-processor "vagrant" {
+    output = "output/${local.vm_name}_${source.type}_${source.name}-${formatdate("YYYY-MM", timestamp())}.box"
+  }
+}
