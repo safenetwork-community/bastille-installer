@@ -119,7 +119,7 @@ cat << EOF | tee "${TARGET_DIR}${CONFIG_SCRIPT}"
   /usr/bin/chmod 0440 /etc/sudoers.d/10_vagrant
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Configuring ssh access for vagrant.."
   /usr/bin/install --directory --owner=vagrant --group=vagrant --mode=0700 /home/vagrant/.ssh
-  /usr/bin/curl --output /home/vagrant/.ssh/authorized_keys --location https://raw.github.com/mitchellh/vagrant/master/keys/vagrant.pub
+  /usr/bin/curl --output /home/vagrant/.ssh/authorized_keys --location https://raw.githubusercontent.com/hashicorp/vagrant/main/keys/vagrant.pub
   /usr/bin/chown vagrant:vagrant /home/vagrant/.ssh/authorized_keys
   /usr/bin/chmod 0600 /home/vagrant/.ssh/authorized_keys
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Cleaning up.."
@@ -138,7 +138,10 @@ echo ">>>> install-base.sh: Completing installation.."
 /usr/bin/sleep 3
 /usr/bin/umount ${BOOT_DIR}
 /usr/bin/umount ${ROOT_DIR}
+
 # Turning network interfaces down to make sure SSH session was dropped on host.
+for i in $(/usr/bin/ls -1 /sys/class/net | grep -v "lo"); do /usr/bin/ip link set ${i} down; done
+
 # More info at: https://www.packer.io/docs/provisioners/shell.html#handling-reboots
 /usr/bin/systemctl reboot
 echo ">>>> install-base.sh: Installation complete!"

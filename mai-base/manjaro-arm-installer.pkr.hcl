@@ -25,6 +25,14 @@ locals {
   vm_name          = "manjaro-arm-installer" 
 }
 
+packer {  
+  required_plugins {    
+    qemu = {
+      version = ">= 1.0.0"
+      source  = "github.com/hashicorp/qemu"
+    }
+  }
+}
 
 source "qemu" "main" {  
     accelerator            = "kvm"  
@@ -62,6 +70,7 @@ build {
     expect_disconnect = true
     script            = "scripts/install-base.sh"
     pause_before      = "10s"
+    timeout           = "10s"
   }
 
   provisioner "shell" {
