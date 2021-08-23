@@ -69,8 +69,6 @@ build {
     execute_command   = "{{ .Vars }} COUNTRY=${var.country} sudo -E -S bash '{{ .Path }}'"
     expect_disconnect = true
     script            = "scripts/install-base.sh"
-    pause_before      = "10s"
-    timeout           = "10s"
   }
 
   provisioner "shell" {

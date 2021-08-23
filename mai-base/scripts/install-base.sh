@@ -64,20 +64,20 @@ echo ">>>> install-base.sh: Setting pacman ${COUNTRY} mirrors.."
 curl -s "$MIRRORLIST" |  sed 's/^#Server/Server/' | tee /etc/pacman.d/mirrorlist
 
 echo ">>>> install-base.sh: Bootstrapping the base installation.."
-/usr/bin/pacstrap ${ROOT_DIR} base base-devel linux linux-firmware
+/usr/bin/pacstrap ${ROOT_DIR} base base-devel btrfs-progs linux linux-firmware
 
 echo ">>>> install-base.sh: Installing databases.."
 /usr/bin/arch-chroot ${ROOT_DIR} pacman -Sy
-
-echo ">>>> install-base.sh: Configuring grub.."
-/usr/bin/arch-chroot ${ROOT_DIR} pacman -S --noconfirm grub
-/usr/bin/arch-chroot ${ROOT_DIR} /usr/bin/grub-install --recheck ${DISK}
-/usr/bin/arch-chroot ${ROOT_DIR} /usr/bin/grub-mkconfig -o /boot/grub/grub.cfg
 
 # Need to install netctl as well: https://github.com/archlinux/arch-boxes/issues/70
 # Can be removed when Vagrant's Arch plugin will use systemd-networkd: https://github.com/hashicorp/vagrant/pull/11400
 echo ">>>> install-base.sh: Installing basic packages.."
 /usr/bin/arch-chroot ${ROOT_DIR} pacman -S --noconfirm gptfdisk openssh syslinux dhcpcd netctl
+
+echo ">>>> install-base.sh: Configuring syslinux.."
+/usr/bin/arch-chroot ${ROOT_DIR} syslinux-install_update -i -a -m
+/usr/bin/sed -i "s|sda3|${ROOT_PARTITION##/dev/}|" "${BOOT_DIR}/syslinux/syslinux.cfg"
+/usr/bin/sed -i 's/TIMEOUT 50/TIMEOUT 10/' "${BOOT_DIR}/syslinux/syslinux.cfg"
 
 echo ">>>> install-base.sh: Generating the filesystem table.."
 /usr/bin/genfstab -U ${ROOT_DIR} | tee -a "${ROOT_DIR}/etc/fstab"
@@ -88,14 +88,16 @@ echo ">>>> install-base.sh: Generating the system configuration script.."
 CONFIG_SCRIPT_SHORT=`basename "$CONFIG_SCRIPT"`
 cat << EOF | tee "${TARGET_DIR}${CONFIG_SCRIPT}"
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Configuring hostname, timezone, and keymap.."
-  echo '${FQDN}' | tee /etc/hostname
+  echo "${FQDN}" | tee /etc/hostname
   /usr/bin/ln -s /usr/share/zoneinfo/${TIMEZONE} /etc/localtime
-  echo 'KEYMAP=${KEYMAP}' > /etc/vconsole.conf
+  echo "KEYMAP=${KEYMAP}" | tee /etc/vconsole.conf
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Configuring locale.."
-  /usr/bin/sed -i 's/#${LANGUAGE}/${LANGUAGE}/' /etc/locale.gen
+  /usr/bin/sed -i "s/#${LANGUAGE}/${LANGUAGE}/" /etc/locale.gen
   /usr/bin/locale-gen
+  echo "$(/usr/bin/cat /etc/mkinitcpio.conf)"
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Creating initramfs.."
   /usr/bin/mkinitcpio -p linux
+  echo "$(/usr/bin/cat /etc/mkinitcpio.conf)"
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Setting root pasword.."
   /usr/bin/usermod --password ${PASSWORD} root
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Configuring network.."
@@ -104,7 +106,7 @@ cat << EOF | tee "${TARGET_DIR}${CONFIG_SCRIPT}"
   /usr/bin/ln -s /dev/null /etc/udev/rules.d/80-net-setup-link.rules
   /usr/bin/systemctl enable dhcpcd@eth0.service
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Configuring sshd.."
-  /usr/bin/sed -i 's/#UseDNS yes/UseDNS no/' /etc/ssh/sshd_config
+  /usr/bin/sed -i "s/#UseDNS yes/UseDNS no/" /etc/ssh/sshd_config
   /usr/bin/systemctl enable sshd.service
   # Workaround for https://bugs.archlinux.org/task/58355 which prevents sshd to accept connections after reboot
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Adding workaround for sshd connection issue after reboot.."
@@ -112,16 +114,17 @@ cat << EOF | tee "${TARGET_DIR}${CONFIG_SCRIPT}"
   /usr/bin/systemctl enable rngd
   # Vagrant-specific configuration
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Creating vagrant user.."
-  /usr/bin/useradd --password ${PASSWORD} --comment 'Vagrant User' --create-home --user-group vagrant
+  /usr/bin/useradd --password ${PASSWORD} --comment "Vagrant User" --create-home --user-group vagrant
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Configuring sudo.."
-  echo 'Defaults env_keep += "SSH_AUTH_SOCK"' | tee /etc/sudoers.d/10_vagrant
-  echo 'vagrant ALL=(ALL) NOPASSWD: ALL' | tee -a /etc/sudoers.d/10_vagrant
+  echo "Defaults env_keep += \"SSH_AUTH_SOCK\"" | tee /etc/sudoers.d/10_vagrant
+  echo "vagrant ALL=(ALL) NOPASSWD: ALL" | tee -a /etc/sudoers.d/10_vagrant
   /usr/bin/chmod 0440 /etc/sudoers.d/10_vagrant
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Configuring ssh access for vagrant.."
   /usr/bin/install --directory --owner=vagrant --group=vagrant --mode=0700 /home/vagrant/.ssh
   /usr/bin/curl --output /home/vagrant/.ssh/authorized_keys --location https://raw.githubusercontent.com/hashicorp/vagrant/main/keys/vagrant.pub
   /usr/bin/chown vagrant:vagrant /home/vagrant/.ssh/authorized_keys
   /usr/bin/chmod 0600 /home/vagrant/.ssh/authorized_keys
+  echo ">>>> $(cat /home/vagrant/.ssh/authorized_keys)"
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Cleaning up.."
   /usr/bin/pacman -Rcns --noconfirm gptfdisk
 EOF
