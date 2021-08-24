@@ -13,7 +13,8 @@ fi
 FQDN='mai-qemu'
 KEYMAP='us'
 LANGUAGE='en_US.UTF-8'
-PASSWORD=$(/usr/bin/openssl passwd -crypt 'vagrant')
+TEMP_PASSWORD=$(/usr/bin/openssl passwd -crypt 'temp')
+PASSWORD='vagrant'
 TIMEZONE='UTC'
 
 CONFIG_SCRIPT='/usr/local/bin/arch-config.sh'
@@ -69,10 +70,10 @@ echo ">>>> install-base.sh: Bootstrapping the base installation.."
 echo ">>>> install-base.sh: Installing databases.."
 /usr/bin/arch-chroot ${ROOT_DIR} pacman -Sy
 
-# Need to install netctl as well: https://github.com/archlinux/arch-boxes/issues/70
+# Need to install netctl as well: ht  tps://github.com/archlinux/arch-boxes/issues/70
 # Can be removed when Vagrant's Arch plugin will use systemd-networkd: https://github.com/hashicorp/vagrant/pull/11400
 echo ">>>> install-base.sh: Installing basic packages.."
-/usr/bin/arch-chroot ${ROOT_DIR} pacman -S --noconfirm gptfdisk openssh syslinux dhcpcd netctl
+/usr/bin/arch-chroot ${ROOT_DIR} pacman -S --noconfirm coreutils gptfdisk openssh syslinux dhcpcd netctl
 
 echo ">>>> install-base.sh: Configuring syslinux.."
 /usr/bin/arch-chroot ${ROOT_DIR} syslinux-install_update -i -a -m
@@ -86,7 +87,7 @@ echo ">>>> install-base.sh: Generating the system configuration script.."
 /usr/bin/install --mode=0755 /dev/null "${ROOT_DIR}${CONFIG_SCRIPT}"
 
 CONFIG_SCRIPT_SHORT=`basename "$CONFIG_SCRIPT"`
-cat << EOF | tee "${TARGET_DIR}${CONFIG_SCRIPT}"
+cat << EOF | tee "${ROOT_DIR}${CONFIG_SCRIPT}"
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Configuring hostname, timezone, and keymap.."
   echo "${FQDN}" | tee /etc/hostname
   /usr/bin/ln -s /usr/share/zoneinfo/${TIMEZONE} /etc/localtime
@@ -94,10 +95,8 @@ cat << EOF | tee "${TARGET_DIR}${CONFIG_SCRIPT}"
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Configuring locale.."
   /usr/bin/sed -i "s/#${LANGUAGE}/${LANGUAGE}/" /etc/locale.gen
   /usr/bin/locale-gen
-  echo "$(/usr/bin/cat /etc/mkinitcpio.conf)"
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Creating initramfs.."
   /usr/bin/mkinitcpio -p linux
-  echo "$(/usr/bin/cat /etc/mkinitcpio.conf)"
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Setting root pasword.."
   /usr/bin/usermod --password ${PASSWORD} root
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Configuring network.."
@@ -114,7 +113,8 @@ cat << EOF | tee "${TARGET_DIR}${CONFIG_SCRIPT}"
   /usr/bin/systemctl enable rngd
   # Vagrant-specific configuration
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Creating vagrant user.."
-  /usr/bin/useradd --password ${PASSWORD} --comment "Vagrant User" --create-home --user-group vagrant
+  /usr/bin/useradd --password ${TEMP_PASSWORD} --comment "Vagrant User" --create-home --user-group vagrant
+  /usr/bin/echo -e "${PASSWORD}\n${PASSWORD}" | /usr/bin/passwd vagrant 
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Configuring sudo.."
   echo "Defaults env_keep += \"SSH_AUTH_SOCK\"" | tee /etc/sudoers.d/10_vagrant
   echo "vagrant ALL=(ALL) NOPASSWD: ALL" | tee -a /etc/sudoers.d/10_vagrant
@@ -124,7 +124,7 @@ cat << EOF | tee "${TARGET_DIR}${CONFIG_SCRIPT}"
   /usr/bin/curl --output /home/vagrant/.ssh/authorized_keys --location https://raw.githubusercontent.com/hashicorp/vagrant/main/keys/vagrant.pub
   /usr/bin/chown vagrant:vagrant /home/vagrant/.ssh/authorized_keys
   /usr/bin/chmod 0600 /home/vagrant/.ssh/authorized_keys
-  echo ">>>> $(cat /home/vagrant/.ssh/authorized_keys)"
+  echo ">>>> ${CONFIG_SCRIPT_SHORT}: .ssh: $(/usr/bin/cat /home/vagrant/.ssh/authorized_keys)"
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Cleaning up.."
   /usr/bin/pacman -Rcns --noconfirm gptfdisk
 EOF
