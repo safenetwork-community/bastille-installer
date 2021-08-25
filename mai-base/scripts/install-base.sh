@@ -22,8 +22,13 @@ ROOT_PARTITION="${DISK}1"
 BOOT_PARTITION="${DISK}2"
 ROOT_DIR='/mnt'
 BOOT_DIR='/mnt/boot'
-COUNTRY=${COUNTRY:-NL}
+COUNTRY=NL
 MIRRORLIST="https://archlinux.org/mirrorlist/?country=${COUNTRY}&protocol=http&protocol=https&ip_version=4&use_mirror_status=on"
+
+echo ">>>> install-base.sh: efivars $(/usr/bin/ls /sys/firmware/efi/efivars)"
+
+echo ">>>> install-base.sh: Update system clock.."
+/usr/bin/timedatectl set-ntp true
 
 echo ">>>> install-base.sh: Clearing partition table on ${DISK}.."
 /usr/bin/sgdisk --zap ${DISK}
@@ -65,7 +70,7 @@ echo ">>>> install-base.sh: Setting pacman ${COUNTRY} mirrors.."
 curl -s "$MIRRORLIST" |  sed 's/^#Server/Server/' | tee /etc/pacman.d/mirrorlist
 
 echo ">>>> install-base.sh: Bootstrapping the base installation.."
-/usr/bin/pacstrap ${ROOT_DIR} base base-devel btrfs-progs linux linux-firmware
+/usr/bin/pacstrap ${ROOT_DIR} base btrfs-progs linux linux-firmware
 
 echo ">>>> install-base.sh: Installing databases.."
 /usr/bin/arch-chroot ${ROOT_DIR} pacman -Sy
@@ -73,7 +78,7 @@ echo ">>>> install-base.sh: Installing databases.."
 # Need to install netctl as well: ht  tps://github.com/archlinux/arch-boxes/issues/70
 # Can be removed when Vagrant's Arch plugin will use systemd-networkd: https://github.com/hashicorp/vagrant/pull/11400
 echo ">>>> install-base.sh: Installing basic packages.."
-/usr/bin/arch-chroot ${ROOT_DIR} pacman -S --noconfirm coreutils gptfdisk openssh syslinux dhcpcd netctl
+/usr/bin/arch-chroot ${ROOT_DIR} pacman -S --noconfirm base-devel gptfdisk openssh syslinux dhcpcd netctl
 
 echo ">>>> install-base.sh: Configuring syslinux.."
 /usr/bin/arch-chroot ${ROOT_DIR} syslinux-install_update -i -a -m
@@ -91,6 +96,7 @@ cat << EOF | tee "${ROOT_DIR}${CONFIG_SCRIPT}"
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Configuring hostname, timezone, and keymap.."
   echo "${FQDN}" | tee /etc/hostname
   /usr/bin/ln -s /usr/share/zoneinfo/${TIMEZONE} /etc/localtime
+  /usr/bin/hwclock --systohc
   echo "KEYMAP=${KEYMAP}" | tee /etc/vconsole.conf
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Configuring locale.."
   /usr/bin/sed -i "s/#${LANGUAGE}/${LANGUAGE}/" /etc/locale.gen

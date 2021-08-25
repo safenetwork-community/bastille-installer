@@ -25,15 +25,6 @@ locals {
   vm_name          = "manjaro-arm-installer" 
 }
 
-packer {  
-  required_plugins {    
-    qemu = {
-      version = ">= 1.0.0"
-      source  = "github.com/hashicorp/qemu"
-    }
-  }
-}
-
 source "qemu" "main" {  
     accelerator            = "kvm"  
     boot_command           = [
@@ -51,7 +42,7 @@ source "qemu" "main" {
     http_directory         = "srv"  
     iso_checksum           = "file:${local.iso_checksum_url}"
     iso_url                = "${local.iso_url}"
-    memory                 = 768
+    memory                 = 1024
     net_device             = "virtio-net"  
     output_directory       = "output"    
     ssh_username           = "vagrant"  
@@ -77,6 +68,6 @@ build {
   }
 
   post-processor "vagrant" {
-    output = "output/${local.vm_name}_${source.type}_${source.name}-${formatdate("YYYY-MM", timestamp())}.box"
+     keep_input_artifact = true    
   }
 }
