@@ -42,7 +42,7 @@ source "qemu" "main" {
     http_directory         = "srv"  
     iso_checksum           = "file:${local.iso_checksum_url}"
     iso_url                = "${local.iso_url}"
-    memory                 = 1024
+    memory                 = 768
     net_device             = "virtio-net"  
     output_directory       = "output"    
     ssh_username           = "vagrant"  
@@ -67,7 +67,8 @@ build {
     script          = "scripts/cleanup.sh"
   }
 
-  post-processor "vagrant" {
-     keep_input_artifact = true    
+  post-processor "vagrant" { 
+      keep_input_artifact = true
+      output = "output/${local.vm_name}_${source.type}_${source.name}-${formatdate("YYYY-MM", timestamp())}.box"
   }
 }
