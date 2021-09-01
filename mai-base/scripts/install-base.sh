@@ -17,18 +17,14 @@ TEMP_PASSWORD=$(/usr/bin/openssl passwd -crypt 'temp')
 PASSWORD='vagrant'
 TIMEZONE='UTC'
 
-CONFIG_SCRIPT='/usr/local/bin/arch-config.sh'
+CONFIG_SCRIPT='/usr/local/bin/manjaro-config.sh'
 ROOT_PARTITION="${DISK}1"
 BOOT_PARTITION="${DISK}2"
 ROOT_DIR='/mnt'
 BOOT_DIR='/mnt/boot'
-COUNTRY=NL
-MIRRORLIST="https://archlinux.org/mirrorlist/?country=${COUNTRY}&protocol=http&protocol=https&ip_version=4&use_mirror_status=on"
+COUNTRY=${COUNTRY:-BE}
 
 echo ">>>> install-base.sh: efivars $(/usr/bin/ls /sys/firmware/efi/efivars)"
-
-echo ">>>> install-base.sh: Update system clock.."
-/usr/bin/timedatectl set-ntp true
 
 echo ">>>> install-base.sh: Clearing partition table on ${DISK}.."
 /usr/bin/sgdisk --zap ${DISK}
@@ -66,29 +62,35 @@ echo ">>>> install-base.sh: Mounting partitions.."
 /usr/bin/mkdir -p ${BOOT_DIR}
 /usr/bin/mount ${BOOT_PARTITION} ${BOOT_DIR}
 
-echo ">>>> install-base.sh: Setting pacman ${COUNTRY} mirrors.."
-curl -s "$MIRRORLIST" |  sed 's/^#Server/Server/' | tee /etc/pacman.d/mirrorlist
+# echo ">>>> install-base.sh: Setting pacman mirrors.."
+# /usr/bin/pacman-mirrors --fasttrack 5 
 
 echo ">>>> install-base.sh: Bootstrapping the base installation.."
-/usr/bin/pacstrap ${ROOT_DIR} base btrfs-progs linux linux-firmware
+/usr/bin/basestrap ${ROOT_DIR} base btrfs-progs
+
+echo ">>>> manjaro-base.sh: Updating pacman-mirrors.."
+/usr/bin/manjaro-chroot ${ROOT_DIR} pacman-mirrors --fasttrack 5
 
 echo ">>>> install-base.sh: Installing databases.."
-/usr/bin/arch-chroot ${ROOT_DIR} pacman -Sy
+/usr/bin/manjaro-chroot ${ROOT_DIR} pacman -Sy
 
-# Need to install netctl as well: ht  tps://github.com/archlinux/arch-boxes/issues/70
-# Can be removed when Vagrant's Arch plugin will use systemd-networkd: https://github.com/hashicorp/vagrant/pull/11400
-echo ">>>> install-base.sh: Installing basic packages.."
-/usr/bin/arch-chroot ${ROOT_DIR} pacman -S --noconfirm base-devel gptfdisk openssh syslinux dhcpcd netctl
+echo ">>>> install-base.sh: Installing databases.."
+/usr/bin/manjaro-chroot ${ROOT_DIR} pacman -S base-devel linux54 linux-firmware
 
 echo ">>>> install-base.sh: Configuring syslinux.."
-/usr/bin/arch-chroot ${ROOT_DIR} syslinux-install_update -i -a -m
+/usr/bin/manjaro-chroot ${ROOT_DIR} syslinux-install_update -i -a -m
 /usr/bin/sed -i "s|sda3|${ROOT_PARTITION##/dev/}|" "${BOOT_DIR}/syslinux/syslinux.cfg"
 /usr/bin/sed -i 's/TIMEOUT 50/TIMEOUT 10/' "${BOOT_DIR}/syslinux/syslinux.cfg"
 
 echo ">>>> install-base.sh: Generating the filesystem table.."
 /usr/bin/genfstab -U ${ROOT_DIR} | tee -a "${ROOT_DIR}/etc/fstab"
 
-echo ">>>> install-base.sh: Generating the system configuration script.."
+# Need to install netctl as well: https://github.com/archlinux/arch-boxes/issues/70
+# Can be removed when Vagrant's Arch plugin will use systemd-networkd: https://github.com/hashicorp/vagrant/pull/11400
+echo ">>>> install-base.sh: Installing basic packages.."
+/usr/bin/manjaro-chroot ${ROOT_DIR} pacman -S --noconfirm gptfdisk openssh syslinux dhcpcd netctl manjaro-arm-installer
+
+echo ">>>> manjaro-base.sh: Generating the system configuration script.."
 /usr/bin/install --mode=0755 /dev/null "${ROOT_DIR}${CONFIG_SCRIPT}"
 
 CONFIG_SCRIPT_SHORT=`basename "$CONFIG_SCRIPT"`
@@ -129,19 +131,16 @@ cat << EOF | tee "${ROOT_DIR}${CONFIG_SCRIPT}"
   /usr/bin/install --directory --owner=vagrant --group=vagrant --mode=0700 /home/vagrant/.ssh
   /usr/bin/curl --output /home/vagrant/.ssh/authorized_keys --location https://raw.githubusercontent.com/hashicorp/vagrant/main/keys/vagrant.pub
   /usr/bin/chown vagrant:vagrant /home/vagrant/.ssh/authorized_keys
-  /usr/bin/chmod 0600 /home/vagrant/.ssh/authorized_keys
-  echo ">>>> ${CONFIG_SCRIPT_SHORT}: .ssh: $(/usr/bin/cat /home/vagrant/.ssh/authorized_keys)"
+  /usr/bin/chmod 0600 /home/vagrant/.ssh/authorized_keys 
+  echo ">>>> ${CONFIG_SCRIPT_SHORT}: Generating ssh keys.."
+  /usr/bin/ssh-keygen -A
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Cleaning up.."
   /usr/bin/pacman -Rcns --noconfirm gptfdisk
 EOF
 
-echo ">>>> install-base.sh: Entering chroot and configuring system.."
-/usr/bin/arch-chroot ${ROOT_DIR} ${CONFIG_SCRIPT}
+echo ">>>> install-manjaro.sh: Entering chroot and configuring system.."
+/usr/bin/manjaro-chroot ${ROOT_DIR} ${CONFIG_SCRIPT}
 rm "${ROOT_DIR}${CONFIG_SCRIPT}"
-
-# http://comments.gmane.org/gmane.linux.arch.general/48739
-echo ">>>> install-base.sh: Adding workaround for shutdown race condition.."
-/usr/bin/install --mode=0644 /root/poweroff.timer "${ROOT_DIR}/etc/systemd/system/poweroff.timer"
 
 echo ">>>> install-base.sh: Completing installation.."
 /usr/bin/sleep 3

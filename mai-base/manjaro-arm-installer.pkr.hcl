@@ -1,6 +1,6 @@
 variable "country" {
   type    = string
-  default = "US"
+  default = "NL"
 }
 
 variable "headless" {
@@ -19,8 +19,8 @@ variable "write_zeros" {
 }
 
 locals {
-  iso_checksum_url = "https://mirrors.kernel.org/archlinux/iso/${formatdate("YYYY.MM", timestamp())}.01/sha1sums.txt"
-  iso_url          = "https://mirrors.kernel.org/archlinux/iso/${formatdate("YYYY.MM", timestamp())}.01/archlinux-${formatdate("YYYY.MM", timestamp())}.01-x86_64.iso"
+  iso_checksum     = "sha1:a981ef7ff846f373809dad59b26e325dff3ef4b8"
+  iso_url          = "https://download.manjaro.org/xfce/21.1.1/manjaro-xfce-21.1.1-minimal-210827-linux54.iso"
   name             = "manjaro-arm-installer"
   vm_name          = "manjaro-arm-installer" 
 }
@@ -28,19 +28,24 @@ locals {
 source "qemu" "main" {  
     accelerator            = "kvm"  
     boot_command           = [
-                            "<enter><wait15><wait15><wait15><wait15><wait15>",
-                            "/usr/bin/curl -O http://{{ .HTTPIP }}:{{ .HTTPPort }}/enable-ssh.sh<enter><wait5>",
-                            "/usr/bin/curl -O http://{{ .HTTPIP }}:{{ .HTTPPort }}/poweroff.timer<enter><wait5>",
-                            "/usr/bin/bash ./enable-ssh.sh<enter><wait5>",
+                            "<enter><wait30><wait30>",
+                            "<leftCtrlOn><leftAltOn><f2><leftCtrlOff><leftAltOff><wait10>",
+                            "manjaro<enter><wait2>",
+                            "manjaro<enter><wait2>",
+                            "su -<enter><wait3>",
+                            "manjaro<enter><wait2>",
+                            "/usr/bin/curl -O http://{{ .HTTPIP }}:{{ .HTTPPort }}/enable-ssh.sh<enter><wait3>",
+                            "/usr/bin/curl -O http://{{ .HTTPIP }}:{{ .HTTPPort }}/poweroff.timer<enter><wait3>",
+                            "/usr/bin/bash ./enable-ssh.sh<enter><wait15>",
                            ]
-    boot_wait              = "5s"  
+    boot_wait              = "2s"  
     cpus                    = 1
     disk_interface         = "virtio"  
     disk_size              = 4096  
     format                 = "qcow2"  
     headless               = "${var.headless}"
     http_directory         = "srv"  
-    iso_checksum           = "file:${local.iso_checksum_url}"
+    iso_checksum           = "${local.iso_checksum}"
     iso_url                = "${local.iso_url}"
     memory                 = 768
     net_device             = "virtio-net"  
@@ -48,7 +53,7 @@ source "qemu" "main" {
     ssh_username           = "vagrant"  
     ssh_password           = "vagrant"  
     ssh_timeout            = "${var.ssh_timeout}"
-    shutdown_command       = ""
+    shutdown_command       = "sudo systemctl start poweroff.timer"
     vm_name                = "${local.vm_name}"  
 }
 
