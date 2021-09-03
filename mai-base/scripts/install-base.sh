@@ -24,8 +24,6 @@ ROOT_DIR='/mnt'
 BOOT_DIR='/mnt/boot'
 COUNTRY=${COUNTRY:-BE}
 
-echo ">>>> install-base.sh: efivars $(/usr/bin/ls /sys/firmware/efi/efivars)"
-
 echo ">>>> install-base.sh: Clearing partition table on ${DISK}.."
 /usr/bin/sgdisk --zap ${DISK}
 
@@ -34,39 +32,39 @@ echo ">>>> install-base.sh: Destroying magic strings and signatures on ${DISK}..
 /usr/bin/wipefs --all ${DISK}
 
 echo ">>>> install-base.sh: Formatting disk.."
-sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | gdisk ${DISK}
+sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk ${DISK}
   o
-  y
   n
+  p
   2
 
   +250M
-  EF02
   n
+  p
   1
-
-
-  8304
+   
+   
+  a
+  1
   p
   w
-  y
   q
 EOF
 
 echo ">>>> install-base.sh: Writing Filesystem types.."
-mkfs.btrfs -L BOHKS_EQAHM ${DISK}1
-mkfs.fat -F32 ${DISK}2
+mkfs.ext4 -L BOHKS_EQAHM ${ROOT_PARTITION}
+mkfs.ext4 ${BOOT_PARTITION}
 
 echo ">>>> install-base.sh: Mounting partitions.."
 /usr/bin/mount ${ROOT_PARTITION} ${ROOT_DIR}
 /usr/bin/mkdir -p ${BOOT_DIR}
 /usr/bin/mount ${BOOT_PARTITION} ${BOOT_DIR}
 
-# echo ">>>> install-base.sh: Setting pacman mirrors.."
-# /usr/bin/pacman-mirrors --fasttrack 5 
+echo ">>>> install-base.sh: Setting pacman mirrors.."
+/usr/bin/pacman-mirrors --fasttrack 5 
 
 echo ">>>> install-base.sh: Bootstrapping the base installation.."
-/usr/bin/basestrap ${ROOT_DIR} base btrfs-progs
+/usr/bin/basestrap ${ROOT_DIR} base linux
 
 echo ">>>> manjaro-base.sh: Updating pacman-mirrors.."
 /usr/bin/manjaro-chroot ${ROOT_DIR} pacman-mirrors --fasttrack 5
@@ -74,21 +72,17 @@ echo ">>>> manjaro-base.sh: Updating pacman-mirrors.."
 echo ">>>> install-base.sh: Installing databases.."
 /usr/bin/manjaro-chroot ${ROOT_DIR} pacman -Sy
 
-echo ">>>> install-base.sh: Installing databases.."
-/usr/bin/manjaro-chroot ${ROOT_DIR} pacman -S base-devel linux54 linux-firmware
-
-echo ">>>> install-base.sh: Configuring syslinux.."
-/usr/bin/manjaro-chroot ${ROOT_DIR} syslinux-install_update -i -a -m
-/usr/bin/sed -i "s|sda3|${ROOT_PARTITION##/dev/}|" "${BOOT_DIR}/syslinux/syslinux.cfg"
-/usr/bin/sed -i 's/TIMEOUT 50/TIMEOUT 10/' "${BOOT_DIR}/syslinux/syslinux.cfg"
-
-echo ">>>> install-base.sh: Generating the filesystem table.."
-/usr/bin/genfstab -U ${ROOT_DIR} | tee -a "${ROOT_DIR}/etc/fstab"
-
 # Need to install netctl as well: https://github.com/archlinux/arch-boxes/issues/70
 # Can be removed when Vagrant's Arch plugin will use systemd-networkd: https://github.com/hashicorp/vagrant/pull/11400
 echo ">>>> install-base.sh: Installing basic packages.."
-/usr/bin/manjaro-chroot ${ROOT_DIR} pacman -S --noconfirm gptfdisk openssh syslinux dhcpcd netctl manjaro-arm-installer
+/usr/bin/manjaro-chroot ${ROOT_DIR} pacman -S --noconfirm sudo gptfdisk openssh grub dhcpcd netctl manjaro-arm-installer
+
+echo ">>>> install-base.sh: Generating the filesystem table.."
+/usr/bin/fstabgen -U ${ROOT_DIR} | tee -a "${ROOT_DIR}/etc/fstab"
+
+echo ">>>> install-base.sh: Configuring grub.."
+/usr/bin/manjaro-chroot ${ROOT_DIR} grub-install --force --target=i386-pc --recheck --boot-directory=/boot ${DISK}
+/usr/bin/manjaro-chroot ${ROOT_DIR} grub-mkconfig -o /boot/grub/grub.cfg
 
 echo ">>>> manjaro-base.sh: Generating the system configuration script.."
 /usr/bin/install --mode=0755 /dev/null "${ROOT_DIR}${CONFIG_SCRIPT}"
@@ -138,9 +132,13 @@ cat << EOF | tee "${ROOT_DIR}${CONFIG_SCRIPT}"
   /usr/bin/pacman -Rcns --noconfirm gptfdisk
 EOF
 
-echo ">>>> install-manjaro.sh: Entering chroot and configuring system.."
+echo ">>>> install-base.sh: Entering chroot and configuring system.."
 /usr/bin/manjaro-chroot ${ROOT_DIR} ${CONFIG_SCRIPT}
 rm "${ROOT_DIR}${CONFIG_SCRIPT}"
+
+# http://comments.gmane.org/gmane.linux.arch.general/48739
+echo ">>>> install-base.sh: Adding workaround for shutdown race condition.."
+/usr/bin/install --mode=0644 /root/poweroff.timer "${ROOT_DIR}/etc/systemd/system/poweroff.timer"
 
 echo ">>>> install-base.sh: Completing installation.."
 /usr/bin/sleep 3

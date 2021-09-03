@@ -39,22 +39,26 @@ source "qemu" "main" {
                             "/usr/bin/bash ./enable-ssh.sh<enter><wait15>",
                            ]
     boot_wait              = "2s"  
-    cpus                    = 1
+    communicator           = "ssh"
+    cpus                   = 1
     disk_interface         = "virtio"  
-    disk_size              = 4096  
+    disk_size              = 4096
     format                 = "qcow2"  
     headless               = "${var.headless}"
     http_directory         = "srv"  
     iso_checksum           = "${local.iso_checksum}"
     iso_url                = "${local.iso_url}"
-    memory                 = 768
+    memory                 = 2048
     net_device             = "virtio-net"  
     output_directory       = "output"    
-    ssh_username           = "vagrant"  
-    ssh_password           = "vagrant"  
-    ssh_timeout            = "${var.ssh_timeout}"
     shutdown_command       = "sudo systemctl start poweroff.timer"
-    vm_name                = "${local.vm_name}"  
+    ssh_username           = "vagrant"  
+    ssh_password           = "vagrant"
+    ssh_port               = 22
+    ssh_timeout            = "${var.ssh_timeout}"
+    vm_name                = "${local.vm_name}.qcow2"
+    vnc_port_max           = 5910
+    vnc_port_min           = 5910
 }
 
 build { 
@@ -65,11 +69,6 @@ build {
     execute_command   = "{{ .Vars }} COUNTRY=${var.country} sudo -E -S bash '{{ .Path }}'"
     expect_disconnect = true
     script            = "scripts/install-base.sh"
-  }
-
-  provisioner "shell" {
-    execute_command = "{{ .Vars }} WRITE_ZEROS=${var.write_zeros} sudo -E -S bash '{{ .Path }}'"
-    script          = "scripts/cleanup.sh"
   }
 
   post-processor "vagrant" { 
