@@ -71,6 +71,11 @@ build {
     script            = "scripts/install-base.sh"
   }
 
+  provisioner "shell" {
+    execute_command = "{{ .Vars }} WRITE_ZEROS=${var.write_zeros} sudo -E -S bash '{{ .Path }}'"
+    script          = "scripts/cleanup.sh"
+  }
+
   post-processor "vagrant" { 
       keep_input_artifact = true
       output = "output/${local.vm_name}_${source.type}_${source.name}-${formatdate("YYYY-MM", timestamp())}.box"

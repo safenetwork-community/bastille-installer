@@ -64,7 +64,7 @@ echo ">>>> install-base.sh: Setting pacman mirrors.."
 /usr/bin/pacman-mirrors --fasttrack 5 
 
 echo ">>>> install-base.sh: Bootstrapping the base installation.."
-/usr/bin/basestrap ${ROOT_DIR} base linux
+/usr/bin/basestrap ${ROOT_DIR} base btrfs-progs linux
 
 echo ">>>> manjaro-base.sh: Updating pacman-mirrors.."
 /usr/bin/manjaro-chroot ${ROOT_DIR} pacman-mirrors --fasttrack 5
