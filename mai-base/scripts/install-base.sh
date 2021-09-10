@@ -128,7 +128,7 @@ cat << EOF | tee "${ROOT_DIR}${CONFIG_SCRIPT}"
   /usr/bin/chmod 0600 /home/vagrant/.ssh/authorized_keys 
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Generating ssh keys.."
   /usr/bin/ssh-keygen -A
-  echo ">>>> ${CONFIG_SCRIPT_SHORT}: Adding .."
+  echo ">>>> ${CONFIG_SCRIPT_SHORT}: Autostarting manjaro-arm-installer at login.."
   /usr/bin/echo "sudo /bin/bash manjaro-arm-installer" | tee -a /home/vagrant/.bashrc
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Cleaning up.."
   /usr/bin/pacman -Rcns --noconfirm gptfdisk
