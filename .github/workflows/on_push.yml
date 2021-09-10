@@ -24,8 +24,10 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
+      #- uses: actions/checkout@v2
+
       - name: Connect to Vagrant
-      run: |
+        run: |
         vagrant cloud auth login --help
 
 
