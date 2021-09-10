@@ -27,5 +27,4 @@ jobs:
       #- uses: actions/checkout@v2
 
       - name: Connect to Vagrant
-        run: 
-        vagrant cloud auth login --help
+        run: vagrant cloud auth login --help
