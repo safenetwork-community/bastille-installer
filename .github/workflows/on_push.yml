@@ -18,7 +18,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: apt install vagrant
+        run: sudo apt-get install vagrant
 
   publish:
     needs: [build]
