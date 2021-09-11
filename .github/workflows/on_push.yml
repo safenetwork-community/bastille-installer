@@ -18,7 +18,9 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: sudo apt-get install vagrant
+        run: |
+          sudo apt-get -y install libvirt
+          sudo apt-get -y install vagrant
 
   publish:
     needs: [build]
