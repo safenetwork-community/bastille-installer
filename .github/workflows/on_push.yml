@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Install Packer
-        run: |
+      - run: |
           sudo apt-get update
           sudo apt-get -y install packer
 
