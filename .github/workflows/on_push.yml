@@ -12,7 +12,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
 
@@ -23,5 +22,5 @@ jobs:
 
       - name: Run packer
       - run: |
-          echo Run packer
-          echo Do other fancy stuff
+          echo "Run packer"
+          echo "Do other fancy stuff"
