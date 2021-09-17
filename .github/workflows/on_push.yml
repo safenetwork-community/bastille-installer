@@ -16,13 +16,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install Packer
+      - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get -y install qemu
+          sudo apt-get -y install qemu-system-x86_64
+          whoami
+
+      - name: Install and Run Packer
+        run: |
           sudo apt-get -y install packer
-      - name: Run packer
-        run: (cd mai-base && PACKER_LOG=1 packer build manjaro-arm-installer.pkr.hcl)
+          (cd mai-base && PACKER_LOG=1 packer build manjaro-arm-installer.pkr.hcl)
   publish:
     needs: [build]
     runs-on: ubuntu-latest
