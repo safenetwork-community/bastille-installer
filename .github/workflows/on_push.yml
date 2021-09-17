@@ -21,7 +21,7 @@ jobs:
           sudo apt-get update
           sudo apt-get -y install packer
       - name: Run packer
-        run: PACKER_LOG=1 packer build mai-base/manjaro-arm-installer.pkr.hcl
+        run: (cd mai-base && PACKER_LOG=1 packer build mai-base/manjaro-arm-installer.pkr.hcl)
   publish:
     needs: [build]
     runs-on: ubuntu-latest
