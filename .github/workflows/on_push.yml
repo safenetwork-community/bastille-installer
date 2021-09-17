@@ -34,5 +34,5 @@ jobs:
           sudo apt-get -y install vagrant
       - name: Connect to Vagrant
         run: |
-          vagrant cloud auth login "${{ secrets.MAI_TOKEN }}"
+          vagrant cloud auth login ${{ secrets.MAI_TOKEN }}
           vagrant cloud auth login --check
