@@ -8,9 +8,6 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-  
-env:
-  MAI_TOKEN: ${{ secrets.MAI_TOKEN }}
 
 jobs:
   build:
@@ -37,5 +34,5 @@ jobs:
           sudo apt-get -y install vagrant
       - name: Connect to Vagrant
         run: |
-          vagrant cloud auth login $MAI_TOKEN
+          vagrant cloud auth login "${{ secrets.MAI_TOKEN }}"
           vagrant cloud auth login --check
