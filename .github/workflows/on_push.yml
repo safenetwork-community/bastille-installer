@@ -19,8 +19,15 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get -y install qemu-system-x86 qemu-kvm
+          sudo apt-get -y install qemu-kvm
+          sudo apt-get -y install libvirt-clients libvirt-daemon-system virtinst
+          sudo apt-get -y install libguestfs-tools libosinfo.bin virt-top
+          
+      - name: Add groups to user
+        run: |    
           whoami
+          sudo usermod -aG libvirt admin
+          sudo usermod -aG libvirt-qemu admin
 
       - name: Install and Run Packer
         run: |
