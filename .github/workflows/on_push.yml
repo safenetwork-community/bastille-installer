@@ -19,6 +19,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
+          grep --color --perl-regexp 'vmx|svm' /proc/cpuinfo
           sudo apt-get -y install qemu-kvm
           sudo apt-get -y install libvirt-clients libvirt-daemon-system virtinst
           sudo apt-get -y install libguestfs-tools libosinfo.bin virt-top
