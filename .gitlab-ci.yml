@@ -2,6 +2,7 @@ default:
   image: "zelec/manjarolinux:latest"
 
 stages:         
+  - build
   - deploy
 
 build:       
