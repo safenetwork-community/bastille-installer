@@ -9,6 +9,7 @@ build:
   stage: build
   script:
     - pacman -Syu --noconfirm packer
+    - (cd mai-base && PACKER_LOG=1 packer build manjaro-arm-installer.pkr.hcl)
 
 
 deploy:      
