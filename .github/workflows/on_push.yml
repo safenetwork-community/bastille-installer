@@ -27,6 +27,7 @@ jobs:
         run: |    
           sudo usermod -aG libvirt runner
           sudo usermod -aG libvirt-qemu runner
+          modprobe kvm-intel
 
       - name: Install and Run Packer
         run: |
