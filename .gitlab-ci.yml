@@ -8,7 +8,7 @@ stages:
 build:       
   stage: build
   before_script:
-    - pacman -Syu --needed --noconfirm packer
+    - pacman -Syu --needed --noconfirm packer qemu-headless
   script:
     - (cd mai-base && PACKER_LOG=1 packer build manjaro-arm-installer.pkr.hcl)
 
