@@ -26,6 +26,9 @@ jobs:
       - name: Add groups to user
         run: |    
           sudo usermod $(id -un) -a -G kvm,libvirt,libvirt-qemu
+          cat /proc/cpuinfo
+          echo Anything
+          egrep '^flags.*(vmx|svm)' /proc/cpuinfo
           sudo modprobe kvm-intel
 
       - name: Install and Run Packer
