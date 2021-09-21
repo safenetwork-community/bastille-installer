@@ -25,7 +25,7 @@ jobs:
           
       - name: Add groups to user
         run: |    
-          sudo usermod $(id -un) -a -G kvm,libvirt, libvirt-qemu
+          sudo usermod $(id -un) -a -G kvm,libvirt,libvirt-qemu
           sudo modprobe kvm-intel
 
       - name: Install and Run Packer
