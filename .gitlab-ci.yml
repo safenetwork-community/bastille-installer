@@ -7,8 +7,9 @@ stages:
 
 build:       
   stage: build
+  before_script:
+    - pacman -Syu --needed --noconfirm packer
   script:
-    - pacman -Syu --noconfirm packer
     - (cd mai-base && PACKER_LOG=1 packer build manjaro-arm-installer.pkr.hcl)
 
 
