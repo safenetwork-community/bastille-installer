@@ -5,7 +5,7 @@ variable "country" {
 
 variable "headless" {
   type    = string
-  default = "false"
+  default = "true"
 }
 
 variable "ssh_timeout" {
