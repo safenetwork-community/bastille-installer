@@ -5,7 +5,7 @@ variable "country" {
 
 variable "headless" {
   type    = string
-  default = "true"
+  default = "false"
 }
 
 variable "ssh_timeout" {
@@ -19,8 +19,8 @@ variable "write_zeros" {
 }
 
 locals {
-  iso_checksum     = "sha1:a981ef7ff846f373809dad59b26e325dff3ef4b8"
-  iso_url          = "https://download.manjaro.org/xfce/21.1.1/manjaro-xfce-21.1.1-minimal-210827-linux54.iso"
+  iso_checksum     = "sha1:d1b5943fcf17061263ad51d97520e9540d192e42"
+  iso_url          = "https://download.manjaro.org/xfce/21.1.3/manjaro-xfce-21.1.3-minimal-210916-linux54.iso"
   name             = "manjaro-arm-installer"
   vm_name          = "manjaro-arm-installer" 
 }
@@ -50,7 +50,7 @@ source "qemu" "main" {
     iso_url                = "${local.iso_url}"
     memory                 = 2048
     net_device             = "virtio-net"  
-    output_directory       = "output"    
+    output_directory       = "output"
     shutdown_command       = "sudo systemctl start poweroff.timer"
     ssh_username           = "vagrant"  
     ssh_password           = "vagrant"
@@ -76,8 +76,9 @@ build {
     script          = "scripts/cleanup.sh"
   }
 
-  post-processor "vagrant" { 
-      keep_input_artifact = true
-      output = "output/${local.vm_name}_${source.type}_${source.name}-${formatdate("YYYY-MM", timestamp())}.box"
+  post-processor "vagrant" {
+    keep_input_artifact = true
+    output = "output/${local.vm_name}_${source.type}_${source.name}-${formatdate("YYYY-MM", timestamp())}.box"
+    vagrantfile_template = "templates/vagrantfile.tpl"
   }
 }
