@@ -18,26 +18,35 @@ variable "write_zeros" {
   default = "true"
 }
 
+variable "iso_url" {
+  type    = string
+}
+
+variable "iso_checksum" {
+  type    = string
+}
+
 locals {
-  iso_checksum     = "sha1:d1b5943fcf17061263ad51d97520e9540d192e42"
-  iso_url          = "https://download.manjaro.org/xfce/21.1.3/manjaro-xfce-21.1.3-minimal-210916-linux54.iso"
-  name             = "manjaro-arm-installer"
-  vm_name          = "manjaro-arm-installer" 
+  boot_command    = [
+                    "<enter><wait30><wait30>",
+                    "<leftCtrlOn><leftAltOn><f2><leftCtrlOff><leftAltOff><wait10>",
+                    "manjaro<enter><wait2>",
+                    "manjaro<enter><wait2>",
+                    "su -<enter><wait3>",
+                    "manjaro<enter><wait2>",
+                    "/usr/bin/curl -O http://{{ .HTTPIP }}:{{ .HTTPPort }}/enable-ssh.sh<enter><wait3>",
+                    "/usr/bin/curl -O http://{{ .HTTPIP }}:{{ .HTTPPort }}/poweroff.timer<enter><wait3>",
+                    "/usr/bin/bash ./enable-ssh.sh<enter><wait15>",
+                  ]
+  iso_checksum    = "${var.iso_checksum}"
+  iso_url         = "${var.iso_url}"
+  name            = "manjaro-arm-installer"
+  vm_name         = "manjaro-arm-installer" 
 }
 
 source "qemu" "main" {  
     accelerator            = "kvm"  
-    boot_command           = [
-                            "<enter><wait30><wait30>",
-                            "<leftCtrlOn><leftAltOn><f2><leftCtrlOff><leftAltOff><wait10>",
-                            "manjaro<enter><wait2>",
-                            "manjaro<enter><wait2>",
-                            "su -<enter><wait3>",
-                            "manjaro<enter><wait2>",
-                            "/usr/bin/curl -O http://{{ .HTTPIP }}:{{ .HTTPPort }}/enable-ssh.sh<enter><wait3>",
-                            "/usr/bin/curl -O http://{{ .HTTPIP }}:{{ .HTTPPort }}/poweroff.timer<enter><wait3>",
-                            "/usr/bin/bash ./enable-ssh.sh<enter><wait15>",
-                           ]
+    boot_command           = "${local.boot_command}"
     boot_wait              = "2s"  
     communicator           = "ssh"
     cpus                   = 1
@@ -64,6 +73,11 @@ source "qemu" "main" {
 build { 
   name = "manjaro-arm-installer"
   sources = ["source.qemu.main"]
+
+  provisioner "file" {
+    destination = "/tmp/"
+    source      = "./files"
+  }
 
   provisioner "shell" {
     execute_command   = "{{ .Vars }} COUNTRY=${var.country} sudo -E -S bash '{{ .Path }}'"

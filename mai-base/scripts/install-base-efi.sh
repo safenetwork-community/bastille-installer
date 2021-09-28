@@ -21,7 +21,7 @@ CONFIG_SCRIPT='/usr/local/bin/manjaro-config.sh'
 ROOT_PARTITION="${DISK}1"
 BOOT_PARTITION="${DISK}2"
 ROOT_DIR='/mnt'
-BOOT_DIR='/mnt/boot'
+BOOT_DIR='/mnt/boot/efi'
 COUNTRY=${COUNTRY:-BE}
 
 echo ">>>> install-base.sh: Clearing partition table on ${DISK}.."
@@ -32,28 +32,28 @@ echo ">>>> install-base.sh: Destroying magic strings and signatures on ${DISK}..
 /usr/bin/wipefs --all ${DISK}
 
 echo ">>>> install-base.sh: Formatting disk.."
-sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk ${DISK}
+sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | gdisk ${DISK}
   o
+  y
   n
-  p
   2
 
   +250M
+  ef00
   n
-  p
   1
    
    
-  a
-  1
+  8304
   p
   w
+  y
   q
 EOF
 
 echo ">>>> install-base.sh: Writing Filesystem types.."
 mkfs.ext4 -L BOHKS_EQAHM ${ROOT_PARTITION}
-mkfs.ext4 ${BOOT_PARTITION}
+mkfs.fat -F32 ${BOOT_PARTITION}
 
 echo ">>>> install-base.sh: Mounting partitions.."
 /usr/bin/mount ${ROOT_PARTITION} ${ROOT_DIR}
@@ -75,13 +75,13 @@ echo ">>>> install-base.sh: Installing databases.."
 # Need to install netctl as well: https://github.com/archlinux/arch-boxes/issues/70
 # Can be removed when Vagrant's Arch plugin will use systemd-networkd: https://github.com/hashicorp/vagrant/pull/11400
 echo ">>>> install-base.sh: Installing basic packages.."
-/usr/bin/manjaro-chroot ${ROOT_DIR} pacman -S --noconfirm sudo gptfdisk openssh grub dhcpcd netctl manjaro-arm-installer
+/usr/bin/manjaro-chroot ${ROOT_DIR} pacman -S --noconfirm sudo efibootmgr gptfdisk openssh grub dhcpcd netctl manjaro-arm-installer
 
 echo ">>>> install-base.sh: Generating the filesystem table.."
 /usr/bin/fstabgen -U ${ROOT_DIR} | tee -a "${ROOT_DIR}/etc/fstab"
 
 echo ">>>> install-base.sh: Configuring grub.."
-/usr/bin/manjaro-chroot ${ROOT_DIR} grub-install --force --target=i386-pc --recheck --boot-directory=/boot ${DISK}
+/usr/bin/manjaro-chroot ${ROOT_DIR} grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=manjaro --recheck
 /usr/bin/manjaro-chroot ${ROOT_DIR} grub-mkconfig -o /boot/grub/grub.cfg
 
 echo ">>>> manjaro-base.sh: Generating the system configuration script.."
