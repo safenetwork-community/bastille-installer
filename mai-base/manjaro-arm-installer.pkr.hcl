@@ -82,7 +82,7 @@ build {
   provisioner "shell" {
     execute_command   = "{{ .Vars }} COUNTRY=${var.country} sudo -E -S bash '{{ .Path }}'"
     expect_disconnect = true
-    script            = "scripts/install-base.sh"
+    script            = "scripts/install-base-btrfs-gpt-lbios.sh"
   }
 
   provisioner "shell" {
