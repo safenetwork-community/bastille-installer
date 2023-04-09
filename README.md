@@ -1,4 +1,4 @@
-# Manjaro Arm Installer Box
-This repository contains all Packer files used for the Manjaro Arm Installer Vagrant Box.
+# Scarch Flasher Installer
 
-Note: Manjaro Arm does not support 32-bit.
+This repository contains Vagrant Packer installation scripts in order to install 
+a flasher-in-a-box used for safely installing the Safenet Community flavour of Arch Linux.
