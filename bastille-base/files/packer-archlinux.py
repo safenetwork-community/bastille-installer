@@ -9,8 +9,8 @@ import json
 default_profile = {'path': 'minimal'}
 default_packages = ['openssh', 'vim', 'wget', 'git', 'ntp']
 default_services = ['sshd', 'ntpd']
-default_root_password = 'sciroot'
-default_user = {'sudo': True, 'username': 'sci', '!password': 'sci'}
+default_root_password = 'basroot'
+default_user = {'sudo': True, 'username': 'bas', '!password': 'bas'}
 default_network = {
     'dhcp': True,
     'dns': None,
@@ -156,7 +156,7 @@ def install_on(mountpoint, disk_layouts):
 			installation.genfstab()
 
 	archinstall.log("There is one account in your installation after reboot:")
-	archinstall.log(" * sci (password: sci)")
+	archinstall.log(" * bas (password: bas)")
 
 def unattended_installer():
 	"""

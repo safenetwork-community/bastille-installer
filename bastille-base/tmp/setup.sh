@@ -1,11 +1,5 @@
 #!/usr/bin/env bash
 
-if [[ $PACKER_BUILDER_TYPE == "qemu" ]]; then
-  DISK='/dev/vda'
-else
-  DISK='/dev/sda'
-fi
-
 COUNTRIES='Netherlands,Belgium'
 VDA_BOOT=/run/archiso/bootmnt
 

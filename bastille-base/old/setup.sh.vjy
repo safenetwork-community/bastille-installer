@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-. /root/vars.sh
+. /tmp/files/vars.sh
 
 CONFIG_SCRIPT_SHORT=`basename "$CONFIG_SCRIPT"`
 tee "${ROOT_DIR}${CONFIG_SCRIPT}" &>/dev/null << EOF
@@ -32,29 +32,29 @@ tee "${ROOT_DIR}${CONFIG_SCRIPT}" &>/dev/null << EOF
   /usr/bin/pacman -S --noconfirm ntp
   /usr/bin/systemctl enable ntpd 
   # Vagrant-specific configuration
-  echo ">>>> ${CONFIG_SCRIPT_SHORT}: Creating sci user.."
-  /usr/bin/rm -rf /home/sci
-  /usr/bin/useradd --password ${TEMP_PASSWORD} --comment "sci User" --create-home --user-group sci
-  /usr/bin/echo -e "${PASSWORD}\n${PASSWORD}" | /usr/bin/passwd sci
+  echo ">>>> ${CONFIG_SCRIPT_SHORT}: Creating ${USER} user.."
+  /usr/bin/rm -rf /home/${USER}
+  /usr/bin/useradd --password ${TEMP_PASSWORD} --comment "${USER} User" --create-home --user-group ${USER}
+  /usr/bin/echo -e "${PASSWORD}\n${PASSWORD}" | /usr/bin/passwd ${USER}
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Configuring sudo.."
-  echo "Defaults env_keep += \"SSH_AUTH_SOCK\"" | tee /etc/sudoers.d/10_sci
-  echo "sci ALL=(ALL) NOPASSWD: ALL" | tee -a /etc/sudoers.d/10_sci
-  /usr/bin/chmod 0440 /etc/sudoers.d/10_sci
+  echo "Defaults env_keep += \"SSH_AUTH_SOCK\"" | tee /etc/sudoers.d/10_${USER}
+  echo "${USER} ALL=(ALL) NOPASSWD: ALL" | tee -a /etc/sudoers.d/10_${USER}
+  /usr/bin/chmod 0440 /etc/sudoers.d/10_${USER}
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Creating .ssh directory.."
-  /usr/bin/install --directory --owner=sci --group=sci --mode=0700 /home/sci/.ssh
-  echo ">>>> ${CONFIG_SCRIPT_SHORT}: Installing scarf-installer non-AUR dependencies.."
+  /usr/bin/install --directory --owner=${USER} --group=${GROUP} --mode=0700 /home/${USER}/.ssh
+  echo ">>>> ${CONFIG_SCRIPT_SHORT}: Installing ${FQDN} non-AUR dependencies.."
   /usr/bin/pacman -S --noconfirm base-devel
   /usr/bin/pacman -S --noconfirm wget git parted 
   /usr/bin/pacman -S --noconfirm dialog dosfstools f2fs-tools polkit qemu-user-static-binfmt
-  echo ">>>> ${CONFIG_SCRIPT_SHORT}: Installing scarf-installer AUR dependencies.."
-  /usr/bin/runuser - sci -c '(cd /tmp && /usr/bin/git clone https://aur.archlinux.org/yay-bin.git)'
-  /usr/bin/runuser - sci -c '(cd /tmp/yay-bin && /usr/bin/makepkg --install --syncdeps --noconfirm)'
-  /usr/bin/runuser - sci -c '/usr/bin/yay -S --noconfirm grub-efi-arm64'
-  echo ">>>> ${CONFIG_SCRIPT_SHORT}: Installing scarf-installer.."
-  /usr/bin/runuser - sci -c 'cd /tmp && /usr/bin/git clone https://gitlab.manjaro.org/scarf/applications/scarf-installer.git/'
-  /usr/bin/install -m 755 -o root /tmp/scarf-installer/scarf-installer /usr/bin
-  echo ">>>> ${CONFIG_SCRIPT_SHORT}: Autostarting scarf-installer at login.."
-  /usr/bin/echo "sudo /bin/bash scarf-installer" | tee -a /home/sci/.bashrc
+  echo ">>>> ${CONFIG_SCRIPT_SHORT}: Installing ${FQDN} AUR dependencies.."
+  /usr/bin/runuser - ${USER} -c '(cd /tmp && /usr/bin/git clone https://aur.archlinux.org/yay-bin.git)'
+  /usr/bin/runuser - ${USER} -c '(cd /tmp/yay-bin && /usr/bin/makepkg --install --syncdeps --noconfirm)'
+  /usr/bin/runuser - ${USER} -c '/usr/bin/yay -S --noconfirm grub-efi-arm64'
+  echo ">>>> ${CONFIG_SCRIPT_SHORT}: Installing ${FQDN}.."
+  /usr/bin/runuser - ${USER} -c 'cd /tmp && /usr/bin/git clone https://gitlab.manjaro.org/scarf/applications/${FQDN}.git/'
+  /usr/bin/install -m 755 -o root /tmp/${FQDN}/${FQDN} /usr/bin
+  echo ">>>> ${CONFIG_SCRIPT_SHORT}: Autostarting ${FQDN} at login.."
+  /usr/bin/echo "sudo /bin/bash ${FQDN}" | tee -a /home/${USER}/.bashrc
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Cleaning up.."
   /usr/bin/pacman -Rcns --noconfirm gptfdisk git
   # Vagrant-specific configuration

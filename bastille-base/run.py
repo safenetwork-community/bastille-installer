@@ -158,7 +158,7 @@ if __name__ == '__main__':
     subcommand = "build"
     option1 = "-var"
     oparam1 = f"iso_release_date={iso_release_date}" 
-    template = "scarf-installer.pkr.hcl"
+    template = "bastille-installer.pkr.hcl"
     args = [command, subcommand, option1, oparam1, template]
     print(' '.join(args)) 
 

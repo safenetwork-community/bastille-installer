@@ -1,6 +1,6 @@
 #!/usr/bin/sh -x
 
-. /root/vars.sh
+. /tmp/files/vars.sh
 
 # Clean the pacman cache.
 echo ">>>> cleanup.sh: Cleaning pacman cache.."
