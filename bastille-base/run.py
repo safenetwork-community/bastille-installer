@@ -1,12 +1,23 @@
 #!/usr/bin/env python
 
-import glob
-import os
+#import glob
+#import os
 import subprocess
-import sys
-import time
-import urllib.request
-from html.parser import HTMLParser
+#import sys
+#import time
+#import urllib.request
+#from html.parser import HTMLParser
+
+# Run packer
+command = "packer"
+subcommand = "build"
+template = "bastille-installer.pkr.hcl"
+args = [command, subcommand, template]
+print(' '.join(args)) 
+
+subprocess.run(args)
+
+"""
 
 class Parse(HTMLParser):
     __current_release_flag=False
@@ -152,14 +163,5 @@ if __name__ == '__main__':
         iso_release_date = dataParsed.release_date
     
     print("Starting packer application..")
-        
-    # Run packer
-    command = "packer"
-    subcommand = "build"
-    option1 = "-var"
-    oparam1 = f"iso_release_date={iso_release_date}" 
-    template = "bastille-installer.pkr.hcl"
-    args = [command, subcommand, option1, oparam1, template]
-    print(' '.join(args)) 
-
-    subprocess.run(args)
+ 
+ """

@@ -37,7 +37,7 @@ echo ">>>> partition-btrfs-efi.sh: Generating the filesystem table.."
 /usr/bin/genfstab -U ${ROOT_DIR} | tee -a "${ROOT_DIR}/etc/fstab"
 
 echo ">>>> partition-btrfs-efi.sh: Configuring grub.."
-/usr/bin/arch-chroot ${ROOT_DIR} grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch --recheck
+/usr/bin/arch-chroot ${ROOT_DIR} grub-install bootloader-id=arch --efi-directory=/boot --recheck --target=x86_64_efi ${DISK}
 /usr/bin/arch-chroot ${ROOT_DIR} grub-mkconfig -o /boot/grub/grub.cfg
 
 echo ">>>> partition-btrfs-efi.sh: Generating the system configuration script.."

@@ -1,3 +1,4 @@
-sci-base/packer_cache/
-sci-base/output/
-sci-base/srv/id_sci.pub
+bastille-base/packer_cache/
+bastille-base/output/
+bastille-base/output-archlinux/
+bastille-base/srv/id_sci.pub
