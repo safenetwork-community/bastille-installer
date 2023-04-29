@@ -2,6 +2,11 @@
 
 . /tmp/files/vars.sh
 
+NAME_SH=configure-virtualbox.sh
+
+# stop on errors
+set -eu
+
 # VirtualBox Guest Additions
 # https://wiki.archlinux.org/index.php/VirtualBox/Install_Arch_Linux_as_a_guest
 echo ">>>> configure-virtualbox.sh: Installing VirtualBox Guest Additions and NFS utilities.."

@@ -4,6 +4,9 @@
 
 NAME_SH=setup.sh
 
+# stop on errors
+set -eu
+
 CONFIG_SCRIPT_SHORT=`basename "$CONFIG_SCRIPT"`
 tee "${ROOT_DIR}${CONFIG_SCRIPT}" &>/dev/null << EOF
   echo ">>>> ${CONFIG_SCRIPT_SHORT}: Configuring hostname, timezone, and keymap.."
@@ -60,11 +63,9 @@ echo ">>>> ${NAME_SH}: Creating ssh access for ${USER}.."
 echo ">>>> ${NAME_SH}: Adding workaround for shutdown race condition.."
 /usr/bin/install --mode=0644 ${FILES_DIR}/poweroff.timer "${ROOT_DIR}/etc/systemd/system/poweroff.timer"
 
-# /usr/bin/ls -lha ${ROOT_DIR}/boot
-# /usr/bin/ls -lha ${BOOT_DIR}
-# /usr/bin/ls -lha ${BOOT_DIR}/EFI
-# /usr/bin/cat ${ROOT_DIR}/etc/fstab
-# /usr/bin/cat ${ROOT_DIR}/boot/grub/grub.cfg
+echo ">>>> ${NAME_SH}: Trimming partition sizes.."
+/usr/bin/fstrim ${BOOT_DIR}
+/usr/bin/fstrim ${ROOT_DIR}
 
 echo ">>>> ${NAME_SH}: Completing installation.."
 /usr/bin/umount ${BOOT_DIR}

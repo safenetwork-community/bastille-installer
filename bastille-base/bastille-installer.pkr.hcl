@@ -1,3 +1,13 @@
+packer {
+  required_plugins {
+    qemu = {
+      version = ">= 1.0.9"
+      source = "github.com/hashicorp/qemu"
+    }
+  }
+}
+
+
 variable "ssh_private_key_file" {
   type    = string
   default = "~/.ssh/id_bas"
@@ -30,7 +40,8 @@ locals {
   ]
   cpus              = 1
   disk_size         = "4G"
-  firmware          = "/usr/share/edk2-ovmf/x64/OVMF_CODE.fd"
+  efi_firmware_code = "/usr/share/edk2-ovmf/x64/OVMF_CODE.fd"
+  efi_firmware_vars = "/usr/share/edk2-ovmf/x64/OVMF_VARS.fd"
   headless          = "false"
   iso_checksum      = "file:https://mirrors.edge.kernel.org/archlinux/iso/{{isotime \"2006.01\"}}.01/sha256sums.txt"
   iso_url           = "https://mirrors.edge.kernel.org/archlinux/iso/{{isotime \"2006.01\"}}.01/archlinux-{{isotime \"2006.01\"}}.01-x86_64.iso"
@@ -47,9 +58,11 @@ source "qemu" "archlinux" {
   boot_command            = local.boot_command_qemu
   boot_wait               = "1s"
   cpus                    = local.cpus
-  disk_interface         = "virtio"
+  disk_interface          = "virtio"
   disk_size               = local.disk_size
-  firmware                = local.firmware
+  efi_boot                = true
+  efi_firmware_code       = local.efi_firmware_code
+  efi_firmware_vars       = local.efi_firmware_vars
   format                  = "qcow2"
   headless                = local.headless
   http_directory          = local.http_directory
@@ -57,12 +70,7 @@ source "qemu" "archlinux" {
   iso_checksum            = local.iso_checksum
   machine_type            = local.machine_type
   memory                  = local.memory
-  net_device             = "virtio-net" 
-  qemuargs               = [
-      ["-m", "${local.memory}M"],
-      ["-monitor", "none"],
-      ["-smp", "${local.cpus}"]
-    ]
+  net_device              = "virtio-net" 
   shutdown_command        = "sudo systemctl start poweroff.timer"
   ssh_handshake_attempts  = 500
   ssh_port                = 22

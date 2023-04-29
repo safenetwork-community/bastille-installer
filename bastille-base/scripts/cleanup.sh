@@ -1,4 +1,7 @@
-#!/usr/bin/bash -x
+#!/usr/bin/bash
+
+# stop on errors
+set -x
 
 # Clean the pacman cache.
 echo ">>>> cleanup.sh: Cleaning pacman cache.."

@@ -2,6 +2,11 @@
 
 . /tmp/files/vars.sh
 
+NAME_SH=partition-btrfs-efi.sh
+
+# Stop on errors
+set -eu
+
 echo ">>>> partition-btrfs-efi.sh: Writing Filesystem types.."
 mkfs.btrfs -L BOHKS_EQAHM ${ROOT_PARTITION}
 mkfs.fat -F32 ${BOOT_PARTITION}

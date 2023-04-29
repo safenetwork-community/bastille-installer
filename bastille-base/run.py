@@ -1,24 +1,52 @@
 #!/usr/bin/env python
 
-#import glob
-#import os
+from pathlib import Path
 import subprocess
 #import sys
 #import time
 #import urllib.request
 #from html.parser import HTMLParser
 
-# Run packer
 command = "packer"
 subcommand = "build"
+
+# File names
 template = "bastille-installer.pkr.hcl"
+vm_name = "bastille-installer_qemu_archlinux-2023-04.qcow2"
+
+# Folder locations
+path_output = "./output"
+path_virt_manager = "/var/lib/libvirt/images/"
+
+# File locations
+location_vm_old = f"{path_output}/{vm_name}"
+location_vm_new = f"{path_virt_manager}/{vm_name}"
+
+# delete output folder if it exists
+if Path(output_folder).is_dir(): 
+    subprocess.run(["rm", "-r", "output"])
+
+# Run packer
 args = [command, subcommand, template]
 print(' '.join(args)) 
 
 subprocess.run(args)
 
-"""
 
+if Path(path_output).exists() and Path(path_output).is_dir():  
+    subprocess.run(["sudo", "chown", "libvirt-qemu:libvirt-qemu", location_vm_old])
+    subprocess.run(["sudo", "chmod", "600", location_vm_old])
+    subprocess.run(["sudo", "mv", location_vm_old, location_vm_new])
+    #subprocess.run(["sudo", "virt-install",
+    #                "--name", "bastille-installer",
+    #                "--vcpu", "2",
+    #                "--memory", "1024",
+    #                "--osinfo", "archlinux",
+    #                "--disk", location_vm_new, 
+    #                "--import",
+    #                "--boot", "uefi"])
+
+"""
 class Parse(HTMLParser):
     __current_release_flag=False
     __current_release_date=None

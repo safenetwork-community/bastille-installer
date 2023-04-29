@@ -13,10 +13,12 @@ PORT=$1
 
 NAME_SH='cfg-liveVM.sh'
 
+# stop on errors
+set -eu
+
 echo ">>>> ${NAME_SH}: Modifying local settings liveVM.."
 ln -sf /usr/share/zoneinfo/Europe/Brussels /etc/localtime
-echo -s ${NAME}'-livevm' | tee /etc/hostname >/edv/null
-
+echo -s ${NAME}'-livevm' | tee /etc/hostname >/dev/null
 
 echo ">>>> ${NAME_SH}: Creating liveVM user.."
 /usr/bin/useradd --password ${TEMP_PASSWORD} --comment 'Bas User' --create-home --user-group ${GROUP}
