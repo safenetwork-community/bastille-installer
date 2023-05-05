@@ -2,13 +2,48 @@
 
 from pathlib import Path
 import subprocess
-#import sys
-#import time
-#import urllib.request
-#from html.parser import HTMLParser
+import urllib.request
+from html.parser import HTMLParser
+
+
+
+class IsoParse(HTMLParser):
+
+    def __init__(self):
+        super().__init__()
+        self.reset()
+        self.iso_url = f"{isoURL}/{artix_flavour}-YYYYMMDD-x86_64.iso"
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "a":  
+            for name, link in attrs:
+                if link and name == "href" and link.startswith(f"{isoURL}/{artix_flavour}") == True:
+                    self.iso_url = link
+                    break
+
+def findIsoURL():
+    #Import HTML from a URL
+    url = urllib.request.urlopen(f"{isoURL}s.php")
+    html = url.read().decode()
+    url.close()
+
+    p = IsoParse()
+    p.feed(html)
+    return p.iso_url
+
+def findChecksum():
+    url = urllib.request.urlopen(f"{isoURL}/sha256sums")
+    for line in url:
+        if line.__contains__(artix_flavour.encode()):  
+            return line.split()[0].decode("utf-8")
+
 
 command = "packer"
 subcommand = "build"
+
+# URLs
+isoURL = "https://download.artixlinux.org/weekly-iso"
+artix_flavour = "artix-base-dinit"
 
 # File names
 template = "bastille-installer.pkr.hcl"
@@ -23,173 +58,37 @@ location_vm_old = f"{path_output}/{vm_name}"
 location_vm_new = f"{path_virt_manager}/{vm_name}"
 
 # delete output folder if it exists
-if Path(output_folder).is_dir(): 
+if Path(path_output).is_dir(): 
     subprocess.run(["rm", "-r", "output"])
-
-# Run packer
-args = [command, subcommand, template]
-print(' '.join(args)) 
-
-subprocess.run(args)
-
-
-if Path(path_output).exists() and Path(path_output).is_dir():  
-    subprocess.run(["sudo", "chown", "libvirt-qemu:libvirt-qemu", location_vm_old])
-    subprocess.run(["sudo", "chmod", "600", location_vm_old])
-    subprocess.run(["sudo", "mv", location_vm_old, location_vm_new])
-    #subprocess.run(["sudo", "virt-install",
-    #                "--name", "bastille-installer",
-    #                "--vcpu", "2",
-    #                "--memory", "1024",
-    #                "--osinfo", "archlinux",
-    #                "--disk", location_vm_new, 
-    #                "--import",
-    #                "--boot", "uefi"])
-
-"""
-class Parse(HTMLParser):
-    __current_release_flag=False
-    __current_release_date=None
-    __magnet_link=None
-    __checksum_flag=False
-
-    def __init__(self, iso_release_date):
-        super().__init__()
-        self.__iso_release_date = iso_release_date
-        self.reset()
-
-    def handle_starttag(self, tag, attrs):
-        if self.__current_release_date is not None:
-            if tag == "a":  
-                for name, link in attrs:
-                    if link and name == "href" and link.startswith("magnet") == True:
-                        self.__magnet_link=link
-                        break
-
-    def handle_data(self, data):
-        if self.__current_release_date is None:
-            if not self.__current_release_flag:
-                if data.lower() == "current release:":
-                    self.__current_release_flag = True
-            else:
-                self.__current_release_date = data.strip()
-                if not self.__current_release_date > self.__iso_release_date:
-                    raise NoNewReleaseException(self.__current_release_date)
-        elif self.__magnet_link is not None:
-            if not self.__checksum_flag:
-                if data.lower() == "sha256:":
-                    self.__checksum_flag = True
-            else:
-                raise DataParsedException(self.__current_release_date, self.__magnet_link, data.strip())
-
-class NoNewReleaseException(Exception):
-    def __init__(self, release_date):
-        self.release_date = release_date
-
-class DataParsedException(Exception):
-    def __init__(self, release_date, magnet_link, checksum):
-        self.release_date = release_date
-        self.magnet_link = magnet_link
-        self.checksum = checksum
-
-
-def delete_last_line():
-    sys.stdout.write('\x1b[2K')
 
 if __name__ == '__main__':
 
-    files = glob.glob('/var/lib/transmission/iso/archlinux-*.iso')
-    if len(files) == 1:
-        filename = files[0]
-        iso_release_date=filename.rstrip('-x86_64.iso').lstrip('/var/lib/transmission/iso/archlinux-')
-    elif len(files) == 0:
-        iso_release_date = '2000.01.01'
-    else:
-        for file in files:
-            print(file)
-        exit('Multiple archlinux iso files found, exiting..')
-
-    #Import HTML from a URL
-    url = urllib.request.urlopen("https://archlinux.org/download")
-    html = url.read().decode()
-    url.close()
-
-    p = Parse(iso_release_date)
-    try:
-        p.feed(html)
-    except NoNewReleaseException as dataParsed:
-        print(f"Latest version is: {dataParsed.release_date}")
-        print("No new version released..")
-    except DataParsedException as dataParsed:
-        oldIsoFile = f"archlinux-{iso_release_date}-x86_64.iso"
-        newIsoFile = f"archlinux-{dataParsed.release_date}-x86_64.iso"
-        pathIsoDir = "/var/lib/transmission/iso"
-        pathOldIso = f"{pathIsoDir}/{oldIsoFile}"
-        pathOldChecksum = f"{pathOldIso}.sha256"
-        pathNewIso = f"{pathIsoDir}/{newIsoFile}"
-        pathNewChecksum = f"{pathNewIso}.sha256"
-        checksum = f"{dataParsed.checksum} {newIsoFile}"
-
-        print("Newer version found!")
-
-        # Download new iso
-        command = "transmission-remote"
-        option2 = "--download-dir"
-        oparam2 = f"{pathIsoDir}"
-        option3 = "--add" 
-        oparam3 = f"{dataParsed.magnet_link}"
-        args = [command, option2, oparam2, option3, oparam3]
-        print(' '.join(args))
-        subprocess.run(args)
-
-        dots = 0
-        while not os.path.isdir(f"{pathIsoDir}"):
-            print("Waiting for transmission to start" + "." * dots, end="\r", flush=True)
-            time.sleep(1)
-            delete_last_line()
-            dots = dots + 1
-            if(dots > 3):
-                dots = 0
-        print("Waiting for transmission to start..." + "\nDone.")
-
-        percentage = 0
-        dots = 0
-        while not os.path.isfile(f"{pathNewIso}"):
-            args = ["transmission-remote", "-l"]
-            process1 = subprocess.run(args, check=True, capture_output=True)
-            args = ["grep", f"{newIsoFile}"]
-            process2 = subprocess.run(args, input=process1.stdout, capture_output=True)
-            percentage = process2.stdout.decode("utf-8").split()[1]
-            print(f"Downloading {newIsoFile} at {percentage}" + "." * dots, end="\r", flush=True)
-            time.sleep(2)
-            delete_last_line()
-            dots = dots + 1
-            if(dots > 3):
-                dots = 0
-        print(f"Downloading {newIsoFile} at {percentage}..\nDone.")
-
-        # delete torrent
-        args = ["transmission-remote", "-l"]
-        process1 = subprocess.run(args, check=True, capture_output=True)
-        args = ["grep", f"{newIsoFile}"]
-        process2 = subprocess.run(args, input=process1.stdout, capture_output=True)
-        torrentID = process2.stdout.decode("utf-8").split()[0]
-        args = ["transmission-remote", "-t", torrentID, "-r"]
-
-        subprocess.run(args)
-
-        # Write checksum file
-        with open(pathNewChecksum, 'w') as file:
-            file.write(checksum + '\n')
-         
-        # Delete old iso & checksum files 
-        if os.path.exists(pathOldIso):
-            os.remove(pathOldIso)
-        if os.path.exists(pathOldChecksum):
-            os.remove(pathOldChecksum)
-
-        iso_release_date = dataParsed.release_date
+    iso_url = findIsoURL()
+    iso_checksum = findChecksum()
     
-    print("Starting packer application..")
- 
- """
+    # Run packer
+    print([command, subcommand, 
+           "-var", f"iso_url={iso_url}",
+           "-var", f"iso_checksum={iso_checksum}", 
+           template])
+    subprocess.run([command, subcommand, 
+                    "-var", f"iso_url={iso_url}", 
+                    "-var", f"iso_checksum={iso_checksum}", 
+                    template])
+
+    # Copy to virt-manager default images folder
+    if Path(path_output).exists() and Path(path_output).is_dir():  
+        subprocess.run(["sudo", "chown", "libvirt-qemu:libvirt-qemu", location_vm_old])
+        subprocess.run(["sudo", "chmod", "600", location_vm_old])
+        subprocess.run(["sudo", "mv", location_vm_old, location_vm_new])
+        #subprocess.run(["sudo", "virt-install",
+        #                "--name", "bastille-installer",
+        #                "--vcpu", "2",
+        #                "--memory", "1024",
+        #                "--osinfo", "archlinux",
+        #                "--disk", location_vm_new, 
+        #                "--import",
+        #                "--boot", "loader=/usr/share/edk2-ovmf/x64/OVMF_CODE.fd," +
+        #                "loader.readonly=yes,loader.type=pflash," + 
+        #                "nvram.template=/usr/share/edk2-ovmf/x64/OVMF_CODE.fd," +
+        #                "loader_secure=no"])

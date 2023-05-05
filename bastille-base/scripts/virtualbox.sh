@@ -21,12 +21,3 @@ echo ">>>> configure-virtualbox.sh: Enabling RPC Bind service.."
 # Add groups for VirtualBox folder sharing
 echo ">>>> configure-virtualbox.sh: Enabling VirtualBox Shared Folders.."
 /usr/bin/usermod --append --groups vagrant,vboxsf vagrant
-
-echo ">>>> configure-virtualbox.sh: Clearing partition table on ${DISK}.."
-/usr/bin/sgdisk --zap ${DISK}
-
-echo ">>>> configure-virtualbox.sh: Destroying magic strings and signatures on ${DISK}.."
-/usr/bin/dd if=/dev/zero of=${DISK} bs=512 count=2048
-/usr/bin/wipefs --all ${DISK}
-
-
