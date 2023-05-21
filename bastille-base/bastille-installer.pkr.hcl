@@ -7,6 +7,11 @@ packer {
   }
 }
 
+variable "country" {
+  type = string
+  default = "NL"
+}
+
 variable "iso_checksum" {
   type = string
   default = "file:https://download.artixlinux.org/weekly-iso/shasums256"
@@ -20,36 +25,37 @@ variable "iso_url" {
 locals {
   boot_command_qemu = [
     "<down><down><enter>",
-    "<wait14s>root<enter>",
-    "<wait3s>artix<enter>",
-    "<wait3s>dinitctl enable sshd<enter>"
+    "<wait15s>root<enter>",
+    "<wait10s>artix<enter>",
+    "<wait3s>curl -Os http://{{ .HTTPIP }}:{{ .HTTPPort }}/${local.init_script} && chmod +x ./${local.init_script} && ./${local.init_script} {{ .HTTPPort }}<enter>"
   ]
   boot_command_virtualbox = [
     "<down><down><enter>",
-    "<wait14s>root<enter>",
-    "<wait3s>artix<enter>",
-    "<wait3s>dinitctl enable sshd<enter>"
+    "<wait15s>root<enter>",
+    "<wait10s>artix<enter>",
+    "<wait3s>/tmp/files/initLiveVM.sh<enter>"
   ]
-  cpus              = 1
-  disk_size         = "4G"
-  efi_firmware_code = "/usr/share/edk2-ovmf/x64/OVMF_CODE.fd"
-  efi_firmware_vars = "/usr/share/edk2-ovmf/x64/OVMF_VARS.fd"
-  headless          = "false"
-  iso_checksum      = var.iso_checksum
-  iso_url           = var.iso_url
-  machine_type      = "q35"
-  memory            = 4096
-  ssh_password      = "artix"
-  ssh_timeout       = "20m"
-  ssh_username      = "artix"
-  vm_name           = "bastille-installer"
-  write_zeros       = "true"
+  cpus                  = 1
+  disk_size             = "4G"
+  efi_firmware_code     = "/usr/share/edk2-ovmf/x64/OVMF_CODE.fd"
+  efi_firmware_vars     = "/usr/share/edk2-ovmf/x64/OVMF_VARS.fd"
+  headless              = "false"
+  http_directory        = "srv" 
+  init_script           = "initLiveVM.sh"
+  iso_checksum          = var.iso_checksum
+  iso_url               = var.iso_url
+  machine_type          = "q35"
+  memory                = 4096
+  ssh_private_key_file  = "~/.ssh/id_bas"
+  ssh_timeout           = "20m"
+  ssh_username          = "bas"
+  vm_name               = "bastille-installer"
 }
 
-source "qemu" "archlinux" {
+source "qemu" "artix" {
   accelerator             = "kvm"
   boot_command            = local.boot_command_qemu
-  boot_wait               = "15s"
+  boot_wait               = "25s"
   cpus                    = local.cpus
   disk_interface          = "virtio"
   disk_size               = local.disk_size
@@ -58,24 +64,26 @@ source "qemu" "archlinux" {
   efi_firmware_vars       = local.efi_firmware_vars
   format                  = "qcow2"
   headless                = local.headless
+  http_directory          = local.http_directory
   iso_url                 = local.iso_url
   iso_checksum            = local.iso_checksum
   machine_type            = local.machine_type
   memory                  = local.memory
   net_device              = "virtio-net" 
-  shutdown_command        = "sudo systemctl start poweroff.timer"
+  shutdown_command        = ""
+  shutdown_timeout        = "5m"
   ssh_handshake_attempts  = 500
   ssh_port                = 22
-  ssh_password            = local.ssh_password
+  ssh_private_key_file    = local.ssh_private_key_file
   ssh_timeout             = local.ssh_timeout
-  ssh_username            = local.ssh_password
+  ssh_username            = local.ssh_username
   ssh_wait_timeout        = local.ssh_timeout
   vm_name                 = "${local.vm_name}.qcow2"
 }
 
 build {
   name = "bastille-installer"
-  sources = ["source.qemu.archlinux"]
+  sources = ["source.qemu.artix"]
   
   provisioner "file" {
     destination = "/tmp/"
@@ -83,21 +91,30 @@ build {
   }
 
   provisioner "shell" {
-    only = ["qemu.archlinux"]
-    execute_command = "{{ .Vars }} sudo -E -S bash '{{ .Path }}'"
+    only = ["qemu.artix"]
+    execute_command = "echo 'primany provisioner';{{ .Vars }} sudo -E -S bash '{{ .Path }}'"
     expect_disconnect = true
+    pause_after = "10s"
+    pause_before = "10s"
     scripts           = [
     "scripts/liveVM.sh",
     "scripts/tables.sh",
     "scripts/partitions.sh",
+    "scripts/base.sh",
+    "scripts/mirrors.sh",
     "scripts/bootloader.sh",
+    "scripts/pacman.sh",
     "scripts/setup.sh"
     ]
   }
       
   provisioner "shell" {
-    execute_command = "{{ .Vars }} WRITE_ZEROS=${local.write_zeros} sudo -E -S bash '{{ .Path }}'"
-    script = "scripts/cleanup.sh"
+    execute_command = "echo 'secondary provisioner';{{ .Vars }} sudo -E -S bash '{{ .Path }}'"
+    pause_before = "10s"
+    scripts = [
+      "scripts/services.sh",
+      "scripts/cleanup.sh"
+    ]
   }
     
   post-processor "vagrant" {

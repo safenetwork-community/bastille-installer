@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-. /tmp/files/vars.sh
+. /root/vars.sh
 
 NAME_SH=liveVM.sh
 GRUB=/etc/default/grub
@@ -8,17 +8,20 @@ GRUB=/etc/default/grub
 # stop on errors
 set -eu
 
-echo ">>>> ${NAME_SH}: Lock root password.."
-passwd -l root >/dev/null
+echo "==> ${NAME_SH}: Lock root password.."
+/usr/bin/passwd -l root >/dev/null
 
-echo ">>>> ${NAME_SH}: Modifying local settings.."
-ln -sf /usr/share/zoneinfo/Europe/Brussels /etc/localtime
-echo -s ${HOSTNAME_LIVEVM} | tee /etc/hostname >/dev/null
+echo "==> ${NAME_SH}: Update the system clock.."
+/usr/bin/dinitctl start ntpd >/dev/null
 
-echo ">>>> ${NAME_SH}: Installing packages for commands used in provisioner scripts.."
+echo "==> ${NAME_SH}: Modifying local settings.."
+/usr/bin/ln -sf /usr/share/zoneinfo/Europe/Brussels /etc/localtime
+echo ${HOST_LIVEVM_NAME} | tee /etc/hostname >/dev/null
+
+echo "==> ${NAME_SH}: Installing packages for commands used in provisioner scripts.."
 /usr/bin/pacman --noconfirm -Sy gptfdisk pacman-contrib >/dev/null
 
-echo ">>>> ${NAME_SH}: Reranking pacman mirrorslist.."
-cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-backup   
-/usr/bin/rankmirrors /etc/pacman.d/mirrorlist-backup | tee /etc/pacman.d/mirrorlist >/dev/null
-rm -rf /etc/pacman.d/mirrorlist-backup
+echo "==> ${NAME_SH}: Reranking pacman mirrorslist.."
+/usr/bin/cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-backup   
+/usr/bin/rankmirrors -v -n 5 /etc/pacman.d/mirrorlist-backup | tee /etc/pacman.d/mirrorlist >/dev/null
+/usr/bin/rm -rf /etc/pacman.d/mirrorlist-backup
