@@ -1,4 +1,13 @@
+# directories
 bastillebox-base/packer_cache/
 bastillebox-base/output/
-bastillebox-base/output-artix/
-bastillebox-base/files/id_bas.pub
+bastillebox-base/output-*/
+
+# Public keys
+*.pub
+
+# For built boxes
+*.box
+
+# Any log files
+*.log

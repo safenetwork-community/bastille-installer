@@ -44,8 +44,8 @@ isoURL = "https://download.artixlinux.org/weekly-iso"
 artix_flavour = "artix-base-dinit"
 
 # File names
-template = "bastille-installer.pkr.hcl"
-vm_name = "bastille-installer_qemu_artix-2023-04.qcow2"
+template = "bastillebox-installer.pkr.hcl"
+vm_name = "bastillebox-installer_qemu_artix-2023-04.qcow2"
 
 # Folder locations
 path_output = "./output"

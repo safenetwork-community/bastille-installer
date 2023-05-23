@@ -1,583 +1,410 @@
-2023/05/22 20:29:45 [INFO] Packer version: 1.8.7 [go1.20.4 linux amd64]
-2023/05/22 20:29:45 [TRACE] discovering plugins in /usr/bin
-2023/05/22 20:29:45 [TRACE] discovering plugins in /home/folaht/.config/packer/plugins
-2023/05/22 20:29:45 [DEBUG] Discovered plugin: qemu = /home/folaht/.config/packer/plugins/github.com/hashicorp/qemu/packer-plugin-qemu_v1.0.9_x5.0_linux_amd64
-2023/05/22 20:29:45 [INFO] found external [-packer-default-plugin-name-] builders from qemu plugin
-2023/05/22 20:29:45 [TRACE] discovering plugins in .
-2023/05/22 20:29:45 [INFO] PACKER_CONFIG env var set; attempting to open config file: /home/folaht/.config/packer/packerconfig
-2023/05/22 20:29:45 [INFO] Setting cache directory: /home/folaht/.cache/packer
-2023/05/22 20:29:45 [TRACE] listing potential installations for "github.com/hashicorp/qemu" that match ">= 1.0.9". plugingetter.ListInstallationsOptions{FromFolders:[]string{"/usr/bin/packer", ".", "/home/folaht/.config/packer/plugins"}, BinaryInstallationOptions:plugingetter.BinaryInstallationOptions{APIVersionMajor:"5", APIVersionMinor:"0", OS:"linux", ARCH:"amd64", Ext:"", Checksummers:[]plugingetter.Checksummer{plugingetter.Checksummer{Type:"sha256", Hash:(*sha256.digest)(0xc00016aa80)}}}}
-2023/05/22 20:29:45 [TRACE] Found the following "github.com/hashicorp/qemu" installations: [{/home/folaht/.config/packer/plugins/github.com/hashicorp/qemu/packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 v1.0.9}]
-2023/05/22 20:29:45 [INFO] found external [-packer-default-plugin-name-] builders from qemu plugin
-2023/05/22 20:29:45 [TRACE] validateValue: not active for country, so skipping
-2023/05/22 20:29:45 [TRACE] validateValue: not active for iso_checksum, so skipping
-2023/05/22 20:29:45 [TRACE] validateValue: not active for iso_url, so skipping
-2023/05/22 20:29:45 [TRACE] Starting external plugin /home/folaht/.config/packer/plugins/github.com/hashicorp/qemu/packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 start builder -packer-default-plugin-name-
-2023/05/22 20:29:45 Starting plugin: /home/folaht/.config/packer/plugins/github.com/hashicorp/qemu/packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 []string{"/home/folaht/.config/packer/plugins/github.com/hashicorp/qemu/packer-plugin-qemu_v1.0.9_x5.0_linux_amd64", "start", "builder", "-packer-default-plugin-name-"}
-2023/05/22 20:29:45 Waiting for RPC address for: /home/folaht/.config/packer/plugins/github.com/hashicorp/qemu/packer-plugin-qemu_v1.0.9_x5.0_linux_amd64
-2023/05/22 20:29:45 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:29:45 Plugin address: unix /tmp/packer-plugin3743354045
-2023/05/22 20:29:45 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:29:45 Waiting for connection...
-2023/05/22 20:29:45 Received unix RPC address for /home/folaht/.config/packer/plugins/github.com/hashicorp/qemu/packer-plugin-qemu_v1.0.9_x5.0_linux_amd64: addr is /tmp/packer-plugin3743354045
-2023/05/22 20:29:45 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:29:45 Serving a plugin connection...
-2023/05/22 20:29:45 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:29:45 [TRACE] starting builder -packer-default-plugin-name-
-2023/05/22 20:29:45 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:29:45 use specified accelerator: kvm
-2023/05/22 20:29:45 [TRACE] Starting internal plugin packer-provisioner-file
-2023/05/22 20:29:45 Starting plugin: /usr/bin/packer []string{"/usr/bin/packer", "plugin", "packer-provisioner-file"}
-2023/05/22 20:29:45 Waiting for RPC address for: /usr/bin/packer
-2023/05/22 20:29:45 packer-provisioner-file plugin: [INFO] Packer version: 1.8.7 [go1.20.4 linux amd64]
-2023/05/22 20:29:45 packer-provisioner-file plugin: [INFO] PACKER_CONFIG env var set; attempting to open config file: /home/folaht/.config/packer/packerconfig
-2023/05/22 20:29:45 packer-provisioner-file plugin: [INFO] Setting cache directory: /home/folaht/.cache/packer
-2023/05/22 20:29:45 packer-provisioner-file plugin: args: []string{"packer-provisioner-file"}
-2023/05/22 20:29:45 Received unix RPC address for /usr/bin/packer: addr is /tmp/packer-plugin899664364
-2023/05/22 20:29:45 packer-provisioner-file plugin: Plugin address: unix /tmp/packer-plugin899664364
-2023/05/22 20:29:45 packer-provisioner-file plugin: Waiting for connection...
-2023/05/22 20:29:45 packer-provisioner-file plugin: Serving a plugin connection...
-2023/05/22 20:29:45 [TRACE] Starting internal plugin packer-provisioner-shell
-2023/05/22 20:29:45 Starting plugin: /usr/bin/packer []string{"/usr/bin/packer", "plugin", "packer-provisioner-shell"}
-2023/05/22 20:29:45 Waiting for RPC address for: /usr/bin/packer
-2023/05/22 20:29:46 packer-provisioner-shell plugin: [INFO] Packer version: 1.8.7 [go1.20.4 linux amd64]
-2023/05/22 20:29:46 packer-provisioner-shell plugin: [INFO] PACKER_CONFIG env var set; attempting to open config file: /home/folaht/.config/packer/packerconfig
-2023/05/22 20:29:46 packer-provisioner-shell plugin: [INFO] Setting cache directory: /home/folaht/.cache/packer
-2023/05/22 20:29:46 packer-provisioner-shell plugin: args: []string{"packer-provisioner-shell"}
-2023/05/22 20:29:46 Received unix RPC address for /usr/bin/packer: addr is /tmp/packer-plugin2907612330
-2023/05/22 20:29:46 packer-provisioner-shell plugin: Plugin address: unix /tmp/packer-plugin2907612330
-2023/05/22 20:29:46 packer-provisioner-shell plugin: Waiting for connection...
-2023/05/22 20:29:46 packer-provisioner-shell plugin: Serving a plugin connection...
-2023/05/22 20:29:46 [TRACE] Starting internal plugin packer-provisioner-shell
-2023/05/22 20:29:46 Starting plugin: /usr/bin/packer []string{"/usr/bin/packer", "plugin", "packer-provisioner-shell"}
-2023/05/22 20:29:46 Waiting for RPC address for: /usr/bin/packer
-2023/05/22 20:29:46 packer-provisioner-shell plugin: [INFO] Packer version: 1.8.7 [go1.20.4 linux amd64]
-2023/05/22 20:29:46 packer-provisioner-shell plugin: [INFO] PACKER_CONFIG env var set; attempting to open config file: /home/folaht/.config/packer/packerconfig
-2023/05/22 20:29:46 packer-provisioner-shell plugin: [INFO] Setting cache directory: /home/folaht/.cache/packer
-2023/05/22 20:29:46 packer-provisioner-shell plugin: args: []string{"packer-provisioner-shell"}
-2023/05/22 20:29:46 Received unix RPC address for /usr/bin/packer: addr is /tmp/packer-plugin44556203
-2023/05/22 20:29:46 packer-provisioner-shell plugin: Plugin address: unix /tmp/packer-plugin44556203
-2023/05/22 20:29:46 packer-provisioner-shell plugin: Waiting for connection...
-2023/05/22 20:29:46 packer-provisioner-shell plugin: Serving a plugin connection...
-2023/05/22 20:29:46 [TRACE] Starting internal plugin packer-post-processor-vagrant
-2023/05/22 20:29:46 Starting plugin: /usr/bin/packer []string{"/usr/bin/packer", "plugin", "packer-post-processor-vagrant"}
-2023/05/22 20:29:46 Waiting for RPC address for: /usr/bin/packer
-2023/05/22 20:29:46 packer-post-processor-vagrant plugin: [INFO] Packer version: 1.8.7 [go1.20.4 linux amd64]
-2023/05/22 20:29:46 packer-post-processor-vagrant plugin: [INFO] PACKER_CONFIG env var set; attempting to open config file: /home/folaht/.config/packer/packerconfig
-2023/05/22 20:29:46 packer-post-processor-vagrant plugin: [INFO] Setting cache directory: /home/folaht/.cache/packer
-2023/05/22 20:29:46 packer-post-processor-vagrant plugin: args: []string{"packer-post-processor-vagrant"}
-2023/05/22 20:29:46 packer-post-processor-vagrant plugin: Plugin address: unix /tmp/packer-plugin1078136824
-2023/05/22 20:29:46 packer-post-processor-vagrant plugin: Waiting for connection...
-2023/05/22 20:29:46 Received unix RPC address for /usr/bin/packer: addr is /tmp/packer-plugin1078136824
-2023/05/22 20:29:46 packer-post-processor-vagrant plugin: Serving a plugin connection...
-2023/05/22 20:29:46 ui: [1;32mbastille-installer.qemu.artix: output will be in this color.[0m
-2023/05/22 20:29:46 ui: 
-2023/05/22 20:29:46 Build debug mode: false
-2023/05/22 20:29:46 Force build: false
-2023/05/22 20:29:46 On error: 
-2023/05/22 20:29:46 Waiting on builds to complete...
-2023/05/22 20:29:46 Starting build run: bastille-installer.qemu.artix
-2023/05/22 20:29:46 Running builder: 
-2023/05/22 20:29:46 [INFO] (telemetry) Starting builder qemu.artix
-2023/05/22 20:29:46 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:29:46 Qemu path: /usr/bin/qemu-system-x86_64, Qemu Image path: /usr/bin/qemu-img
-2023/05/22 20:29:46 ui: [1;32m==> bastille-installer.qemu.artix: Retrieving ISO[0m
-2023/05/22 20:29:46 ui: [1;32m==> bastille-installer.qemu.artix: Trying https://download.artixlinux.org/weekly-iso/artix-base-dinit-20230522-x86_64.iso[0m
-2023/05/22 20:29:46 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:29:46 Acquiring lock for: https://download.artixlinux.org/weekly-iso/artix-base-dinit-20230522-x86_64.iso?checksum=sha256%3Aad2d9cd323c87008cb41020956609a019fc17a4b930d7e410c6d024276e3dd79 (/home/folaht/.cache/packer/55eedaa9238cdcd9fce85609109ce730f105d589.iso.lock)
-2023/05/22 20:29:46 ui: [1;32m==> bastille-installer.qemu.artix: Trying https://download.artixlinux.org/weekly-iso/artix-base-dinit-20230522-x86_64.iso?checksum=sha256%3Aad2d9cd323c87008cb41020956609a019fc17a4b930d7e410c6d024276e3dd79[0m
-2023/05/22 20:42:56 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:42:56 closing
-2023/05/22 20:43:02 ui: [1;32m==> bastille-installer.qemu.artix: https://download.artixlinux.org/weekly-iso/artix-base-dinit-20230522-x86_64.iso?checksum=sha256%3Aad2d9cd323c87008cb41020956609a019fc17a4b930d7e410c6d024276e3dd79 => /home/folaht/.cache/packer/55eedaa9238cdcd9fce85609109ce730f105d589.iso[0m
-2023/05/22 20:43:02 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:02 Leaving retrieve loop for ISO
-2023/05/22 20:43:02 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:02 No floppy files specified. Floppy disk will not be made.
-2023/05/22 20:43:02 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:02 No CD files specified. CD disk will not be made.
-2023/05/22 20:43:02 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:02 [INFO] Creating disk with Path: output-artix/bastille-installer.qcow2 and Size: 4G
-2023/05/22 20:43:02 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:02 Executing qemu-img: []string{"create", "-f", "qcow2", "output-artix/bastille-installer.qcow2", "4G"}
-2023/05/22 20:43:02 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:02 stdout: Formatting 'output-artix/bastille-installer.qcow2', fmt=qcow2 cluster_size=65536 extended_l2=off compression_type=zlib size=4294967296 lazy_refcounts=off refcount_bits=16
-2023/05/22 20:43:02 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:02 stderr:
-2023/05/22 20:43:02 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:02 Found available port: 8983 on IP: 0.0.0.0
-2023/05/22 20:43:02 ui: [1;32m==> bastille-installer.qemu.artix: Starting HTTP server on port 8983[0m
-2023/05/22 20:43:02 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:02 Looking for available communicator (SSH, WinRM, etc) port between 2222 and 4444
-2023/05/22 20:43:02 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:02 Found available port: 3714 on IP: 127.0.0.1
-2023/05/22 20:43:02 ui: [1;32m==> bastille-installer.qemu.artix: Found port for communicator (SSH, WinRM, etc): 3714.[0m
-2023/05/22 20:43:02 ui: [1;32m==> bastille-installer.qemu.artix: Looking for available port between 5900 and 6000 on 127.0.0.1[0m
-2023/05/22 20:43:02 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:02 Looking for available port between 5900 and 6000 on 127.0.0.1
-2023/05/22 20:43:02 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:02 Found available port: 5967 on IP: 127.0.0.1
-2023/05/22 20:43:02 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:02 Found available VNC port: 5967 on IP: 127.0.0.1
-2023/05/22 20:43:02 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:02 Qemu --version output: QEMU emulator version 8.0.0
-2023/05/22 20:43:02 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: Copyright (c) 2003-2022 Fabrice Bellard and the QEMU Project developers
-2023/05/22 20:43:02 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:02 Qemu version: 8.0.0
-2023/05/22 20:43:02 ui: [1;32m==> bastille-installer.qemu.artix: Starting VM, booting from CD-ROM[0m
-2023/05/22 20:43:02 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:02 Qemu Builder has no floppy files, not attaching a floppy.
-2023/05/22 20:43:02 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:02 Executing /usr/bin/qemu-system-x86_64: []string{"-machine", "type=q35,accel=kvm", "-device", "virtio-net,netdev=user.0", "-netdev", "user,id=user.0,hostfwd=tcp::3714-:22", "-vnc", "127.0.0.1:67", "-m", "4096M", "-display", "gtk", "-drive", "file=output-artix/bastille-installer.qcow2,if=virtio,cache=writeback,discard=ignore,format=qcow2", "-drive", "file=/home/folaht/.cache/packer/55eedaa9238cdcd9fce85609109ce730f105d589.iso,media=cdrom", "-drive", "file=/usr/share/edk2-ovmf/x64/OVMF_CODE.fd,if=pflash,unit=0,format=raw,readonly=on", "-drive", "file=output-artix/efivars.fd,if=pflash,unit=1,format=raw", "-name", "bastille-installer.qcow2", "-smp", "1"}
-2023/05/22 20:43:02 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:02 Started Qemu. Pid: 814425
-2023/05/22 20:43:04 ui: [1;32m==> bastille-installer.qemu.artix: Waiting 25s for boot...[0m
-2023/05/22 20:43:29 ui: [1;32m==> bastille-installer.qemu.artix: Connecting to VM via VNC (127.0.0.1:5967)[0m
-2023/05/22 20:43:29 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:29 Connected to VNC desktop: QEMU (bastille-installer.qcow2)
-2023/05/22 20:43:29 ui: [1;32m==> bastille-installer.qemu.artix: Typing the boot commands over VNC...[0m
-2023/05/22 20:43:29 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:29 Special code '<down>' found, replacing with: 0xFF54
-2023/05/22 20:43:29 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:29 Special code '<down>' found, replacing with: 0xFF54
-2023/05/22 20:43:29 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:29 Special code '<enter>' found, replacing with: 0xFF0D
-2023/05/22 20:43:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:30 [INFO] Waiting 15s
-2023/05/22 20:43:45 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:45 Sending char 'r', code 0x72, shift false
-2023/05/22 20:43:45 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:45 Sending char 'o', code 0x6F, shift false
-2023/05/22 20:43:45 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:45 Sending char 'o', code 0x6F, shift false
-2023/05/22 20:43:45 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:45 Sending char 't', code 0x74, shift false
-2023/05/22 20:43:45 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:45 Special code '<enter>' found, replacing with: 0xFF0D
-2023/05/22 20:43:46 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:46 [INFO] Waiting 10s
-2023/05/22 20:43:56 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:56 Sending char 'a', code 0x61, shift false
-2023/05/22 20:43:56 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:56 Sending char 'r', code 0x72, shift false
-2023/05/22 20:43:56 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:56 Sending char 't', code 0x74, shift false
-2023/05/22 20:43:56 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:56 Sending char 'i', code 0x69, shift false
-2023/05/22 20:43:56 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:56 Sending char 'x', code 0x78, shift false
-2023/05/22 20:43:57 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:57 Special code '<enter>' found, replacing with: 0xFF0D
-2023/05/22 20:43:57 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:43:57 [INFO] Waiting 3s
-2023/05/22 20:44:00 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:00 Sending char 'c', code 0x63, shift false
-2023/05/22 20:44:00 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:00 Sending char 'u', code 0x75, shift false
-2023/05/22 20:44:00 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:00 Sending char 'r', code 0x72, shift false
-2023/05/22 20:44:00 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:00 Sending char 'l', code 0x6C, shift false
-2023/05/22 20:44:01 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:01 Sending char ' ', code 0x20, shift false
-2023/05/22 20:44:01 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:01 Sending char '-', code 0x2D, shift false
-2023/05/22 20:44:01 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:01 Sending char 'O', code 0x4F, shift true
-2023/05/22 20:44:01 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:01 Sending char 's', code 0x73, shift false
-2023/05/22 20:44:02 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:02 Sending char ' ', code 0x20, shift false
-2023/05/22 20:44:02 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:02 Sending char 'h', code 0x68, shift false
-2023/05/22 20:44:02 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:02 Sending char 't', code 0x74, shift false
-2023/05/22 20:44:02 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:02 Sending char 't', code 0x74, shift false
-2023/05/22 20:44:02 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:02 Sending char 'p', code 0x70, shift false
-2023/05/22 20:44:03 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:03 Sending char ':', code 0x3A, shift true
-2023/05/22 20:44:03 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:03 Sending char '/', code 0x2F, shift false
-2023/05/22 20:44:03 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:03 Sending char '/', code 0x2F, shift false
-2023/05/22 20:44:03 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:03 Sending char '1', code 0x31, shift false
-2023/05/22 20:44:04 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:04 Sending char '0', code 0x30, shift false
-2023/05/22 20:44:04 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:04 Sending char '.', code 0x2E, shift false
-2023/05/22 20:44:04 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:04 Sending char '0', code 0x30, shift false
-2023/05/22 20:44:04 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:04 Sending char '.', code 0x2E, shift false
-2023/05/22 20:44:04 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:04 Sending char '2', code 0x32, shift false
-2023/05/22 20:44:05 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:05 Sending char '.', code 0x2E, shift false
-2023/05/22 20:44:05 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:05 Sending char '2', code 0x32, shift false
-2023/05/22 20:44:05 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:05 Sending char ':', code 0x3A, shift true
-2023/05/22 20:44:05 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:05 Sending char '8', code 0x38, shift false
-2023/05/22 20:44:06 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:06 Sending char '9', code 0x39, shift false
-2023/05/22 20:44:06 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:06 Sending char '8', code 0x38, shift false
-2023/05/22 20:44:06 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:06 Sending char '3', code 0x33, shift false
-2023/05/22 20:44:06 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:06 Sending char '/', code 0x2F, shift false
-2023/05/22 20:44:06 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:06 Sending char 'i', code 0x69, shift false
-2023/05/22 20:44:07 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:07 Sending char 'n', code 0x6E, shift false
-2023/05/22 20:44:07 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:07 Sending char 'i', code 0x69, shift false
-2023/05/22 20:44:07 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:07 Sending char 't', code 0x74, shift false
-2023/05/22 20:44:07 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:07 Sending char 'L', code 0x4C, shift true
-2023/05/22 20:44:08 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:08 Sending char 'i', code 0x69, shift false
-2023/05/22 20:44:08 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:08 Sending char 'v', code 0x76, shift false
-2023/05/22 20:44:08 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:08 Sending char 'e', code 0x65, shift false
-2023/05/22 20:44:08 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:08 Sending char 'V', code 0x56, shift true
-2023/05/22 20:44:09 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:09 Sending char 'M', code 0x4D, shift true
-2023/05/22 20:44:09 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:09 Sending char '.', code 0x2E, shift false
-2023/05/22 20:44:09 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:09 Sending char 's', code 0x73, shift false
-2023/05/22 20:44:09 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:09 Sending char 'h', code 0x68, shift false
-2023/05/22 20:44:10 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:10 Sending char ' ', code 0x20, shift false
-2023/05/22 20:44:10 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:10 Sending char '&', code 0x26, shift true
-2023/05/22 20:44:10 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:10 Sending char '&', code 0x26, shift true
-2023/05/22 20:44:11 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:11 Sending char ' ', code 0x20, shift false
-2023/05/22 20:44:11 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:11 Sending char 'c', code 0x63, shift false
-2023/05/22 20:44:11 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:11 Sending char 'h', code 0x68, shift false
-2023/05/22 20:44:11 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:11 Sending char 'm', code 0x6D, shift false
-2023/05/22 20:44:11 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:11 Sending char 'o', code 0x6F, shift false
-2023/05/22 20:44:12 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:12 Sending char 'd', code 0x64, shift false
-2023/05/22 20:44:12 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:12 Sending char ' ', code 0x20, shift false
-2023/05/22 20:44:12 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:12 Sending char '+', code 0x2B, shift true
-2023/05/22 20:44:12 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:12 Sending char 'x', code 0x78, shift false
-2023/05/22 20:44:13 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:13 Sending char ' ', code 0x20, shift false
-2023/05/22 20:44:13 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:13 Sending char '.', code 0x2E, shift false
-2023/05/22 20:44:13 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:13 Sending char '/', code 0x2F, shift false
-2023/05/22 20:44:13 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:13 Sending char 'i', code 0x69, shift false
-2023/05/22 20:44:13 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:13 Sending char 'n', code 0x6E, shift false
-2023/05/22 20:44:14 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:14 Sending char 'i', code 0x69, shift false
-2023/05/22 20:44:14 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:14 Sending char 't', code 0x74, shift false
-2023/05/22 20:44:14 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:14 Sending char 'L', code 0x4C, shift true
-2023/05/22 20:44:14 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:14 Sending char 'i', code 0x69, shift false
-2023/05/22 20:44:15 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:15 Sending char 'v', code 0x76, shift false
-2023/05/22 20:44:15 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:15 Sending char 'e', code 0x65, shift false
-2023/05/22 20:44:15 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:15 Sending char 'V', code 0x56, shift true
-2023/05/22 20:44:15 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:15 Sending char 'M', code 0x4D, shift true
-2023/05/22 20:44:16 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:16 Sending char '.', code 0x2E, shift false
-2023/05/22 20:44:16 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:16 Sending char 's', code 0x73, shift false
-2023/05/22 20:44:16 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:16 Sending char 'h', code 0x68, shift false
-2023/05/22 20:44:16 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:16 Sending char ' ', code 0x20, shift false
-2023/05/22 20:44:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:17 Sending char '&', code 0x26, shift true
-2023/05/22 20:44:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:17 Sending char '&', code 0x26, shift true
-2023/05/22 20:44:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:17 Sending char ' ', code 0x20, shift false
-2023/05/22 20:44:18 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:18 Sending char '.', code 0x2E, shift false
-2023/05/22 20:44:18 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:18 Sending char '/', code 0x2F, shift false
-2023/05/22 20:44:18 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:18 Sending char 'i', code 0x69, shift false
-2023/05/22 20:44:18 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:18 Sending char 'n', code 0x6E, shift false
-2023/05/22 20:44:18 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:18 Sending char 'i', code 0x69, shift false
-2023/05/22 20:44:19 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:19 Sending char 't', code 0x74, shift false
-2023/05/22 20:44:19 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:19 Sending char 'L', code 0x4C, shift true
-2023/05/22 20:44:19 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:19 Sending char 'i', code 0x69, shift false
-2023/05/22 20:44:19 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:19 Sending char 'v', code 0x76, shift false
-2023/05/22 20:44:20 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:20 Sending char 'e', code 0x65, shift false
-2023/05/22 20:44:20 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:20 Sending char 'V', code 0x56, shift true
-2023/05/22 20:44:20 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:20 Sending char 'M', code 0x4D, shift true
-2023/05/22 20:44:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:21 Sending char '.', code 0x2E, shift false
-2023/05/22 20:44:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:21 Sending char 's', code 0x73, shift false
-2023/05/22 20:44:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:21 Sending char 'h', code 0x68, shift false
-2023/05/22 20:44:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:21 Sending char ' ', code 0x20, shift false
-2023/05/22 20:44:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:21 Sending char '8', code 0x38, shift false
-2023/05/22 20:44:22 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:22 Sending char '9', code 0x39, shift false
-2023/05/22 20:44:22 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:22 Sending char '8', code 0x38, shift false
-2023/05/22 20:44:22 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:22 Sending char '3', code 0x33, shift false
-2023/05/22 20:44:22 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:22 Special code '<enter>' found, replacing with: 0xFF0D
-2023/05/22 20:44:22 ui: [0;32m    bastille-installer.qemu.artix: Not using a NetBridge -- skipping StepWaitGuestAddress[0m
-2023/05/22 20:44:22 ui: [1;32m==> bastille-installer.qemu.artix: Using SSH communicator to connect: 127.0.0.1[0m
-2023/05/22 20:44:22 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:22 [INFO] Waiting for SSH, up to timeout: 20m0s
-2023/05/22 20:44:22 ui: [1;32m==> bastille-installer.qemu.artix: Waiting for SSH to become available...[0m
-2023/05/22 20:44:22 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:22 [INFO] Attempting SSH connection to 127.0.0.1:3714...
-2023/05/22 20:44:22 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:22 [DEBUG] reconnecting to TCP connection for SSH
-2023/05/22 20:44:22 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:22 [DEBUG] handshaking with SSH
-2023/05/22 20:44:22 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:22 [DEBUG] SSH handshake err: ssh: handshake failed: read tcp 127.0.0.1:51692->127.0.0.1:3714: read: connection reset by peer
-2023/05/22 20:44:29 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:29 [INFO] Attempting SSH connection to 127.0.0.1:3714...
-2023/05/22 20:44:29 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:29 [DEBUG] reconnecting to TCP connection for SSH
-2023/05/22 20:44:29 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:29 [DEBUG] handshaking with SSH
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:30 [DEBUG] handshake complete!
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:30 [DEBUG] Opening new ssh session
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:30 [INFO] agent forwarding enabled
-2023/05/22 20:44:30 ui: [1;32m==> bastille-installer.qemu.artix: Connected to SSH![0m
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:30 Running the provision hook
-2023/05/22 20:44:30 [INFO] (telemetry) Starting provisioner file
-2023/05/22 20:44:30 ui: [1;32m==> bastille-installer.qemu.artix: Uploading ./files => /tmp/[0m
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:30 [DEBUG] Upload dir './files' to '/tmp/'
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:30 [DEBUG] Opening new ssh session
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:30 [DEBUG] Starting remote scp process:  scp -rvt /tmp/
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:30 [DEBUG] Started SCP session, beginning transfers...
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:30 [DEBUG] No trailing slash, creating the source directory name
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:30 [DEBUG] SCP: starting directory upload: files
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:30 [DEBUG] scp: Uploading yr-af.map: perms=C0644 size=3717
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:30 [DEBUG] scp: Uploading packer-archlinux.py: perms=C0644 size=6777
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:30 [DEBUG] scp: Uploading user_credentials.json: perms=C0644 size=47
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:30 [DEBUG] scp: Uploading user_disk_layout.json: perms=C0644 size=805
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:30 [DEBUG] scp: Uploading user_configuration.json: perms=C0644 size=542
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:30 [DEBUG] SCP session complete, closing stdin pipe.
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:30 [DEBUG] Waiting for SSH session to complete.
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:30 [DEBUG] scp stderr (length 402): Sink: D0755 0 files
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: Sink: C0644 3717 yr-af.map
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: scp: debug1: fd 0 clearing O_NONBLOCK
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: Sink: C0644 6777 packer-archlinux.py
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: scp: debug1: fd 0 clearing O_NONBLOCK
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: Sink: C0644 47 user_credentials.json
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: scp: debug1: fd 0 clearing O_NONBLOCK
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: Sink: C0644 805 user_disk_layout.json
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: scp: debug1: fd 0 clearing O_NONBLOCK
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: Sink: C0644 542 user_configuration.json
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: scp: debug1: fd 0 clearing O_NONBLOCK
-2023/05/22 20:44:30 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: Sink: E
-2023/05/22 20:44:30 [INFO] (telemetry) ending file
-2023/05/22 20:44:30 [INFO] (telemetry) Starting provisioner shell
-2023/05/22 20:44:30 ui: [1;32m==> bastille-installer.qemu.artix: Pausing 10s before the next provisioner...[0m
-2023/05/22 20:44:40 ui: [1;32m==> bastille-installer.qemu.artix: Provisioning with shell script: scripts/liveVM.sh[0m
-2023/05/22 20:44:40 packer-provisioner-shell plugin: Opening scripts/liveVM.sh for reading
-2023/05/22 20:44:40 [INFO] 877 bytes written for 'uploadData'
-2023/05/22 20:44:40 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:40 [DEBUG] Opening new ssh session
-2023/05/22 20:44:40 packer-provisioner-shell plugin: [INFO] 877 bytes written for 'uploadData'
-2023/05/22 20:44:40 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:40 [DEBUG] Starting remote scp process:  scp -vt /tmp
-2023/05/22 20:44:40 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:40 [DEBUG] Started SCP session, beginning transfers...
-2023/05/22 20:44:40 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:40 [DEBUG] Copying input data into temporary file so we can read the length
-2023/05/22 20:44:40 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:40 [DEBUG] scp: Uploading script_1285.sh: perms=C0644 size=877
-2023/05/22 20:44:40 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:40 [DEBUG] SCP session complete, closing stdin pipe.
-2023/05/22 20:44:40 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:40 [DEBUG] Waiting for SSH session to complete.
-2023/05/22 20:44:40 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:40 [DEBUG] scp stderr (length 70): Sink: C0644 877 script_1285.sh
-2023/05/22 20:44:40 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: scp: debug1: fd 0 clearing O_NONBLOCK
-2023/05/22 20:44:40 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:40 [DEBUG] Opening new ssh session
-2023/05/22 20:44:40 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:40 [DEBUG] starting remote command: chmod 0755 /tmp/script_1285.sh
-2023/05/22 20:44:40 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:40 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:44:40 [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:44:40 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:44:40 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:44:40 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:40 [DEBUG] Opening new ssh session
-2023/05/22 20:44:40 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:44:40 [DEBUG] starting remote command: echo 'primany provisioner';PACKER_BUILDER_TYPE='qemu' PACKER_BUILD_NAME='artix' PACKER_HTTP_ADDR='10.0.2.2:8983' PACKER_HTTP_IP='10.0.2.2' PACKER_HTTP_PORT='8983'  sudo -E -S bash '/tmp/script_1285.sh'
-2023/05/22 20:44:40 ui: [0;32m    bastille-installer.qemu.artix: primany provisioner[0m
-2023/05/22 20:44:40 ui: [0;32m    bastille-installer.qemu.artix: ==> liveVM.sh: Lock root password..[0m
-2023/05/22 20:44:40 ui: [0;32m    bastille-installer.qemu.artix: ==> liveVM.sh: Update the system clock..[0m
-2023/05/22 20:44:40 ui: [0;32m    bastille-installer.qemu.artix: ==> liveVM.sh: Modifying local settings..[0m
-2023/05/22 20:44:40 ui: [0;32m    bastille-installer.qemu.artix: ==> liveVM.sh: Installing packages for commands used in provisioner scripts..[0m
-2023/05/22 20:44:42 ui: [0;32m    bastille-installer.qemu.artix: ==> liveVM.sh: Reranking pacman mirrorslist..[0m
-2023/05/22 20:45:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:21 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:45:21 [INFO] 263 bytes written for 'stdout'
-2023/05/22 20:45:21 [INFO] 0 bytes written for 'stderr'
-2023/05/22 20:45:21 [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:45:21 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:45:21 packer-provisioner-shell plugin: [INFO] 263 bytes written for 'stdout'
-2023/05/22 20:45:21 packer-provisioner-shell plugin: [INFO] 0 bytes written for 'stderr'
-2023/05/22 20:45:21 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:45:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:21 [DEBUG] Opening new ssh session
-2023/05/22 20:45:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:21 [DEBUG] starting remote command: rm -f /tmp/script_1285.sh
-2023/05/22 20:45:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:21 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:45:21 [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:45:21 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:45:21 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:45:21 ui: [1;32m==> bastille-installer.qemu.artix: Provisioning with shell script: scripts/tables.sh[0m
-2023/05/22 20:45:21 packer-provisioner-shell plugin: Opening scripts/tables.sh for reading
-2023/05/22 20:45:21 packer-provisioner-shell plugin: [INFO] 567 bytes written for 'uploadData'
-2023/05/22 20:45:21 [INFO] 567 bytes written for 'uploadData'
-2023/05/22 20:45:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:21 [DEBUG] Opening new ssh session
-2023/05/22 20:45:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:21 [DEBUG] Starting remote scp process:  scp -vt /tmp
-2023/05/22 20:45:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:21 [DEBUG] Started SCP session, beginning transfers...
-2023/05/22 20:45:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:21 [DEBUG] Copying input data into temporary file so we can read the length
-2023/05/22 20:45:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:21 [DEBUG] scp: Uploading script_1285.sh: perms=C0644 size=567
-2023/05/22 20:45:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:21 [DEBUG] SCP session complete, closing stdin pipe.
-2023/05/22 20:45:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:21 [DEBUG] Waiting for SSH session to complete.
-2023/05/22 20:45:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:21 [DEBUG] scp stderr (length 70): Sink: C0644 567 script_1285.sh
-2023/05/22 20:45:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: scp: debug1: fd 0 clearing O_NONBLOCK
-2023/05/22 20:45:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:21 [DEBUG] Opening new ssh session
-2023/05/22 20:45:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:21 [DEBUG] starting remote command: chmod 0755 /tmp/script_1285.sh
-2023/05/22 20:45:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:21 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:45:21 [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:45:21 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:45:21 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:45:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:21 [DEBUG] Opening new ssh session
-2023/05/22 20:45:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:21 [DEBUG] starting remote command: echo 'primany provisioner';PACKER_BUILDER_TYPE='qemu' PACKER_BUILD_NAME='artix' PACKER_HTTP_ADDR='10.0.2.2:8983' PACKER_HTTP_IP='10.0.2.2' PACKER_HTTP_PORT='8983'  sudo -E -S bash '/tmp/script_1285.sh'
-2023/05/22 20:45:21 ui: [0;32m    bastille-installer.qemu.artix: primany provisioner[0m
-2023/05/22 20:45:21 ui: [0;32m    bastille-installer.qemu.artix: ==> tables.sh: Clearing partition table on /dev/vda..[0m
-2023/05/22 20:45:22 ui: [0;32m    bastille-installer.qemu.artix: ==> tables.sh: Destroying magic strings and signatures on /dev/vda..[0m
-2023/05/22 20:45:23 ui: [0;32m    bastille-installer.qemu.artix: ==> tables.sh: Formatting disk..[0m
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:45:24 [INFO] 176 bytes written for 'stdout'
-2023/05/22 20:45:24 [INFO] 0 bytes written for 'stderr'
-2023/05/22 20:45:24 [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:45:24 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:45:24 packer-provisioner-shell plugin: [INFO] 176 bytes written for 'stdout'
-2023/05/22 20:45:24 packer-provisioner-shell plugin: [INFO] 0 bytes written for 'stderr'
-2023/05/22 20:45:24 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [DEBUG] Opening new ssh session
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [DEBUG] starting remote command: rm -f /tmp/script_1285.sh
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:45:24 [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:45:24 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:45:24 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:45:24 ui: [1;32m==> bastille-installer.qemu.artix: Provisioning with shell script: scripts/partitions.sh[0m
-2023/05/22 20:45:24 packer-provisioner-shell plugin: Opening scripts/partitions.sh for reading
-2023/05/22 20:45:24 [INFO] 465 bytes written for 'uploadData'
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [DEBUG] Opening new ssh session
-2023/05/22 20:45:24 packer-provisioner-shell plugin: [INFO] 465 bytes written for 'uploadData'
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [DEBUG] Starting remote scp process:  scp -vt /tmp
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [DEBUG] Started SCP session, beginning transfers...
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [DEBUG] Copying input data into temporary file so we can read the length
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [DEBUG] scp: Uploading script_1285.sh: perms=C0644 size=465
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [DEBUG] SCP session complete, closing stdin pipe.
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [DEBUG] Waiting for SSH session to complete.
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [DEBUG] scp stderr (length 70): Sink: C0644 465 script_1285.sh
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: scp: debug1: fd 0 clearing O_NONBLOCK
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [DEBUG] Opening new ssh session
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [DEBUG] starting remote command: chmod 0755 /tmp/script_1285.sh
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:45:24 [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:45:24 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:45:24 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [DEBUG] Opening new ssh session
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [DEBUG] starting remote command: echo 'primany provisioner';PACKER_BUILDER_TYPE='qemu' PACKER_BUILD_NAME='artix' PACKER_HTTP_ADDR='10.0.2.2:8983' PACKER_HTTP_IP='10.0.2.2' PACKER_HTTP_PORT='8983'  sudo -E -S bash '/tmp/script_1285.sh'
-2023/05/22 20:45:24 ui: [0;32m    bastille-installer.qemu.artix: primany provisioner[0m
-2023/05/22 20:45:24 ui: [0;32m    bastille-installer.qemu.artix: ==> partitions.sh: Writing Filesystem types..[0m
-2023/05/22 20:45:24 ui: [0;32m    bastille-installer.qemu.artix: ==> partitions.sh: Mounting partitions..[0m
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:45:24 [INFO] 107 bytes written for 'stdout'
-2023/05/22 20:45:24 [INFO] 0 bytes written for 'stderr'
-2023/05/22 20:45:24 [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:45:24 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:45:24 packer-provisioner-shell plugin: [INFO] 107 bytes written for 'stdout'
-2023/05/22 20:45:24 packer-provisioner-shell plugin: [INFO] 0 bytes written for 'stderr'
-2023/05/22 20:45:24 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [DEBUG] Opening new ssh session
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [DEBUG] starting remote command: rm -f /tmp/script_1285.sh
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:45:24 [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:45:24 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:45:24 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:45:24 ui: [1;32m==> bastille-installer.qemu.artix: Provisioning with shell script: scripts/base.sh[0m
-2023/05/22 20:45:24 packer-provisioner-shell plugin: Opening scripts/base.sh for reading
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [DEBUG] Opening new ssh session
-2023/05/22 20:45:24 packer-provisioner-shell plugin: [INFO] 549 bytes written for 'uploadData'
-2023/05/22 20:45:24 [INFO] 549 bytes written for 'uploadData'
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [DEBUG] Starting remote scp process:  scp -vt /tmp
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [DEBUG] Started SCP session, beginning transfers...
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [DEBUG] Copying input data into temporary file so we can read the length
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [DEBUG] scp: Uploading script_1285.sh: perms=C0644 size=549
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [DEBUG] SCP session complete, closing stdin pipe.
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [DEBUG] Waiting for SSH session to complete.
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [DEBUG] scp stderr (length 70): Sink: C0644 549 script_1285.sh
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: scp: debug1: fd 0 clearing O_NONBLOCK
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [DEBUG] Opening new ssh session
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [DEBUG] starting remote command: chmod 0755 /tmp/script_1285.sh
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:45:24 [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:45:24 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:45:24 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [DEBUG] Opening new ssh session
-2023/05/22 20:45:24 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:45:24 [DEBUG] starting remote command: echo 'primany provisioner';PACKER_BUILDER_TYPE='qemu' PACKER_BUILD_NAME='artix' PACKER_HTTP_ADDR='10.0.2.2:8983' PACKER_HTTP_IP='10.0.2.2' PACKER_HTTP_PORT='8983'  sudo -E -S bash '/tmp/script_1285.sh'
-2023/05/22 20:45:24 ui: [0;32m    bastille-installer.qemu.artix: primany provisioner[0m
-2023/05/22 20:45:24 ui: [0;32m    bastille-installer.qemu.artix: ==> base.sh: Installing base system..[0m
-2023/05/22 20:46:43 ui: [0;32m    bastille-installer.qemu.artix: ==> base.sh: Installing kernel..[0m
-2023/05/22 20:48:34 ui: [0;32m    bastille-installer.qemu.artix: ==> base.sh: Generating the filesystem table..[0m
-2023/05/22 20:48:34 [INFO] 138 bytes written for 'stdout'
-2023/05/22 20:48:34 [INFO] 0 bytes written for 'stderr'
-2023/05/22 20:48:34 [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:48:34 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:48:34 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:34 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:48:34 packer-provisioner-shell plugin: [INFO] 138 bytes written for 'stdout'
-2023/05/22 20:48:34 packer-provisioner-shell plugin: [INFO] 0 bytes written for 'stderr'
-2023/05/22 20:48:34 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:48:34 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:34 [DEBUG] Opening new ssh session
-2023/05/22 20:48:34 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:34 [DEBUG] starting remote command: rm -f /tmp/script_1285.sh
-2023/05/22 20:48:34 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:34 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:48:34 [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:48:34 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:48:34 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:48:34 ui: [1;32m==> bastille-installer.qemu.artix: Provisioning with shell script: scripts/mirrors.sh[0m
-2023/05/22 20:48:34 packer-provisioner-shell plugin: Opening scripts/mirrors.sh for reading
-2023/05/22 20:48:34 [INFO] 825 bytes written for 'uploadData'
-2023/05/22 20:48:34 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:34 [DEBUG] Opening new ssh session
-2023/05/22 20:48:34 packer-provisioner-shell plugin: [INFO] 825 bytes written for 'uploadData'
-2023/05/22 20:48:34 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:34 [DEBUG] Starting remote scp process:  scp -vt /tmp
-2023/05/22 20:48:34 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:34 [DEBUG] Started SCP session, beginning transfers...
-2023/05/22 20:48:34 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:34 [DEBUG] Copying input data into temporary file so we can read the length
-2023/05/22 20:48:34 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:34 [DEBUG] scp: Uploading script_1285.sh: perms=C0644 size=825
-2023/05/22 20:48:34 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:34 [DEBUG] SCP session complete, closing stdin pipe.
-2023/05/22 20:48:34 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:34 [DEBUG] Waiting for SSH session to complete.
-2023/05/22 20:48:34 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:34 [DEBUG] scp stderr (length 70): Sink: C0644 825 script_1285.sh
-2023/05/22 20:48:34 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: scp: debug1: fd 0 clearing O_NONBLOCK
-2023/05/22 20:48:34 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:34 [DEBUG] Opening new ssh session
-2023/05/22 20:48:34 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:34 [DEBUG] starting remote command: chmod 0755 /tmp/script_1285.sh
-2023/05/22 20:48:34 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:34 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:48:34 [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:48:34 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:48:34 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:48:34 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:34 [DEBUG] Opening new ssh session
-2023/05/22 20:48:34 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:34 [DEBUG] starting remote command: echo 'primany provisioner';PACKER_BUILDER_TYPE='qemu' PACKER_BUILD_NAME='artix' PACKER_HTTP_ADDR='10.0.2.2:8983' PACKER_HTTP_IP='10.0.2.2' PACKER_HTTP_PORT='8983'  sudo -E -S bash '/tmp/script_1285.sh'
-2023/05/22 20:48:34 ui: [0;32m    bastille-installer.qemu.artix: primany provisioner[0m
-2023/05/22 20:48:34 ui: [0;32m    bastille-installer.qemu.artix: ==> mirrors.sh: Reranking pacman mirrorlist..[0m
-2023/05/22 20:48:35 ui: [0;32m    bastille-installer.qemu.artix: ==> mirrors.sh: Installing cron..[0m
-2023/05/22 20:48:36 ui: [0;32m    bastille-installer.qemu.artix: ==> mirrors.sh: Crontab rankmirrors every week..[0m
-2023/05/22 20:48:36 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:36 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:48:36 [INFO] 149 bytes written for 'stdout'
-2023/05/22 20:48:36 [INFO] 0 bytes written for 'stderr'
-2023/05/22 20:48:36 [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:48:36 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:48:36 packer-provisioner-shell plugin: [INFO] 149 bytes written for 'stdout'
-2023/05/22 20:48:36 packer-provisioner-shell plugin: [INFO] 0 bytes written for 'stderr'
-2023/05/22 20:48:36 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:48:36 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:36 [DEBUG] Opening new ssh session
-2023/05/22 20:48:36 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:36 [DEBUG] starting remote command: rm -f /tmp/script_1285.sh
-2023/05/22 20:48:36 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:36 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:48:36 [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:48:36 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:48:36 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:48:36 ui: [1;32m==> bastille-installer.qemu.artix: Provisioning with shell script: scripts/bootloader.sh[0m
-2023/05/22 20:48:36 packer-provisioner-shell plugin: Opening scripts/bootloader.sh for reading
-2023/05/22 20:48:36 [INFO] 751 bytes written for 'uploadData'
-2023/05/22 20:48:36 packer-provisioner-shell plugin: [INFO] 751 bytes written for 'uploadData'
-2023/05/22 20:48:36 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:36 [DEBUG] Opening new ssh session
-2023/05/22 20:48:36 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:36 [DEBUG] Starting remote scp process:  scp -vt /tmp
-2023/05/22 20:48:36 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:36 [DEBUG] Started SCP session, beginning transfers...
-2023/05/22 20:48:36 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:36 [DEBUG] Copying input data into temporary file so we can read the length
-2023/05/22 20:48:36 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:36 [DEBUG] scp: Uploading script_1285.sh: perms=C0644 size=751
-2023/05/22 20:48:36 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:36 [DEBUG] SCP session complete, closing stdin pipe.
-2023/05/22 20:48:36 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:36 [DEBUG] Waiting for SSH session to complete.
-2023/05/22 20:48:36 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:36 [DEBUG] scp stderr (length 70): Sink: C0644 751 script_1285.sh
-2023/05/22 20:48:36 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: scp: debug1: fd 0 clearing O_NONBLOCK
-2023/05/22 20:48:36 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:36 [DEBUG] Opening new ssh session
-2023/05/22 20:48:36 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:36 [DEBUG] starting remote command: chmod 0755 /tmp/script_1285.sh
-2023/05/22 20:48:36 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:36 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:48:36 [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:48:36 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:48:36 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:48:36 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:36 [DEBUG] Opening new ssh session
-2023/05/22 20:48:36 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:48:36 [DEBUG] starting remote command: echo 'primany provisioner';PACKER_BUILDER_TYPE='qemu' PACKER_BUILD_NAME='artix' PACKER_HTTP_ADDR='10.0.2.2:8983' PACKER_HTTP_IP='10.0.2.2' PACKER_HTTP_PORT='8983'  sudo -E -S bash '/tmp/script_1285.sh'
-2023/05/22 20:48:36 ui: [0;32m    bastille-installer.qemu.artix: primany provisioner[0m
-2023/05/22 20:48:36 ui: [0;32m    bastille-installer.qemu.artix: ==> bootloader.sh: Installing grub packages..[0m
-2023/05/22 20:49:13 ui: [0;32m    bastille-installer.qemu.artix: ==> bootloader.sh: Pre-configure grub..[0m
-2023/05/22 20:49:13 ui: [0;32m    bastille-installer.qemu.artix: ==> bootloader.sh: Installing grub..[0m
-2023/05/22 20:49:20 ui: [0;32m    bastille-installer.qemu.artix: ==> bootloader.sh: Check boots..[0m
-2023/05/22 20:49:20 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:20 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:49:20 [INFO] 0 bytes written for 'stderr'
-2023/05/22 20:49:20 [INFO] 176 bytes written for 'stdout'
-2023/05/22 20:49:20 [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:49:20 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:49:20 packer-provisioner-shell plugin: [INFO] 176 bytes written for 'stdout'
-2023/05/22 20:49:20 packer-provisioner-shell plugin: [INFO] 0 bytes written for 'stderr'
-2023/05/22 20:49:20 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:49:20 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:20 [DEBUG] Opening new ssh session
-2023/05/22 20:49:20 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:20 [DEBUG] starting remote command: rm -f /tmp/script_1285.sh
-2023/05/22 20:49:20 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:20 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:49:20 [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:49:20 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:49:20 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:49:20 ui: [1;32m==> bastille-installer.qemu.artix: Provisioning with shell script: scripts/pacman.sh[0m
-2023/05/22 20:49:20 packer-provisioner-shell plugin: Opening scripts/pacman.sh for reading
-2023/05/22 20:49:20 packer-provisioner-shell plugin: [INFO] 329 bytes written for 'uploadData'
-2023/05/22 20:49:20 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:20 [DEBUG] Opening new ssh session
-2023/05/22 20:49:20 [INFO] 329 bytes written for 'uploadData'
-2023/05/22 20:49:20 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:20 [DEBUG] Starting remote scp process:  scp -vt /tmp
-2023/05/22 20:49:20 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:20 [DEBUG] Started SCP session, beginning transfers...
-2023/05/22 20:49:20 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:20 [DEBUG] Copying input data into temporary file so we can read the length
-2023/05/22 20:49:20 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:20 [DEBUG] scp: Uploading script_1285.sh: perms=C0644 size=329
-2023/05/22 20:49:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:21 [DEBUG] SCP session complete, closing stdin pipe.
-2023/05/22 20:49:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:21 [DEBUG] Waiting for SSH session to complete.
-2023/05/22 20:49:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:21 [DEBUG] scp stderr (length 70): Sink: C0644 329 script_1285.sh
-2023/05/22 20:49:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: scp: debug1: fd 0 clearing O_NONBLOCK
-2023/05/22 20:49:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:21 [DEBUG] Opening new ssh session
-2023/05/22 20:49:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:21 [DEBUG] starting remote command: chmod 0755 /tmp/script_1285.sh
-2023/05/22 20:49:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:21 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:49:21 [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:49:21 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:49:21 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:49:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:21 [DEBUG] Opening new ssh session
-2023/05/22 20:49:21 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:21 [DEBUG] starting remote command: echo 'primany provisioner';PACKER_BUILDER_TYPE='qemu' PACKER_BUILD_NAME='artix' PACKER_HTTP_ADDR='10.0.2.2:8983' PACKER_HTTP_IP='10.0.2.2' PACKER_HTTP_PORT='8983'  sudo -E -S bash '/tmp/script_1285.sh'
-2023/05/22 20:49:21 ui: [0;32m    bastille-installer.qemu.artix: primany provisioner[0m
-2023/05/22 20:49:21 ui: [0;32m    bastille-installer.qemu.artix: ==> pacman.sh: Installing databases..[0m
-2023/05/22 20:49:21 ui: [0;32m    bastille-installer.qemu.artix: ==> pacman.sh: Installing basic packages..[0m
-2023/05/22 20:49:23 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:23 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:49:23 [INFO] 101 bytes written for 'stdout'
-2023/05/22 20:49:23 [INFO] 0 bytes written for 'stderr'
-2023/05/22 20:49:23 [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:49:23 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:49:23 packer-provisioner-shell plugin: [INFO] 101 bytes written for 'stdout'
-2023/05/22 20:49:23 packer-provisioner-shell plugin: [INFO] 0 bytes written for 'stderr'
-2023/05/22 20:49:23 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:49:23 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:23 [DEBUG] Opening new ssh session
-2023/05/22 20:49:23 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:23 [DEBUG] starting remote command: rm -f /tmp/script_1285.sh
-2023/05/22 20:49:23 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:23 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:49:23 [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:49:23 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:49:23 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:49:23 ui: [1;32m==> bastille-installer.qemu.artix: Provisioning with shell script: scripts/setup.sh[0m
-2023/05/22 20:49:23 packer-provisioner-shell plugin: Opening scripts/setup.sh for reading
-2023/05/22 20:49:23 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:23 [DEBUG] Opening new ssh session
-2023/05/22 20:49:23 packer-provisioner-shell plugin: [INFO] 3947 bytes written for 'uploadData'
-2023/05/22 20:49:23 [INFO] 3947 bytes written for 'uploadData'
-2023/05/22 20:49:23 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:23 [DEBUG] Starting remote scp process:  scp -vt /tmp
-2023/05/22 20:49:23 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:23 [DEBUG] Started SCP session, beginning transfers...
-2023/05/22 20:49:23 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:23 [DEBUG] Copying input data into temporary file so we can read the length
-2023/05/22 20:49:23 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:23 [DEBUG] scp: Uploading script_1285.sh: perms=C0644 size=3947
-2023/05/22 20:49:23 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:23 [DEBUG] SCP session complete, closing stdin pipe.
-2023/05/22 20:49:23 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:23 [DEBUG] Waiting for SSH session to complete.
-2023/05/22 20:49:23 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:23 [DEBUG] scp stderr (length 71): Sink: C0644 3947 script_1285.sh
-2023/05/22 20:49:23 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: scp: debug1: fd 0 clearing O_NONBLOCK
-2023/05/22 20:49:23 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:23 [DEBUG] Opening new ssh session
-2023/05/22 20:49:23 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:23 [DEBUG] starting remote command: chmod 0755 /tmp/script_1285.sh
-2023/05/22 20:49:23 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:23 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:49:23 [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:49:23 [INFO] RPC endpoint: Communicator ended with: 0
-2023/05/22 20:49:23 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
-2023/05/22 20:49:23 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:23 [DEBUG] Opening new ssh session
-2023/05/22 20:49:23 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/22 20:49:23 [DEBUG] starting remote command: echo 'primany provisioner';PACKER_BUILDER_TYPE='qemu' PACKER_BUILD_NAME='artix' PACKER_HTTP_ADDR='10.0.2.2:8983' PACKER_HTTP_IP='10.0.2.2' PACKER_HTTP_PORT='8983'  sudo -E -S bash '/tmp/script_1285.sh'
-2023/05/22 20:49:23 ui: [0;32m    bastille-installer.qemu.artix: primany provisioner[0m
-2023/05/22 20:49:23 ui: [0;32m    bastille-installer.qemu.artix: ==> setup.sh: Generating the system configuration script..[0m
-2023/05/22 20:49:23 ui: [0;32m    bastille-installer.qemu.artix: ==> setup.sh: Entering chroot and configuring system..[0m
-2023/05/22 20:49:23 ui: [0;32m    bastille-installer.qemu.artix: ==> setup.sh: Configuring hostname, timezone, and keymap..[0m
-2023/05/22 20:49:23 ui: [0;32m    bastille-installer.qemu.artix: ==> setup.sh: Configuring locale..[0m
-2023/05/22 20:49:25 ui: [0;32m    bastille-installer.qemu.artix: ==> setup.sh: Creating initramfs..[0m
-2023/05/22 20:49:55 ui: [0;32m    bastille-installer.qemu.artix: ==> setup.sh: Setting root pasword..[0m
-2023/05/22 20:49:55 ui: [0;32m    bastille-installer.qemu.artix: ==> setup.sh: Configuring sshd..[0m
-2023/05/22 20:49:55 ui: [0;32m    bastille-installer.qemu.artix: ==> setup.sh: Adding workaround for sshd connection issue after reboot..[0m
-2023/05/22 20:49:56 ui: [0;32m    bastille-installer.qemu.artix: ==> setup.sh: Enable time synching..[0m
-2023/05/22 20:49:57 ui: [0;32m    bastille-installer.qemu.artix: ==> setup.sh: Installing manjaro-arm-installer non-AUR dependencies..[0m
-2023/05/22 20:50:06 ui: [0;32m    bastille-installer.qemu.artix: ==> setup.sh: Modifying box user..[0m
-2023/05/22 20:50:06 ui: [0;32m    bastille-installer.qemu.artix: ==> setup.sh: Configuring sudo..[0m
-2023/05/22 20:50:06 ui: [0;32m    bastille-installer.qemu.artix: ==> setup.sh: Cleaning up..[0m
-2023/05/22 20:50:06 ui: [0;32m    bastille-installer.qemu.artix: ==> setup.sh: Creating ssh access for bas..[0m
-2023/05/22 20:50:06 ui: [0;32m    bastille-installer.qemu.artix: ==> setup.sh: Enable ssh access manually for box..[0m
-2023/05/22 20:50:06 ui: [0;32m    bastille-installer.qemu.artix: ==> setup.sh: Moving vars file to box..[0m
-2023/05/22 20:50:06 ui: [0;32m    bastille-installer.qemu.artix: ==> setup.sh: Trimming partition sizes..[0m
-2023/05/22 20:50:06 ui: [0;32m    bastille-installer.qemu.artix: ==> setup.sh: Unmounting box partitions from liveVM..[0m
+2023/05/23 21:16:42 [INFO] Packer version: 1.8.7 [go1.20.4 linux amd64]
+2023/05/23 21:16:42 [TRACE] discovering plugins in /usr/bin
+2023/05/23 21:16:42 [TRACE] discovering plugins in /home/folaht/.config/packer/plugins
+2023/05/23 21:16:42 [DEBUG] Discovered plugin: qemu = /home/folaht/.config/packer/plugins/github.com/hashicorp/qemu/packer-plugin-qemu_v1.0.9_x5.0_linux_amd64
+2023/05/23 21:16:42 [INFO] found external [-packer-default-plugin-name-] builders from qemu plugin
+2023/05/23 21:16:42 [TRACE] discovering plugins in .
+2023/05/23 21:16:42 [INFO] PACKER_CONFIG env var set; attempting to open config file: /home/folaht/.config/packer/packerconfig
+2023/05/23 21:16:42 [INFO] Setting cache directory: /home/folaht/.cache/packer
+2023/05/23 21:16:42 [TRACE] listing potential installations for "github.com/hashicorp/qemu" that match ">= 1.0.9". plugingetter.ListInstallationsOptions{FromFolders:[]string{"/usr/bin/packer", ".", "/home/folaht/.config/packer/plugins"}, BinaryInstallationOptions:plugingetter.BinaryInstallationOptions{APIVersionMajor:"5", APIVersionMinor:"0", OS:"linux", ARCH:"amd64", Ext:"", Checksummers:[]plugingetter.Checksummer{plugingetter.Checksummer{Type:"sha256", Hash:(*sha256.digest)(0xc00050c980)}}}}
+2023/05/23 21:16:42 [TRACE] Found the following "github.com/hashicorp/qemu" installations: [{/home/folaht/.config/packer/plugins/github.com/hashicorp/qemu/packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 v1.0.9}]
+2023/05/23 21:16:42 [INFO] found external [-packer-default-plugin-name-] builders from qemu plugin
+2023/05/23 21:16:42 [TRACE] validateValue: not active for iso_checksum, so skipping
+2023/05/23 21:16:42 [TRACE] validateValue: not active for iso_url, so skipping
+2023/05/23 21:16:42 [TRACE] validateValue: not active for country, so skipping
+2023/05/23 21:16:42 [TRACE] Starting external plugin /home/folaht/.config/packer/plugins/github.com/hashicorp/qemu/packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 start builder -packer-default-plugin-name-
+2023/05/23 21:16:42 Starting plugin: /home/folaht/.config/packer/plugins/github.com/hashicorp/qemu/packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 []string{"/home/folaht/.config/packer/plugins/github.com/hashicorp/qemu/packer-plugin-qemu_v1.0.9_x5.0_linux_amd64", "start", "builder", "-packer-default-plugin-name-"}
+2023/05/23 21:16:42 Waiting for RPC address for: /home/folaht/.config/packer/plugins/github.com/hashicorp/qemu/packer-plugin-qemu_v1.0.9_x5.0_linux_amd64
+2023/05/23 21:16:42 Received unix RPC address for /home/folaht/.config/packer/plugins/github.com/hashicorp/qemu/packer-plugin-qemu_v1.0.9_x5.0_linux_amd64: addr is /tmp/packer-plugin2903707562
+2023/05/23 21:16:42 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:16:42 Plugin address: unix /tmp/packer-plugin2903707562
+2023/05/23 21:16:42 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:16:42 Waiting for connection...
+2023/05/23 21:16:42 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:16:42 Serving a plugin connection...
+2023/05/23 21:16:42 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:16:42 [TRACE] starting builder -packer-default-plugin-name-
+2023/05/23 21:16:42 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:16:42 use specified accelerator: kvm
+2023/05/23 21:16:42 [TRACE] Starting internal plugin packer-provisioner-file
+2023/05/23 21:16:42 Starting plugin: /usr/bin/packer []string{"/usr/bin/packer", "plugin", "packer-provisioner-file"}
+2023/05/23 21:16:42 Waiting for RPC address for: /usr/bin/packer
+2023/05/23 21:16:42 packer-provisioner-file plugin: [INFO] Packer version: 1.8.7 [go1.20.4 linux amd64]
+2023/05/23 21:16:42 packer-provisioner-file plugin: [INFO] PACKER_CONFIG env var set; attempting to open config file: /home/folaht/.config/packer/packerconfig
+2023/05/23 21:16:42 packer-provisioner-file plugin: [INFO] Setting cache directory: /home/folaht/.cache/packer
+2023/05/23 21:16:42 packer-provisioner-file plugin: args: []string{"packer-provisioner-file"}
+2023/05/23 21:16:42 packer-provisioner-file plugin: Plugin address: unix /tmp/packer-plugin3318925367
+2023/05/23 21:16:42 packer-provisioner-file plugin: Waiting for connection...
+2023/05/23 21:16:42 Received unix RPC address for /usr/bin/packer: addr is /tmp/packer-plugin3318925367
+2023/05/23 21:16:42 packer-provisioner-file plugin: Serving a plugin connection...
+2023/05/23 21:16:42 [TRACE] Starting internal plugin packer-provisioner-shell
+2023/05/23 21:16:42 Starting plugin: /usr/bin/packer []string{"/usr/bin/packer", "plugin", "packer-provisioner-shell"}
+2023/05/23 21:16:42 Waiting for RPC address for: /usr/bin/packer
+2023/05/23 21:16:43 packer-provisioner-shell plugin: [INFO] Packer version: 1.8.7 [go1.20.4 linux amd64]
+2023/05/23 21:16:43 packer-provisioner-shell plugin: [INFO] PACKER_CONFIG env var set; attempting to open config file: /home/folaht/.config/packer/packerconfig
+2023/05/23 21:16:43 packer-provisioner-shell plugin: [INFO] Setting cache directory: /home/folaht/.cache/packer
+2023/05/23 21:16:43 packer-provisioner-shell plugin: args: []string{"packer-provisioner-shell"}
+2023/05/23 21:16:43 packer-provisioner-shell plugin: Plugin address: unix /tmp/packer-plugin1438959613
+2023/05/23 21:16:43 packer-provisioner-shell plugin: Waiting for connection...
+2023/05/23 21:16:43 Received unix RPC address for /usr/bin/packer: addr is /tmp/packer-plugin1438959613
+2023/05/23 21:16:43 packer-provisioner-shell plugin: Serving a plugin connection...
+2023/05/23 21:16:43 [TRACE] Starting internal plugin packer-provisioner-shell
+2023/05/23 21:16:43 Starting plugin: /usr/bin/packer []string{"/usr/bin/packer", "plugin", "packer-provisioner-shell"}
+2023/05/23 21:16:43 Waiting for RPC address for: /usr/bin/packer
+2023/05/23 21:16:43 packer-provisioner-shell plugin: [INFO] Packer version: 1.8.7 [go1.20.4 linux amd64]
+2023/05/23 21:16:43 packer-provisioner-shell plugin: [INFO] PACKER_CONFIG env var set; attempting to open config file: /home/folaht/.config/packer/packerconfig
+2023/05/23 21:16:43 packer-provisioner-shell plugin: [INFO] Setting cache directory: /home/folaht/.cache/packer
+2023/05/23 21:16:43 packer-provisioner-shell plugin: args: []string{"packer-provisioner-shell"}
+2023/05/23 21:16:43 packer-provisioner-shell plugin: Plugin address: unix /tmp/packer-plugin93337976
+2023/05/23 21:16:43 packer-provisioner-shell plugin: Waiting for connection...
+2023/05/23 21:16:43 Received unix RPC address for /usr/bin/packer: addr is /tmp/packer-plugin93337976
+2023/05/23 21:16:43 packer-provisioner-shell plugin: Serving a plugin connection...
+2023/05/23 21:16:43 [TRACE] Starting internal plugin packer-post-processor-vagrant
+2023/05/23 21:16:43 Starting plugin: /usr/bin/packer []string{"/usr/bin/packer", "plugin", "packer-post-processor-vagrant"}
+2023/05/23 21:16:43 Waiting for RPC address for: /usr/bin/packer
+2023/05/23 21:16:43 packer-post-processor-vagrant plugin: [INFO] Packer version: 1.8.7 [go1.20.4 linux amd64]
+2023/05/23 21:16:43 packer-post-processor-vagrant plugin: [INFO] PACKER_CONFIG env var set; attempting to open config file: /home/folaht/.config/packer/packerconfig
+2023/05/23 21:16:43 packer-post-processor-vagrant plugin: [INFO] Setting cache directory: /home/folaht/.cache/packer
+2023/05/23 21:16:43 packer-post-processor-vagrant plugin: args: []string{"packer-post-processor-vagrant"}
+2023/05/23 21:16:43 packer-post-processor-vagrant plugin: Plugin address: unix /tmp/packer-plugin3930141060
+2023/05/23 21:16:43 packer-post-processor-vagrant plugin: Waiting for connection...
+2023/05/23 21:16:43 Received unix RPC address for /usr/bin/packer: addr is /tmp/packer-plugin3930141060
+2023/05/23 21:16:43 packer-post-processor-vagrant plugin: Serving a plugin connection...
+2023/05/23 21:16:43 ui: [1;32mbastille-installer.qemu.artix: output will be in this color.[0m
+2023/05/23 21:16:43 ui: 
+2023/05/23 21:16:43 Build debug mode: false
+2023/05/23 21:16:43 Force build: false
+2023/05/23 21:16:43 On error: 
+2023/05/23 21:16:43 Waiting on builds to complete...
+2023/05/23 21:16:43 Starting build run: bastille-installer.qemu.artix
+2023/05/23 21:16:43 Running builder: 
+2023/05/23 21:16:43 [INFO] (telemetry) Starting builder qemu.artix
+2023/05/23 21:16:43 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:16:43 Qemu path: /usr/bin/qemu-system-x86_64, Qemu Image path: /usr/bin/qemu-img
+2023/05/23 21:16:43 ui: [1;32m==> bastille-installer.qemu.artix: Retrieving ISO[0m
+2023/05/23 21:16:43 ui: [1;32m==> bastille-installer.qemu.artix: Trying https://download.artixlinux.org/weekly-iso/artix-base-dinit-20230522-x86_64.iso[0m
+2023/05/23 21:16:43 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:16:43 Acquiring lock for: https://download.artixlinux.org/weekly-iso/artix-base-dinit-20230522-x86_64.iso?checksum=sha256%3Aad2d9cd323c87008cb41020956609a019fc17a4b930d7e410c6d024276e3dd79 (/home/folaht/.cache/packer/55eedaa9238cdcd9fce85609109ce730f105d589.iso.lock)
+2023/05/23 21:16:43 ui: [1;32m==> bastille-installer.qemu.artix: Trying https://download.artixlinux.org/weekly-iso/artix-base-dinit-20230522-x86_64.iso?checksum=sha256%3Aad2d9cd323c87008cb41020956609a019fc17a4b930d7e410c6d024276e3dd79[0m
+2023/05/23 21:16:49 ui: [1;32m==> bastille-installer.qemu.artix: https://download.artixlinux.org/weekly-iso/artix-base-dinit-20230522-x86_64.iso?checksum=sha256%3Aad2d9cd323c87008cb41020956609a019fc17a4b930d7e410c6d024276e3dd79 => /home/folaht/.cache/packer/55eedaa9238cdcd9fce85609109ce730f105d589.iso[0m
+2023/05/23 21:16:49 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:16:49 Leaving retrieve loop for ISO
+2023/05/23 21:16:49 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:16:49 No floppy files specified. Floppy disk will not be made.
+2023/05/23 21:16:49 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:16:49 No CD files specified. CD disk will not be made.
+2023/05/23 21:16:49 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:16:49 [INFO] Creating disk with Path: output-artix/bastille-installer.qcow2 and Size: 4G
+2023/05/23 21:16:49 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:16:49 Executing qemu-img: []string{"create", "-f", "qcow2", "output-artix/bastille-installer.qcow2", "4G"}
+2023/05/23 21:16:49 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:16:49 stdout: Formatting 'output-artix/bastille-installer.qcow2', fmt=qcow2 cluster_size=65536 extended_l2=off compression_type=zlib size=4294967296 lazy_refcounts=off refcount_bits=16
+2023/05/23 21:16:49 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:16:49 stderr:
+2023/05/23 21:16:49 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:16:49 Found available port: 8060 on IP: 0.0.0.0
+2023/05/23 21:16:49 ui: [1;32m==> bastille-installer.qemu.artix: Starting HTTP server on port 8060[0m
+2023/05/23 21:16:49 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:16:49 Looking for available communicator (SSH, WinRM, etc) port between 2222 and 4444
+2023/05/23 21:16:49 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:16:49 Found available port: 3580 on IP: 127.0.0.1
+2023/05/23 21:16:49 ui: [1;32m==> bastille-installer.qemu.artix: Found port for communicator (SSH, WinRM, etc): 3580.[0m
+2023/05/23 21:16:49 ui: [1;32m==> bastille-installer.qemu.artix: Looking for available port between 5900 and 6000 on 127.0.0.1[0m
+2023/05/23 21:16:49 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:16:49 Looking for available port between 5900 and 6000 on 127.0.0.1
+2023/05/23 21:16:49 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:16:49 Found available port: 5931 on IP: 127.0.0.1
+2023/05/23 21:16:49 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:16:49 Found available VNC port: 5931 on IP: 127.0.0.1
+2023/05/23 21:16:49 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:16:49 Qemu --version output: QEMU emulator version 8.0.0
+2023/05/23 21:16:49 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: Copyright (c) 2003-2022 Fabrice Bellard and the QEMU Project developers
+2023/05/23 21:16:49 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:16:49 Qemu version: 8.0.0
+2023/05/23 21:16:49 ui: [1;32m==> bastille-installer.qemu.artix: Starting VM, booting from CD-ROM[0m
+2023/05/23 21:16:49 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:16:49 Qemu Builder has no floppy files, not attaching a floppy.
+2023/05/23 21:16:49 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:16:49 Executing /usr/bin/qemu-system-x86_64: []string{"-device", "virtio-net,netdev=user.0", "-name", "bastille-installer.qcow2", "-smp", "1", "-display", "gtk", "-m", "4096M", "-machine", "type=q35,accel=kvm", "-vnc", "127.0.0.1:31", "-netdev", "user,id=user.0,hostfwd=tcp::3580-:22", "-drive", "file=output-artix/bastille-installer.qcow2,if=virtio,cache=writeback,discard=ignore,format=qcow2", "-drive", "file=/home/folaht/.cache/packer/55eedaa9238cdcd9fce85609109ce730f105d589.iso,media=cdrom", "-drive", "file=/usr/share/edk2-ovmf/x64/OVMF_CODE.fd,if=pflash,unit=0,format=raw,readonly=on", "-drive", "file=output-artix/efivars.fd,if=pflash,unit=1,format=raw"}
+2023/05/23 21:16:49 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:16:49 Started Qemu. Pid: 850664
+2023/05/23 21:16:51 ui: [1;32m==> bastille-installer.qemu.artix: Waiting 25s for boot...[0m
+2023/05/23 21:17:16 ui: [1;32m==> bastille-installer.qemu.artix: Connecting to VM via VNC (127.0.0.1:5931)[0m
+2023/05/23 21:17:16 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:16 Connected to VNC desktop: QEMU (bastille-installer.qcow2)
+2023/05/23 21:17:16 ui: [1;32m==> bastille-installer.qemu.artix: Typing the boot commands over VNC...[0m
+2023/05/23 21:17:16 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:16 Special code '<down>' found, replacing with: 0xFF54
+2023/05/23 21:17:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:17 Special code '<down>' found, replacing with: 0xFF54
+2023/05/23 21:17:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:17 Special code '<enter>' found, replacing with: 0xFF0D
+2023/05/23 21:17:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:17 [INFO] Waiting 15s
+2023/05/23 21:17:32 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:32 Sending char 'r', code 0x72, shift false
+2023/05/23 21:17:32 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:32 Sending char 'o', code 0x6F, shift false
+2023/05/23 21:17:32 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:32 Sending char 'o', code 0x6F, shift false
+2023/05/23 21:17:33 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:33 Sending char 't', code 0x74, shift false
+2023/05/23 21:17:33 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:33 Special code '<enter>' found, replacing with: 0xFF0D
+2023/05/23 21:17:33 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:33 [INFO] Waiting 10s
+2023/05/23 21:17:43 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:43 Sending char 'a', code 0x61, shift false
+2023/05/23 21:17:43 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:43 Sending char 'r', code 0x72, shift false
+2023/05/23 21:17:43 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:43 Sending char 't', code 0x74, shift false
+2023/05/23 21:17:44 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:44 Sending char 'i', code 0x69, shift false
+2023/05/23 21:17:44 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:44 Sending char 'x', code 0x78, shift false
+2023/05/23 21:17:44 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:44 Special code '<enter>' found, replacing with: 0xFF0D
+2023/05/23 21:17:44 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:44 [INFO] Waiting 3s
+2023/05/23 21:17:47 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:47 Sending char 'c', code 0x63, shift false
+2023/05/23 21:17:47 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:47 Sending char 'u', code 0x75, shift false
+2023/05/23 21:17:48 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:48 Sending char 'r', code 0x72, shift false
+2023/05/23 21:17:48 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:48 Sending char 'l', code 0x6C, shift false
+2023/05/23 21:17:48 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:48 Sending char ' ', code 0x20, shift false
+2023/05/23 21:17:48 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:48 Sending char '-', code 0x2D, shift false
+2023/05/23 21:17:48 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:48 Sending char 'O', code 0x4F, shift true
+2023/05/23 21:17:49 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:49 Sending char 's', code 0x73, shift false
+2023/05/23 21:17:49 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:49 Sending char ' ', code 0x20, shift false
+2023/05/23 21:17:49 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:49 Sending char 'h', code 0x68, shift false
+2023/05/23 21:17:49 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:49 Sending char 't', code 0x74, shift false
+2023/05/23 21:17:50 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:50 Sending char 't', code 0x74, shift false
+2023/05/23 21:17:50 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:50 Sending char 'p', code 0x70, shift false
+2023/05/23 21:17:50 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:50 Sending char ':', code 0x3A, shift true
+2023/05/23 21:17:50 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:50 Sending char '/', code 0x2F, shift false
+2023/05/23 21:17:51 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:51 Sending char '/', code 0x2F, shift false
+2023/05/23 21:17:51 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:51 Sending char '1', code 0x31, shift false
+2023/05/23 21:17:51 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:51 Sending char '0', code 0x30, shift false
+2023/05/23 21:17:51 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:51 Sending char '.', code 0x2E, shift false
+2023/05/23 21:17:51 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:51 Sending char '0', code 0x30, shift false
+2023/05/23 21:17:52 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:52 Sending char '.', code 0x2E, shift false
+2023/05/23 21:17:52 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:52 Sending char '2', code 0x32, shift false
+2023/05/23 21:17:52 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:52 Sending char '.', code 0x2E, shift false
+2023/05/23 21:17:52 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:52 Sending char '2', code 0x32, shift false
+2023/05/23 21:17:52 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:52 Sending char ':', code 0x3A, shift true
+2023/05/23 21:17:53 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:53 Sending char '8', code 0x38, shift false
+2023/05/23 21:17:53 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:53 Sending char '0', code 0x30, shift false
+2023/05/23 21:17:53 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:53 Sending char '6', code 0x36, shift false
+2023/05/23 21:17:53 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:53 Sending char '0', code 0x30, shift false
+2023/05/23 21:17:54 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:54 Sending char '/', code 0x2F, shift false
+2023/05/23 21:17:54 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:54 Sending char 'i', code 0x69, shift false
+2023/05/23 21:17:54 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:54 Sending char 'n', code 0x6E, shift false
+2023/05/23 21:17:54 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:54 Sending char 'i', code 0x69, shift false
+2023/05/23 21:17:54 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:54 Sending char 't', code 0x74, shift false
+2023/05/23 21:17:55 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:55 Sending char 'L', code 0x4C, shift true
+2023/05/23 21:17:55 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:55 Sending char 'i', code 0x69, shift false
+2023/05/23 21:17:55 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:55 Sending char 'v', code 0x76, shift false
+2023/05/23 21:17:55 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:55 Sending char 'e', code 0x65, shift false
+2023/05/23 21:17:56 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:56 Sending char 'V', code 0x56, shift true
+2023/05/23 21:17:56 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:56 Sending char 'M', code 0x4D, shift true
+2023/05/23 21:17:56 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:56 Sending char '.', code 0x2E, shift false
+2023/05/23 21:17:57 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:57 Sending char 's', code 0x73, shift false
+2023/05/23 21:17:57 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:57 Sending char 'h', code 0x68, shift false
+2023/05/23 21:17:57 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:57 Sending char ' ', code 0x20, shift false
+2023/05/23 21:17:57 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:57 Sending char '&', code 0x26, shift true
+2023/05/23 21:17:58 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:58 Sending char '&', code 0x26, shift true
+2023/05/23 21:17:58 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:58 Sending char ' ', code 0x20, shift false
+2023/05/23 21:17:58 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:58 Sending char 'c', code 0x63, shift false
+2023/05/23 21:17:58 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:58 Sending char 'h', code 0x68, shift false
+2023/05/23 21:17:59 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:59 Sending char 'm', code 0x6D, shift false
+2023/05/23 21:17:59 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:59 Sending char 'o', code 0x6F, shift false
+2023/05/23 21:17:59 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:59 Sending char 'd', code 0x64, shift false
+2023/05/23 21:17:59 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:17:59 Sending char ' ', code 0x20, shift false
+2023/05/23 21:18:00 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:00 Sending char '+', code 0x2B, shift true
+2023/05/23 21:18:00 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:00 Sending char 'x', code 0x78, shift false
+2023/05/23 21:18:00 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:00 Sending char ' ', code 0x20, shift false
+2023/05/23 21:18:00 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:00 Sending char '.', code 0x2E, shift false
+2023/05/23 21:18:01 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:01 Sending char '/', code 0x2F, shift false
+2023/05/23 21:18:01 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:01 Sending char 'i', code 0x69, shift false
+2023/05/23 21:18:01 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:01 Sending char 'n', code 0x6E, shift false
+2023/05/23 21:18:01 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:01 Sending char 'i', code 0x69, shift false
+2023/05/23 21:18:01 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:01 Sending char 't', code 0x74, shift false
+2023/05/23 21:18:02 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:02 Sending char 'L', code 0x4C, shift true
+2023/05/23 21:18:02 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:02 Sending char 'i', code 0x69, shift false
+2023/05/23 21:18:02 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:02 Sending char 'v', code 0x76, shift false
+2023/05/23 21:18:02 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:02 Sending char 'e', code 0x65, shift false
+2023/05/23 21:18:03 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:03 Sending char 'V', code 0x56, shift true
+2023/05/23 21:18:03 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:03 Sending char 'M', code 0x4D, shift true
+2023/05/23 21:18:03 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:03 Sending char '.', code 0x2E, shift false
+2023/05/23 21:18:04 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:04 Sending char 's', code 0x73, shift false
+2023/05/23 21:18:04 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:04 Sending char 'h', code 0x68, shift false
+2023/05/23 21:18:04 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:04 Sending char ' ', code 0x20, shift false
+2023/05/23 21:18:04 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:04 Sending char '&', code 0x26, shift true
+2023/05/23 21:18:05 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:05 Sending char '&', code 0x26, shift true
+2023/05/23 21:18:05 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:05 Sending char ' ', code 0x20, shift false
+2023/05/23 21:18:05 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:05 Sending char '.', code 0x2E, shift false
+2023/05/23 21:18:05 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:05 Sending char '/', code 0x2F, shift false
+2023/05/23 21:18:06 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:06 Sending char 'i', code 0x69, shift false
+2023/05/23 21:18:06 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:06 Sending char 'n', code 0x6E, shift false
+2023/05/23 21:18:06 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:06 Sending char 'i', code 0x69, shift false
+2023/05/23 21:18:06 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:06 Sending char 't', code 0x74, shift false
+2023/05/23 21:18:06 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:06 Sending char 'L', code 0x4C, shift true
+2023/05/23 21:18:07 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:07 Sending char 'i', code 0x69, shift false
+2023/05/23 21:18:07 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:07 Sending char 'v', code 0x76, shift false
+2023/05/23 21:18:07 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:07 Sending char 'e', code 0x65, shift false
+2023/05/23 21:18:07 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:07 Sending char 'V', code 0x56, shift true
+2023/05/23 21:18:08 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:08 Sending char 'M', code 0x4D, shift true
+2023/05/23 21:18:08 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:08 Sending char '.', code 0x2E, shift false
+2023/05/23 21:18:08 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:08 Sending char 's', code 0x73, shift false
+2023/05/23 21:18:09 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:09 Sending char 'h', code 0x68, shift false
+2023/05/23 21:18:09 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:09 Sending char ' ', code 0x20, shift false
+2023/05/23 21:18:09 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:09 Sending char '8', code 0x38, shift false
+2023/05/23 21:18:09 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:09 Sending char '0', code 0x30, shift false
+2023/05/23 21:18:09 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:09 Sending char '6', code 0x36, shift false
+2023/05/23 21:18:10 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:10 Sending char '0', code 0x30, shift false
+2023/05/23 21:18:10 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:10 Special code '<enter>' found, replacing with: 0xFF0D
+2023/05/23 21:18:10 ui: [0;32m    bastille-installer.qemu.artix: Not using a NetBridge -- skipping StepWaitGuestAddress[0m
+2023/05/23 21:18:10 ui: [1;32m==> bastille-installer.qemu.artix: Using SSH communicator to connect: 127.0.0.1[0m
+2023/05/23 21:18:10 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:10 [INFO] Waiting for SSH, up to timeout: 20m0s
+2023/05/23 21:18:10 ui: [1;32m==> bastille-installer.qemu.artix: Waiting for SSH to become available...[0m
+2023/05/23 21:18:10 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:10 [INFO] Attempting SSH connection to 127.0.0.1:3580...
+2023/05/23 21:18:10 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:10 [DEBUG] reconnecting to TCP connection for SSH
+2023/05/23 21:18:10 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:10 [DEBUG] handshaking with SSH
+2023/05/23 21:18:10 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:10 [DEBUG] SSH handshake err: ssh: handshake failed: read tcp 127.0.0.1:39956->127.0.0.1:3580: read: connection reset by peer
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:17 [INFO] Attempting SSH connection to 127.0.0.1:3580...
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:17 [DEBUG] reconnecting to TCP connection for SSH
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:17 [DEBUG] handshaking with SSH
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:17 [DEBUG] handshake complete!
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:17 [DEBUG] Opening new ssh session
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:17 [INFO] agent forwarding enabled
+2023/05/23 21:18:17 ui: [1;32m==> bastille-installer.qemu.artix: Connected to SSH![0m
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:17 Running the provision hook
+2023/05/23 21:18:17 [INFO] (telemetry) Starting provisioner file
+2023/05/23 21:18:17 ui: [1;32m==> bastille-installer.qemu.artix: Uploading ./files => /tmp/[0m
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:17 [DEBUG] Upload dir './files' to '/tmp/'
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:17 [DEBUG] Opening new ssh session
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:17 [DEBUG] Starting remote scp process:  scp -rvt /tmp/
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:17 [DEBUG] Started SCP session, beginning transfers...
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:17 [DEBUG] No trailing slash, creating the source directory name
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:17 [DEBUG] SCP: starting directory upload: files
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:17 [DEBUG] scp: Uploading yr-af.map: perms=C0644 size=3717
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:17 [DEBUG] scp: Uploading packer-archlinux.py: perms=C0644 size=6777
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:17 [DEBUG] scp: Uploading user_credentials.json: perms=C0644 size=47
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:17 [DEBUG] scp: Uploading user_disk_layout.json: perms=C0644 size=805
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:17 [DEBUG] scp: Uploading user_configuration.json: perms=C0644 size=542
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:17 [DEBUG] SCP session complete, closing stdin pipe.
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:17 [DEBUG] Waiting for SSH session to complete.
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:17 [DEBUG] scp stderr (length 402): Sink: D0755 0 files
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: Sink: C0644 3717 yr-af.map
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: scp: debug1: fd 0 clearing O_NONBLOCK
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: Sink: C0644 6777 packer-archlinux.py
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: scp: debug1: fd 0 clearing O_NONBLOCK
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: Sink: C0644 47 user_credentials.json
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: scp: debug1: fd 0 clearing O_NONBLOCK
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: Sink: C0644 805 user_disk_layout.json
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: scp: debug1: fd 0 clearing O_NONBLOCK
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: Sink: C0644 542 user_configuration.json
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: scp: debug1: fd 0 clearing O_NONBLOCK
+2023/05/23 21:18:17 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: Sink: E
+2023/05/23 21:18:17 [INFO] (telemetry) ending file
+2023/05/23 21:18:17 [INFO] (telemetry) Starting provisioner shell
+2023/05/23 21:18:17 ui: [1;32m==> bastille-installer.qemu.artix: Pausing 10s before the next provisioner...[0m
+2023/05/23 21:18:27 ui: [1;32m==> bastille-installer.qemu.artix: Provisioning with shell script: scripts/liveVM.sh[0m
+2023/05/23 21:18:27 packer-provisioner-shell plugin: Opening scripts/liveVM.sh for reading
+2023/05/23 21:18:27 packer-provisioner-shell plugin: [INFO] 877 bytes written for 'uploadData'
+2023/05/23 21:18:27 [INFO] 877 bytes written for 'uploadData'
+2023/05/23 21:18:27 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:27 [DEBUG] Opening new ssh session
+2023/05/23 21:18:27 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:27 [DEBUG] Starting remote scp process:  scp -vt /tmp
+2023/05/23 21:18:27 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:27 [DEBUG] Started SCP session, beginning transfers...
+2023/05/23 21:18:27 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:27 [DEBUG] Copying input data into temporary file so we can read the length
+2023/05/23 21:18:27 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:27 [DEBUG] scp: Uploading script_9903.sh: perms=C0644 size=877
+2023/05/23 21:18:27 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:27 [DEBUG] SCP session complete, closing stdin pipe.
+2023/05/23 21:18:27 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:27 [DEBUG] Waiting for SSH session to complete.
+2023/05/23 21:18:27 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:27 [DEBUG] scp stderr (length 70): Sink: C0644 877 script_9903.sh
+2023/05/23 21:18:27 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: scp: debug1: fd 0 clearing O_NONBLOCK
+2023/05/23 21:18:27 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:27 [DEBUG] Opening new ssh session
+2023/05/23 21:18:27 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:27 [DEBUG] starting remote command: chmod 0755 /tmp/script_9903.sh
+2023/05/23 21:18:27 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:27 [INFO] RPC endpoint: Communicator ended with: 0
+2023/05/23 21:18:27 [INFO] RPC client: Communicator ended with: 0
+2023/05/23 21:18:27 [INFO] RPC endpoint: Communicator ended with: 0
+2023/05/23 21:18:27 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
+2023/05/23 21:18:27 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:27 [DEBUG] Opening new ssh session
+2023/05/23 21:18:27 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:18:27 [DEBUG] starting remote command: echo 'primany provisioner';PACKER_BUILDER_TYPE='qemu' PACKER_BUILD_NAME='artix' PACKER_HTTP_ADDR='10.0.2.2:8060' PACKER_HTTP_IP='10.0.2.2' PACKER_HTTP_PORT='8060'  sudo -E -S bash '/tmp/script_9903.sh'
+2023/05/23 21:18:27 ui: [0;32m    bastille-installer.qemu.artix: primany provisioner[0m
+2023/05/23 21:18:27 ui: [0;32m    bastille-installer.qemu.artix: ==> liveVM.sh: Lock root password..[0m
+2023/05/23 21:18:27 ui: [0;32m    bastille-installer.qemu.artix: ==> liveVM.sh: Update the system clock..[0m
+2023/05/23 21:18:27 ui: [0;32m    bastille-installer.qemu.artix: ==> liveVM.sh: Modifying local settings..[0m
+2023/05/23 21:18:27 ui: [0;32m    bastille-installer.qemu.artix: ==> liveVM.sh: Installing packages for commands used in provisioner scripts..[0m
+2023/05/23 21:18:30 ui: [0;32m    bastille-installer.qemu.artix: ==> liveVM.sh: Reranking pacman mirrorslist..[0m
+2023/05/23 21:19:22 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:22 [INFO] RPC endpoint: Communicator ended with: 0
+2023/05/23 21:19:22 [INFO] 263 bytes written for 'stdout'
+2023/05/23 21:19:22 [INFO] 0 bytes written for 'stderr'
+2023/05/23 21:19:22 [INFO] RPC client: Communicator ended with: 0
+2023/05/23 21:19:22 [INFO] RPC endpoint: Communicator ended with: 0
+2023/05/23 21:19:22 packer-provisioner-shell plugin: [INFO] 263 bytes written for 'stdout'
+2023/05/23 21:19:22 packer-provisioner-shell plugin: [INFO] 0 bytes written for 'stderr'
+2023/05/23 21:19:22 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
+2023/05/23 21:19:22 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:22 [DEBUG] Opening new ssh session
+2023/05/23 21:19:22 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:22 [DEBUG] starting remote command: rm -f /tmp/script_9903.sh
+2023/05/23 21:19:22 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:22 [INFO] RPC endpoint: Communicator ended with: 0
+2023/05/23 21:19:22 [INFO] RPC client: Communicator ended with: 0
+2023/05/23 21:19:22 [INFO] RPC endpoint: Communicator ended with: 0
+2023/05/23 21:19:22 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
+2023/05/23 21:19:22 ui: [1;32m==> bastille-installer.qemu.artix: Provisioning with shell script: scripts/tables.sh[0m
+2023/05/23 21:19:22 packer-provisioner-shell plugin: Opening scripts/tables.sh for reading
+2023/05/23 21:19:22 packer-provisioner-shell plugin: [INFO] 567 bytes written for 'uploadData'
+2023/05/23 21:19:22 [INFO] 567 bytes written for 'uploadData'
+2023/05/23 21:19:22 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:22 [DEBUG] Opening new ssh session
+2023/05/23 21:19:22 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:22 [DEBUG] Starting remote scp process:  scp -vt /tmp
+2023/05/23 21:19:22 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:22 [DEBUG] Started SCP session, beginning transfers...
+2023/05/23 21:19:22 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:22 [DEBUG] Copying input data into temporary file so we can read the length
+2023/05/23 21:19:22 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:22 [DEBUG] scp: Uploading script_9903.sh: perms=C0644 size=567
+2023/05/23 21:19:22 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:22 [DEBUG] SCP session complete, closing stdin pipe.
+2023/05/23 21:19:22 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:22 [DEBUG] Waiting for SSH session to complete.
+2023/05/23 21:19:22 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:22 [DEBUG] scp stderr (length 70): Sink: C0644 567 script_9903.sh
+2023/05/23 21:19:22 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: scp: debug1: fd 0 clearing O_NONBLOCK
+2023/05/23 21:19:22 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:22 [DEBUG] Opening new ssh session
+2023/05/23 21:19:22 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:22 [DEBUG] starting remote command: chmod 0755 /tmp/script_9903.sh
+2023/05/23 21:19:22 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:22 [INFO] RPC endpoint: Communicator ended with: 0
+2023/05/23 21:19:22 [INFO] RPC client: Communicator ended with: 0
+2023/05/23 21:19:22 [INFO] RPC endpoint: Communicator ended with: 0
+2023/05/23 21:19:22 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
+2023/05/23 21:19:22 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:22 [DEBUG] Opening new ssh session
+2023/05/23 21:19:22 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:22 [DEBUG] starting remote command: echo 'primany provisioner';PACKER_BUILDER_TYPE='qemu' PACKER_BUILD_NAME='artix' PACKER_HTTP_ADDR='10.0.2.2:8060' PACKER_HTTP_IP='10.0.2.2' PACKER_HTTP_PORT='8060'  sudo -E -S bash '/tmp/script_9903.sh'
+2023/05/23 21:19:22 ui: [0;32m    bastille-installer.qemu.artix: primany provisioner[0m
+2023/05/23 21:19:22 ui: [0;32m    bastille-installer.qemu.artix: ==> tables.sh: Clearing partition table on /dev/vda..[0m
+2023/05/23 21:19:23 ui: [0;32m    bastille-installer.qemu.artix: ==> tables.sh: Destroying magic strings and signatures on /dev/vda..[0m
+2023/05/23 21:19:23 ui: [0;32m    bastille-installer.qemu.artix: ==> tables.sh: Formatting disk..[0m
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [INFO] RPC endpoint: Communicator ended with: 0
+2023/05/23 21:19:25 [INFO] 176 bytes written for 'stdout'
+2023/05/23 21:19:25 [INFO] 0 bytes written for 'stderr'
+2023/05/23 21:19:25 [INFO] RPC client: Communicator ended with: 0
+2023/05/23 21:19:25 [INFO] RPC endpoint: Communicator ended with: 0
+2023/05/23 21:19:25 packer-provisioner-shell plugin: [INFO] 176 bytes written for 'stdout'
+2023/05/23 21:19:25 packer-provisioner-shell plugin: [INFO] 0 bytes written for 'stderr'
+2023/05/23 21:19:25 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [DEBUG] Opening new ssh session
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [DEBUG] starting remote command: rm -f /tmp/script_9903.sh
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [INFO] RPC endpoint: Communicator ended with: 0
+2023/05/23 21:19:25 [INFO] RPC client: Communicator ended with: 0
+2023/05/23 21:19:25 [INFO] RPC endpoint: Communicator ended with: 0
+2023/05/23 21:19:25 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
+2023/05/23 21:19:25 ui: [1;32m==> bastille-installer.qemu.artix: Provisioning with shell script: scripts/partitions.sh[0m
+2023/05/23 21:19:25 packer-provisioner-shell plugin: Opening scripts/partitions.sh for reading
+2023/05/23 21:19:25 packer-provisioner-shell plugin: [INFO] 465 bytes written for 'uploadData'
+2023/05/23 21:19:25 [INFO] 465 bytes written for 'uploadData'
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [DEBUG] Opening new ssh session
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [DEBUG] Starting remote scp process:  scp -vt /tmp
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [DEBUG] Started SCP session, beginning transfers...
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [DEBUG] Copying input data into temporary file so we can read the length
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [DEBUG] scp: Uploading script_9903.sh: perms=C0644 size=465
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [DEBUG] SCP session complete, closing stdin pipe.
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [DEBUG] Waiting for SSH session to complete.
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [DEBUG] scp stderr (length 70): Sink: C0644 465 script_9903.sh
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: scp: debug1: fd 0 clearing O_NONBLOCK
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [DEBUG] Opening new ssh session
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [DEBUG] starting remote command: chmod 0755 /tmp/script_9903.sh
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [INFO] RPC endpoint: Communicator ended with: 0
+2023/05/23 21:19:25 [INFO] RPC client: Communicator ended with: 0
+2023/05/23 21:19:25 [INFO] RPC endpoint: Communicator ended with: 0
+2023/05/23 21:19:25 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [DEBUG] Opening new ssh session
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [DEBUG] starting remote command: echo 'primany provisioner';PACKER_BUILDER_TYPE='qemu' PACKER_BUILD_NAME='artix' PACKER_HTTP_ADDR='10.0.2.2:8060' PACKER_HTTP_IP='10.0.2.2' PACKER_HTTP_PORT='8060'  sudo -E -S bash '/tmp/script_9903.sh'
+2023/05/23 21:19:25 ui: [0;32m    bastille-installer.qemu.artix: primany provisioner[0m
+2023/05/23 21:19:25 ui: [0;32m    bastille-installer.qemu.artix: ==> partitions.sh: Writing Filesystem types..[0m
+2023/05/23 21:19:25 ui: [0;32m    bastille-installer.qemu.artix: ==> partitions.sh: Mounting partitions..[0m
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [INFO] RPC endpoint: Communicator ended with: 0
+2023/05/23 21:19:25 [INFO] 107 bytes written for 'stdout'
+2023/05/23 21:19:25 [INFO] 0 bytes written for 'stderr'
+2023/05/23 21:19:25 [INFO] RPC client: Communicator ended with: 0
+2023/05/23 21:19:25 [INFO] RPC endpoint: Communicator ended with: 0
+2023/05/23 21:19:25 packer-provisioner-shell plugin: [INFO] 107 bytes written for 'stdout'
+2023/05/23 21:19:25 packer-provisioner-shell plugin: [INFO] 0 bytes written for 'stderr'
+2023/05/23 21:19:25 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [DEBUG] Opening new ssh session
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [DEBUG] starting remote command: rm -f /tmp/script_9903.sh
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [INFO] RPC endpoint: Communicator ended with: 0
+2023/05/23 21:19:25 [INFO] RPC client: Communicator ended with: 0
+2023/05/23 21:19:25 [INFO] RPC endpoint: Communicator ended with: 0
+2023/05/23 21:19:25 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
+2023/05/23 21:19:25 ui: [1;32m==> bastille-installer.qemu.artix: Provisioning with shell script: scripts/base.sh[0m
+2023/05/23 21:19:25 packer-provisioner-shell plugin: Opening scripts/base.sh for reading
+2023/05/23 21:19:25 packer-provisioner-shell plugin: [INFO] 549 bytes written for 'uploadData'
+2023/05/23 21:19:25 [INFO] 549 bytes written for 'uploadData'
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [DEBUG] Opening new ssh session
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [DEBUG] Starting remote scp process:  scp -vt /tmp
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [DEBUG] Started SCP session, beginning transfers...
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [DEBUG] Copying input data into temporary file so we can read the length
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [DEBUG] scp: Uploading script_9903.sh: perms=C0644 size=549
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [DEBUG] SCP session complete, closing stdin pipe.
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [DEBUG] Waiting for SSH session to complete.
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [DEBUG] scp stderr (length 70): Sink: C0644 549 script_9903.sh
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: scp: debug1: fd 0 clearing O_NONBLOCK
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [DEBUG] Opening new ssh session
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [DEBUG] starting remote command: chmod 0755 /tmp/script_9903.sh
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [INFO] RPC endpoint: Communicator ended with: 0
+2023/05/23 21:19:25 [INFO] RPC client: Communicator ended with: 0
+2023/05/23 21:19:25 [INFO] RPC endpoint: Communicator ended with: 0
+2023/05/23 21:19:25 packer-provisioner-shell plugin: [INFO] RPC client: Communicator ended with: 0
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [DEBUG] Opening new ssh session
+2023/05/23 21:19:25 packer-plugin-qemu_v1.0.9_x5.0_linux_amd64 plugin: 2023/05/23 21:19:25 [DEBUG] starting remote command: echo 'primany provisioner';PACKER_BUILDER_TYPE='qemu' PACKER_BUILD_NAME='artix' PACKER_HTTP_ADDR='10.0.2.2:8060' PACKER_HTTP_IP='10.0.2.2' PACKER_HTTP_PORT='8060'  sudo -E -S bash '/tmp/script_9903.sh'
+2023/05/23 21:19:25 ui: [0;32m    bastille-installer.qemu.artix: primany provisioner[0m
+2023/05/23 21:19:25 ui: [0;32m    bastille-installer.qemu.artix: ==> base.sh: Installing base system..[0m
+2023/05/23 21:20:45 ui: [0;32m    bastille-installer.qemu.artix: ==> base.sh: Installing kernel..[0m
