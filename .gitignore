@@ -1,4 +1,4 @@
-bastille-base/packer_cache/
-bastille-base/output/
-bastille-base/output-archlinux/
-bastille-base/files/id_bas.pub
+bastillebox-base/packer_cache/
+bastillebox-base/output/
+bastillebox-base/output-artix/
+bastillebox-base/files/id_bas.pub
