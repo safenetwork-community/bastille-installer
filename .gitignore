@@ -1,7 +1,7 @@
 # directories
-bastillebox-base/packer_cache/
-bastillebox-base/output/
-bastillebox-base/output-*/
+bib-base/packer_cache/
+bib-base/output/
+bib-base/output-*/
 
 # Public keys
 *.pub

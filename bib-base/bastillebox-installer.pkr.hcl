@@ -101,7 +101,6 @@ build {
     "scripts/tables.sh",
     "scripts/partitions.sh",
     "scripts/base.sh",
-    "scripts/mirrors.sh",
     "scripts/bootloader.sh",
     "scripts/pacman.sh",
     "scripts/setup.sh"
