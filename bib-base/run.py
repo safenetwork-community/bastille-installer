@@ -1,98 +1,59 @@
 #!/usr/bin/env python
 
 from pathlib import Path
-import subprocess
-import urllib.request
-from html.parser import HTMLParser
+import subprocess, os
 
-class IsoParse(HTMLParser):
-
-    def __init__(self):
-        super().__init__()
-        self.reset()
-        self.iso_url = f"{isoURL}/{artix_flavour}-YYYYMMDD-x86_64.iso"
-
-    def handle_starttag(self, tag, attrs):
-        if tag == "a":  
-            for name, link in attrs:
-                if link and name == "href" and link.startswith(f"{isoURL}/{artix_flavour}") == True:
-                    self.iso_url = link
-                    break
-
-def findIsoURL():
-    #Import HTML from a URL
-    url = urllib.request.urlopen(f"{isoURL}s.php")
-    html = url.read().decode()
-    url.close()
-
-    p = IsoParse()
-    p.feed(html)
-    return p.iso_url
-
-def findChecksum():
-    url = urllib.request.urlopen(f"{isoURL}/sha256sums")
-    for line in url:
-        if line.__contains__(artix_flavour.encode()):  
-            return line.split()[0].decode("utf-8")
-
+vm_name = "SE_bastille-installer-box"
+vm_hv = "qemu"
+vm_os = "alpinelinux"
+vm_ym = "2023-08"
 
 command = "packer"
 subcommand = "build"
+option1 = f"-only={vm_name}.{vm_hv}.{vm_os}"
 
-# URLs
-isoURL = "https://download.artixlinux.org/weekly-iso"
-artix_flavour = "artix-base-dinit"
+# Environment variables
+packer_env = os.environ.copy()
+packer_env["PACKER_LOG"] = "1"
 
 # File names
-template = "bastillebox-installer.pkr.hcl"
-vm_name = "bastillebox-installer_qemu_artix-2023-04.qcow2"
+template = f"{vm_name}.pkr.hcl"
+vmq_name = f"{vm_name}.qcow2"
+vmb_name = f"{vm_name}_{vm_hv}_{vm_os}_{vm_ym}.box"
 
 # Folder locations
 path_output = "./output"
-path_output_os = "./output-artix"
+path_output_qemu = f"./output-{vm_os}"
 path_virt_manager = "/var/lib/libvirt/images/"
 
 # File locations
-location_vm_old = f"{path_output}/{vm_name}"
-location_vm_new = f"{path_virt_manager}/{vm_name}"
+location_vmq_old = f"{path_output_qemu}/{vmq_name}"
+location_vmq_new = f"{path_virt_manager}/{vmq_name}"
 
 # delete output folder if it exists
 if Path(path_output).is_dir(): 
     subprocess.run(["rm", "-r", path_output])
 
 # delete os output folder if it exists
-if Path(path_output_os).is_dir(): 
-    subprocess.run(["rm", "-r", path_output_os])
+if Path(path_output_qemu).is_dir(): 
+    subprocess.run(["rm", "-r", path_output_qemu])
 
+# Run packer
+args = [command, subcommand, option1, template]
+print(' '.join(args)) 
+subprocess.run(args, env=packer_env)
 
-if __name__ == '__main__':
-
-    iso_url = findIsoURL()
-    iso_checksum = findChecksum()
-    
-    # Run packer
-    print([command, subcommand, 
-           "-var", f"iso_url={iso_url}",
-           "-var", f"iso_checksum={iso_checksum}", 
-           template])
-    subprocess.run([command, subcommand, 
-                    "-var", f"iso_url={iso_url}", 
-                    "-var", f"iso_checksum={iso_checksum}", 
-                    template])
-
-    # Copy to virt-manager default images folder
-    if Path(path_output).exists() and Path(path_output).is_dir():  
-        subprocess.run(["sudo", "chown", "libvirt-qemu:libvirt-qemu", location_vm_old])
-        subprocess.run(["sudo", "chmod", "600", location_vm_old])
-        subprocess.run(["sudo", "mv", location_vm_old, location_vm_new])
-        #subprocess.run(["sudo", "virt-install",
-        #                "--name", "bastille-installer",
-        #                "--vcpu", "2",
-        #                "--memory", "1024",
-        #                "--osinfo", "linux2022",
-        #                "--disk", location_vm_new, 
-        #                "--import",
-        #                "--boot", "loader=/usr/share/edk2-ovmf/x64/OVMF_CODE.fd," +
-        #                "loader.readonly=yes,loader.type=pflash," + 
-        #                "nvram.template=/usr/share/edk2-ovmf/x64/OVMF_CODE.fd," +
-        #                "loader_secure=no"])
+# Move box to virt-manager 
+if Path(path_output).exists() and Path(path_output).is_dir():  
+    #subprocess.run(["sudo", "qemu-img", "info", location_vm_old])
+    subprocess.run(["sudo", "chown", "libvirt-qemu:libvirt-qemu", location_vmq_old])
+    subprocess.run(["sudo", "chmod", "600", location_vmq_old])
+    subprocess.run(["sudo", "mv", location_vmq_old, location_vmq_new])
+    subprocess.run(["sudo", "virt-install",
+                    "--name", "bastille-installer",
+                    "--vcpu", "2",
+                    "--memory", "1024",
+                    "--osinfo", "archlinux",
+                    "--disk", location_vmq_new, 
+                    "--import",
+                    "--boot", "uefi"])

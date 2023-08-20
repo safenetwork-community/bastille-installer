@@ -1,30 +1,107 @@
-#!/usr/bin/env bash
+#!/bin/ash
 
-LOCAL_IP=10.0.2.2
-PORT=$1
-
-echo "==> ${NAME_SH}: Downloading vars file.."
-curl -Os http://${LOCAL_IP}:${PORT}/vars.sh >/dev/null
-
-. ~/vars.sh
-
+set -euxo pipefail
 NAME_SH='initLiveVM.sh'
 
-echo "==> ${NAME_SH}: Creating liveVM group.."
-/usr/bin/groupadd ${USER_GROUP}
-echo "==> ${NAME_SH}: Creating liveVM user.."
-/usr/bin/useradd -m -c 'Bas User' -g ${USER_GROUP} -p ${USER_PASSWORD} ${USER_NAME}
-tee /etc/sudoers.d/10_${USER_NAME} &>/dev/null <<EOF
-Defaults env_keep += "SSH_AUTH_SOCK"
-${USER_NAME} ALL=(ALL) NOPASSWD: ALL 
+NAME='bas'
+USER='bas'
+PASS='bas'
+GROUP='bas'
+PUBLIC_KEY=id_${NAME}.pub
+PRIVATE_KEY=id_${NAME}
+SSH_DIR=/home/${USER}/.ssh
+A_KEYS=${SSH_DIR}/authorized_keys
+LOCAL_IP='10.0.2.2'
+
+CFG_SSH=/etc/ssh/sshd_config
+DOASD_DIR=/etc/doas.d/
+
+BOOT_DEVICE='/dev/sda'
+APKREPOSOPTS="http://mirrors.dotsrc.org/alpine/v3.18/main"
+
+echo "==> ${NAME_SH}: Update package list.."
+echo ${APKREPOSOPTS} | tee -a /etc/apk/repositories
+apk update
+
+# install btrfs
+apk add btrfs-progs
+
+# install to local disk.
+cat >answers <<EOF
+APKREPOSOPTS=${APKREPOSOPTS}
+DISKOPTS="-s 0 -m sys ${BOOT_DEVICE}"
+DNSOPTS=""
+HOSTNAMEOPTS="-n alpine"
+INTERFACESOPTS="auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet dhcp
+"
+KEYMAPOPTS="us us"
+NTPOPTS="-c chrony"
+PROXYOPTS="none"
+ROOTFS="btrfs"
+SSHDOPTS="-c openssh"
+TIMEZONEOPTS="-z UTC"
+USE_EFI=1
+USEROPTS="-a ${USER}"
 EOF
-/usr/bin/chmod 0440 /etc/sudoers.d/10_${USER_NAME}
+ERASE_DISKS="${BOOT_DEVICE}" ROOTFS="btrfs" \
+setup-alpine -e -f ${PWD}/answers >/dev/null
 
-echo "==> ${NAME_SH}: Creating public key for liveVM SSH connection.."
-mkdir -pm 700 ${USER_SSH_DIR}
-curl -s http://${LOCAL_IP}:${PORT}/${USER_PUBLIC_KEY} | tee ${USER_KEYS_PATH} >/dev/null
-chmod 0600 ${USER_KEYS_PATH}
-chown -R ${USER_NAME}:${USER_GROUP} ${USER_SSH_DIR}
+passwd -u ${USER}
 
-echo "==> ${NAME_SH}: Init LiveVM SSH.."
-/usr/bin/dinitctl enable sshd
+# install the efi boot manager.
+apk add efibootmgr
+# show the boot options.
+# efibootmgr -v
+# remove all the boot options.
+efibootmgr \
+  | sed -nE 's,^Boot([0-9A-F]{4}).*,\1,gp' \
+  | xargs -I% efibootmgr --quiet --delete-bootnum --bootnum %
+  # create the boot option.
+efibootmgr \
+  -c \
+  -d "${BOOT_DEVICE}" \
+  -p 1 \
+  -L Alpine \
+  -l '\EFI\alpine\grubx64.efi'
+
+# mount device
+mount -t btrfs "${BOOT_DEVICE}2" /mnt
+
+# configure the vagrant user.
+chroot /mnt ash <<-EOF
+set -euxo pipefail
+
+# configure doas to allow the wheel group members to use root permissions
+# without providing a password.
+echo 'permit nopass :wheel' | tee /etc/doas.d/wheel.conf
+
+# set the vagrant user password.
+echo '${USER}:${PASS}' | chpasswd
+EOF
+
+# lock the root account.
+chroot /mnt passwd -l root
+
+chroot /mnt ash <<-EOF
+set -euxo pipefail 
+
+install -dm 700 ${SSH_DIR}
+wget -qO- http://${LOCAL_IP}:${LOCAL_PORT}/${PUBLIC_KEY} | tee ${A_KEYS} >/dev/null
+chmod 0600 ${A_KEYS}
+chown -R ${USER}:${GROUP} ${SSH_DIR}
+
+ls /etc/ssh/sshd_config
+
+sed -i "s/^#PubkeyAuthentication.*/PubkeyAuthentication yes/; \
+s/^#PasswordAuthentication.*/PasswordAuthentication no/; \
+s/^#PermitEmptyPasswords.*/PermitEmptyPasswords no/; \
+s/^#ChallengeResponseAuthentication.*/ChallengeResponseAuthentication no/; \
+s/^#KbdInteractiveAuthentication.*/KbdInteractiveAuthentication no/" ${CFG_SSH}
+echo "AllowUsers ${USER}" | tee -a ${CFG_SSH}
+EOF
+
+reboot

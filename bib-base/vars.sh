@@ -1,16 +1,11 @@
 #!/usr/bin/env bash
 
 # Host locals
-
-HOST_LIVEVM_NAME="Artix-liveVM"
+HOST_LIVEVM_NAME="Arch-liveVM"
+PACKER_BUILDER_TYPE="qemu"
 
 # Drives and partitions
-
-if [[ $PACKER_BUILDER_TYPE == "qemu" ]]; then
-  DISK='/dev/vda'
-else
-  DISK='/dev/sda'
-fi
+DISK='/dev/vda'
 BOOT_DIR='/mnt/boot/efi'
 ROOT_DIR='/mnt'
 BOOT_LABEL="AMOHRS_BAZ"
@@ -23,7 +18,7 @@ ROOT_SIZE="∞"
 # Types
 
 ENCRYPTION_TYPE="none"
-FS_TYPE="ext4"
+FS_TYPE="btrfs"
 INIT_TYPE="dinit"
 
 # Locals
@@ -56,7 +51,7 @@ USER_SUDO_PATH=/etc/sudoers.d/10_${USER_NAME}
 # Bootloader
 
 ESP_DIR='/boot/efi'
-BOOTLOADER_LABEL="ARTIX_BOOT"
+BOOTLOADER_LABEL="ARCH_BOOT"
 
 # Other dirs
 
