@@ -18,12 +18,10 @@ locals {
     "wget -qO- http://{{ .HTTPIP }}:{{ .HTTPPort }}/${local.init_script} | LOCAL_PORT={{ .HTTPPort }} ash<enter>",
   ]
   cpus                  = 1
-  disk_size             = "2G"
-  disk_size_vb          = "2000"
-  efi_firmware_code     = "/usr/share/edk2/x64/OVMF_CODE.secboot.4m.fd"
-  efi_firmware_vars     = "/usr/share/edk2/x64/OVMF_VARS.4m.fd"
+  disk_size             = "4G"
+  disk_size_vb          = "4000"
   format                = "qcow2"
-  headless              = "false"
+  headless              = "true"
   http_directory        = "srv"
   init_script           = "initLiveVM.sh"
   iso_checksum          = "sha256:6bc7ff54f5249bfb67082e1cf261aaa6f307d05f64089d3909e18b2b0481467f"
@@ -43,9 +41,7 @@ source "qemu" "alpinelinux" {
   cpus                    = local.cpus
   disk_interface          = "virtio-scsi"
   disk_size               = local.disk_size
-  efi_boot                = true
-  efi_firmware_code       = local.efi_firmware_code
-  efi_firmware_vars       = local.efi_firmware_vars
+  efi_boot                = false
   format                  = "qcow2"
   headless                = local.headless
   http_directory          = local.http_directory
@@ -71,14 +67,16 @@ build {
   
   provisioner "file" {
     destination = "/tmp"
-    source      = "./files/tmp/"
+    source      = "./files/rootdir"
   }
 
   provisioner "shell" {
     execute_command = "doas '{{ .Path }}'"
     expect_disconnect = true
     scripts           = [
-      "scripts/provision.sh" 
+      "scripts/provision.sh",
+      "scripts/bootloader.sh",
+      "scripts/cleanup.sh"
     ]
   }
   
@@ -87,6 +85,24 @@ build {
     source      = "./files/user/"
   }
  
+  provisioner "file" {
+    destination = "./boot/vmlinuz-virt"
+    direction   = "download" 
+    source      = "/boot/vmlinuz-virt"
+  } 
+
+  provisioner "file" {
+    destination = "./tmp/initramfs-virt"
+    direction   = "download" 
+    source      = "/tmp/initramfs-virt"
+  } 
+
+  provisioner "file" {
+    destination = "./boot/initramfs-virt.gz"
+    direction   = "download" 
+    source      = "/tmp/initramfs-virt.gz"
+  } 
+
   post-processor "vagrant" {
     keep_input_artifact = true
     output = "output/${local.vm_name}-${formatdate("YYYY-MM", timestamp())}.box"

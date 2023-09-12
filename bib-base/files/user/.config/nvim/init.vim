@@ -1,5 +1,6 @@
-lua require('languages.yr')
 
-call plug#begin('~/.local/share/nvim/site/plugged')
-Plug 'junegunn/goyo.vim'
+lua require("languages.yr")
+
+call plug#begin()
+Plug 'lambdalisue/suda.vim'
 call plug#end()

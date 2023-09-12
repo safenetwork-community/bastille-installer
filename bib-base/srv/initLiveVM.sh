@@ -16,8 +16,10 @@ LOCAL_IP='10.0.2.2'
 CFG_SSH=/etc/ssh/sshd_config
 DOASD_DIR=/etc/doas.d/
 
+ROOT_DIR='/mnt'
 BOOT_DEVICE='/dev/sda'
-APKREPOSOPTS="http://mirrors.dotsrc.org/alpine/v3.18/main"
+ROOTFS=${BOOT_DEVICE}2
+APKREPOSOPTS="https://alpine.mirror.wearetriple.com/v3.18/main"
 
 echo "==> ${NAME_SH}: Update package list.."
 echo ${APKREPOSOPTS} | tee -a /etc/apk/repositories
@@ -44,35 +46,34 @@ PROXYOPTS="none"
 ROOTFS="btrfs"
 SSHDOPTS="-c openssh"
 TIMEZONEOPTS="-z UTC"
-USE_EFI=1
 USEROPTS="-a ${USER}"
 EOF
-ERASE_DISKS="${BOOT_DEVICE}" ROOTFS="btrfs" \
+ERASE_DISKS="${BOOT_DEVICE}" BOOTLOADER="grub" ROOTFS="btrfs" \
 setup-alpine -e -f ${PWD}/answers >/dev/null
 
 passwd -u ${USER}
 
 # install the efi boot manager.
-apk add efibootmgr
+# apk add efibootmgr
 # show the boot options.
 # efibootmgr -v
 # remove all the boot options.
-efibootmgr \
-  | sed -nE 's,^Boot([0-9A-F]{4}).*,\1,gp' \
-  | xargs -I% efibootmgr --quiet --delete-bootnum --bootnum %
+# efibootmgr \
+#  | sed -nE 's,^Boot([0-9A-F]{4}).*,\1,gp' \
+#  | xargs -I% efibootmgr --quiet --delete-bootnum --bootnum %
   # create the boot option.
-efibootmgr \
-  -c \
-  -d "${BOOT_DEVICE}" \
-  -p 1 \
-  -L Alpine \
-  -l '\EFI\alpine\grubx64.efi'
+# efibootmgr \
+#  -c \
+#  -d "${BOOT_DEVICE}" \
+#  -p 1 \
+#  -L Alpine \
+#  -l '\EFI\alpine\grubx64.efi'
 
 # mount device
-mount -t btrfs "${BOOT_DEVICE}2" /mnt
+mount -t btrfs ${ROOTFS} ${ROOT_DIR}
 
 # configure the vagrant user.
-chroot /mnt ash <<-EOF
+chroot ${ROOT_DIR} ash <<-EOF
 set -euxo pipefail
 
 # configure doas to allow the wheel group members to use root permissions
@@ -84,17 +85,15 @@ echo '${USER}:${PASS}' | chpasswd
 EOF
 
 # lock the root account.
-chroot /mnt passwd -l root
+chroot ${ROOT_DIR} passwd -l root
 
-chroot /mnt ash <<-EOF
+chroot ${ROOT_DIR} ash <<-EOF
 set -euxo pipefail 
 
 install -dm 700 ${SSH_DIR}
 wget -qO- http://${LOCAL_IP}:${LOCAL_PORT}/${PUBLIC_KEY} | tee ${A_KEYS} >/dev/null
 chmod 0600 ${A_KEYS}
 chown -R ${USER}:${GROUP} ${SSH_DIR}
-
-ls /etc/ssh/sshd_config
 
 sed -i "s/^#PubkeyAuthentication.*/PubkeyAuthentication yes/; \
 s/^#PasswordAuthentication.*/PasswordAuthentication no/; \
