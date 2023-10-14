@@ -4,8 +4,7 @@ set -euxo pipefail
 NAME_SH=cleanup.sh
 
 echo "==> ${NAME_SH}: Clean up script packages.."
-apk del bison build-base efibootmgr flex freetype-dev 
-apk del gpg gpg-agent linux-headers python3 rsync unifont
+apk del curl efibootmgr moreutils rsync
 
 # NB prefer discard/trim (safer; faster) over creating a big zero filled file
 #    (somewhat unsafe as it has to fill the entire disk, which might trigger

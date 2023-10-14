@@ -2,35 +2,32 @@
 set -euxo pipefail
 
 NAME_SH=bootloader.sh
-USER=bas
-
-#echo "==> ${NAME_SH}: Remove initial efi grub and all it\'s configurations.."
-#apk del --purge grub-efi
-#apk del --purge grub
-
-#echo "==> ${NAME_SH}: Remove EFI boot options.."
-#apk add efibootmgr
-#efibootmgr \
-#  | sed -nE 's,^Boot([0-9A-F]{4}).*,\1,gp' \
-#  | xargs -I% efibootmgr --quiet --delete-bootnum --bootnum %
-
-ls -lha /boot
-ls -lha /boot/grub
-cat /boot/grub/grub.cfg
+USER_NAME=bas
+USER_HOME_DIR=/home/${USER_NAME}
 
 sed -i '\@^/dev/cdrom@d;\@^/dev/fd@d;\@/dev/usbdisk@d' /etc/fstab
 
-echo "==> ${NAME_SH}: Rebuild initramfs.."
-mkinitfs
+# echo "==> ${NAME_SH}: Install the u-root dependencies."
+# apk add direnv go
 
-echo "==> ${NAME_SH}: New initramfs for QEMU.."
-mkinitfs -o /tmp/initramfs-virt
-chmod 777 /tmp/initramfs-virt
+# echo "==> ${NAME_SH}: Install the goenv."
+# doas -u ${USER_NAME} wget -q https://github.com/ankitcharolia/goenv/releases/latest/download/goenv-linux-amd64.tar.gz
+# doas -u ${USER_NAME} mkdir ./goenv && tar -xzf goenv-linux-amd64.tar.gz -C ./goenv
+# doas install -o root -g root ./goenv/goenv /usr/bin/
+# ulimit -n 66536
+# doas -u ${USER_NAME} goenv --install 1.20.8 &>/dev/null
 
-echo "==> ${NAME_SH}: New initramfs for Linuxboot.."
-cp /tmp/initramfs-virt /tmp/initramfs-virt.gz
-zcat /tmp/initramfs-virt.gz | cpio -id /tmp/initramfs-virt.gz
-chmod 777 /tmp/initramfs-virt.gz
+# echo "==> ${NAME_SH}: Download u-root."
+# doas -u ${USER_NAME} git clone https://github.com/u-root/u-root
+# cd u-root
 
-#grub-mkconfig -o /boot/grub/grub.cfg
-#sleep 300
+# echo "==> ${NAME_SH}: Setup go version.."
+# sponge .envrc <<'EOF'
+# export GOROOT=~/.go/1.20.8
+# EOF
+
+# echo "==> ${NAME_SH}: Install u-root."
+# doas -u ${USER_NAME} go build
+# doas -u ${USER_NAME} ./u-root core boot
+# doas mv /tmp/initramfs.linux_amd64.cpio /boot/initramfs-virt
+# cd ${USER_HOME_DIR}

@@ -51,23 +51,8 @@ EOF
 ERASE_DISKS="${BOOT_DEVICE}" BOOTLOADER="grub" ROOTFS="btrfs" \
 setup-alpine -e -f ${PWD}/answers >/dev/null
 
+# add password
 passwd -u ${USER}
-
-# install the efi boot manager.
-# apk add efibootmgr
-# show the boot options.
-# efibootmgr -v
-# remove all the boot options.
-# efibootmgr \
-#  | sed -nE 's,^Boot([0-9A-F]{4}).*,\1,gp' \
-#  | xargs -I% efibootmgr --quiet --delete-bootnum --bootnum %
-  # create the boot option.
-# efibootmgr \
-#  -c \
-#  -d "${BOOT_DEVICE}" \
-#  -p 1 \
-#  -L Alpine \
-#  -l '\EFI\alpine\grubx64.efi'
 
 # mount device
 mount -t btrfs ${ROOTFS} ${ROOT_DIR}

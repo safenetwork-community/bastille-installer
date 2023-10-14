@@ -7,6 +7,7 @@ NAME_SH=provision.sh
 USER_NAME='bas'
 USER_GROUP='bas'
 USER_HOME_DIR=/home/${USER_NAME}
+ROOT_HOME_DIR=/root
 APP_NAME='SE_bastille-installer'
 APP_DIR=${USER_HOME_DIR}/${APP_NAME}
 
@@ -24,7 +25,7 @@ echo "==> ${NAME_SH}: Install keyboard layouts.."
 apk add kbd-bkeymaps
 
 echo "==> ${NAME_SH}: Add script packages.."
-apk add rsync
+apk add build-base curl moreutils python3 rsync
 
 echo "==> ${NAME_SH}: Merge all system files"
 chown root:root -R /tmp/rootdir
@@ -46,17 +47,34 @@ echo "==> ${NAME_SH}: Install the SE Bastille Installer."
 doas -u ${USER_NAME} git clone https://github.com/safenetwork-community/${APP_NAME}.git
 doas -u ${USER_NAME} git -C ${APP_DIR} checkout -q `doas -u ${USER_NAME} git -C ${APP_DIR} describe --tags`
 
-echo "==> ${NAME_SH}: Install neovim.."
-apk add neovim
+echo "==> ${NAME_SH}: Install lunarvim.."
+apk add neovim 
+sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF \
+  | LV_BRANCH='release-1.3/neovim-0.9' doas -u ${USER_NAME} \
+  curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.3/neovim-0.9/utils/installer/install.sh \
+  | doas -u ${USER_NAME} bash
+n
+y
+n
+EOF
 
 echo "==> ${NAME_SH}: Disable DNS reverse lookup.."
 sed -i -E 's,#?(UseDNS\s+).+,\1no,' /etc/ssh/sshd_config
 
 # NB to get these codes, press ctrl+v then the key combination you want.
 echo "==> ${NAME_SH}: Setup bash history navigation.."
-cat >>/etc/inputrc <<'EOF'
+sponge /etc/inputrc <<'EOF'
 "\e[A": history-search-backward
 "\e[B": history-search-forward
 set show-all-if-ambiguous on
 set completion-ignore-case on
+EOF
+
+echo "==> ${NAME_SH}: Setup bash aliases.."
+sponge -a ${USER_HOME_DIR}/.profile ${ROOT_HOME_DIR}/.profile <<'EOF'
+alias l='ls -lF --color'
+alias ll='l -a'
+alias h='history 25'
+alias j='jobs -l'
+alias vim='lvim'
 EOF

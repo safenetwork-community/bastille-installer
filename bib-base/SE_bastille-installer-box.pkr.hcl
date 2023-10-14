@@ -85,24 +85,6 @@ build {
     source      = "./files/user/"
   }
  
-  provisioner "file" {
-    destination = "./boot/vmlinuz-virt"
-    direction   = "download" 
-    source      = "/boot/vmlinuz-virt"
-  } 
-
-  provisioner "file" {
-    destination = "./tmp/initramfs-virt"
-    direction   = "download" 
-    source      = "/tmp/initramfs-virt"
-  } 
-
-  provisioner "file" {
-    destination = "./boot/initramfs-virt.gz"
-    direction   = "download" 
-    source      = "/tmp/initramfs-virt.gz"
-  } 
-
   post-processor "vagrant" {
     keep_input_artifact = true
     output = "output/${local.vm_name}-${formatdate("YYYY-MM", timestamp())}.box"
