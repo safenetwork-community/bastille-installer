@@ -1,2 +1,2 @@
-export EDITOR=/usr/bin/lvim
-export VISUAL=/usr/bin/lvim
+export EDITOR=$HOME/.local/bin/lvim
+export VISUAL=$HOME/.local/bin/lvim

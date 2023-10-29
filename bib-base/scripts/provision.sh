@@ -25,7 +25,7 @@ echo "==> ${NAME_SH}: Install keyboard layouts.."
 apk add kbd-bkeymaps
 
 echo "==> ${NAME_SH}: Add script packages.."
-apk add build-base curl moreutils python3 rsync
+apk add build-base cargo curl moreutils rsync
 
 echo "==> ${NAME_SH}: Merge all system files"
 chown root:root -R /tmp/rootdir
@@ -54,8 +54,8 @@ sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF \
   curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.3/neovim-0.9/utils/installer/install.sh \
   | doas -u ${USER_NAME} bash
 n
-y
 n
+y
 EOF
 
 echo "==> ${NAME_SH}: Disable DNS reverse lookup.."

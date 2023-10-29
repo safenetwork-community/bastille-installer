@@ -1,0 +1,23 @@
+[package]
+name = "bib-base"
+version = "0.1.0"
+edition = "2021"
+authors = ["Folât Pjêrsômêj"]
+default-run = "create-vm"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[[bin]]
+name = "create-vm"
+path = "src/create-vm/bin/main.rs"
+
+[[bin]]
+name = "install"
+path = "src/install/bin/main.rs"
+
+[[bin]]
+name = "run"
+path = "src/run/bin/main.rs"
+
+[dependencies]
+simple-home-dir = "0.2.0"

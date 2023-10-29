@@ -1,7 +1,13 @@
-# directories
+# vagrant directories
 bib-base/packer_cache/
 bib-base/output/
 bib-base/output-*/
+
+# rust directories
+target/
+
+# Locked files
+*.lock
 
 # Public keys
 *.pub
