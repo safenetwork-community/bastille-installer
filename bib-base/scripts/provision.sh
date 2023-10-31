@@ -58,6 +58,16 @@ n
 y
 EOF
 
+echo "==> ${NAME_SH}: Install lunarvim on root.."
+sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF \
+  | LV_BRANCH='release-1.3/neovim-0.9' \
+  curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.3/neovim-0.9/utils/installer/install.sh \
+  | bash
+n
+n
+y
+EOF
+
 echo "==> ${NAME_SH}: Disable DNS reverse lookup.."
 sed -i -E 's,#?(UseDNS\s+).+,\1no,' /etc/ssh/sshd_config
 

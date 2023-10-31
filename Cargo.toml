@@ -12,12 +12,19 @@ name = "create-vm"
 path = "src/create-vm/bin/main.rs"
 
 [[bin]]
-name = "install"
-path = "src/install/bin/main.rs"
+name = "start-vm"
+path = "src/start-vm/bin/main.rs"
 
 [[bin]]
-name = "run"
-path = "src/run/bin/main.rs"
+name = "setup-vm"
+path = "src/setup-vm/bin/main.rs"
+
+[[bin]]
+name = "run-vm"
+path = "src/run-vm/bin/main.rs"
 
 [dependencies]
 simple-home-dir = "0.2.0"
+
+[profile.release]
+strip = true

@@ -1,13 +1,28 @@
 extern crate simple_home_dir;
 
 use simple_home_dir::home_dir;
-use std::process::{Command, Stdio};
 
-fn main() {
-    // Folder locations
-    let mac_address = "52:54:00:5c:4f:00"; // TODO: automate address retrieval
+use std::env;
+use std::process::{Command, ExitCode, Stdio};
+
+fn main() -> ExitCode {
+    let args: Vec<String> = env::args().collect();
+
+    if args.len() != 2 { 
+        eprintln!("Usage: setup-vm [MAC_ADDRESS].\n\
+        To retrieve the correct mac address, enter \"ip add | grep link/ether | awk \'{{print $2}}\'\"\n\
+        on your SE_bastille_installer-box console without double quotes.");
+        return ExitCode::FAILURE;
+    }
+
+
+    // Mac address of SE_Bastille-installer_box network device.
+    let mac_address = &args[1];
+    
+    // File locations  
     let path_ssh_key = format!("{}/.ssh/id_bas", home_dir().unwrap().display());
-    let path_github_key = format!("{}/.ssh/id_folaht_ybgiht_ssh", home_dir().unwrap().display());
+    
+    // Scanning for VM network devices.
     let arp_scan = Command::new("arp-scan")
         .arg("--interface=virbr0") 
         .arg("--localnet")
@@ -25,11 +40,12 @@ fn main() {
     let grep_string = String::from_utf8(grep_output.stdout).unwrap();
     let ip_address = grep_string.split_once('\t').unwrap().0;
 
-    Command::new("scp")
+    Command::new("ssh")
         .arg("-i")
         .arg(path_ssh_key)
-        .arg(path_github_key)
-        .arg(format!("bas@{}:~/.ssh", ip_address))
+        .arg(format!("bas@{}", ip_address))
         .status()
         .expect("ssh failed");
+
+    return ExitCode::SUCCESS;
 }
