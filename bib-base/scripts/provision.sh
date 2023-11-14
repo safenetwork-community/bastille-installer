@@ -25,9 +25,9 @@ echo "==> ${NAME_SH}: Install keyboard layouts.."
 apk add kbd-bkeymaps
 
 echo "==> ${NAME_SH}: Add script packages.."
-apk add build-base cargo curl moreutils rsync
+apk add curl moreutils rsync
 
-echo "==> ${NAME_SH}: Merge all system files"
+echo "==> ${NAME_SH}: Merge all system files.."
 chown root:root -R /tmp/rootdir
 rsync -a /tmp/rootdir/* / 
 
@@ -37,18 +37,20 @@ setup-keymap yr yr-af
 echo "==> ${NAME_SH}: Install the doas sudo shim.."
 apk add doas-sudo-shim
 
-echo "==> ${NAME_SH}: Add support for validating https certificates."
+echo "==> ${NAME_SH}: Add support for validating https certificates.."
 apk add ca-certificates openssl
 
-echo "==> ${NAME_SH}: Install the SE Bastille Installer dependencies."
-apk add git bash parted dialog 
+echo "==> ${NAME_SH}: Install the SE Bastille Installer dependencies.."
+apk add git bash cargo dialog parted tzdata
 
-echo "==> ${NAME_SH}: Install the SE Bastille Installer."
+echo "==> ${NAME_SH}: Install the SE Bastille Installer.."
 doas -u ${USER_NAME} git clone https://github.com/safenetwork-community/${APP_NAME}.git
 doas -u ${USER_NAME} git -C ${APP_DIR} checkout -q `doas -u ${USER_NAME} git -C ${APP_DIR} describe --tags`
 
-echo "==> ${NAME_SH}: Install lunarvim.."
-apk add neovim 
+echo "==> ${NAME_SH}: Install local development environment dependencies.."
+apk add git build-base cargo neovim
+
+echo "==> ${NAME_SH}: Install IDE lunarvim.."
 sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF \
   | LV_BRANCH='release-1.3/neovim-0.9' doas -u ${USER_NAME} \
   curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.3/neovim-0.9/utils/installer/install.sh \
