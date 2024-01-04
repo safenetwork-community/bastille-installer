@@ -24,7 +24,7 @@ name = "run-vm"
 path = "src/run-vm/bin/main.rs"
 
 [dependencies]
-simple-home-dir = "0.2.0"
+simple-home-dir = { version = "0.2.1", features = ["expand_tilde"] }
 
 [profile.release]
 strip = true

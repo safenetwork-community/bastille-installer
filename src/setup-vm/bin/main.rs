@@ -1,6 +1,6 @@
 extern crate simple_home_dir;
 
-use simple_home_dir::home_dir;
+use simple_home_dir::expand_tilde;
 
 use std::env;
 use std::process::{Command, ExitCode, Stdio};
@@ -19,8 +19,8 @@ fn main() -> ExitCode {
     let mac_address = &args[1]; // TODO: automate address retrieval
     
     // File locations
-    let path_ssh_key = format!("{}/.ssh/id_bas", home_dir().unwrap().display());
-    let path_github_key = format!("{}/.ssh/id_folaht_ybgiht_ssh", home_dir().unwrap().display());
+    let path_ssh_key = expand_tilde("~/.ssh/id_bas").unwrap();
+    let path_github_key = expand_tilde("~/.ssh/id_folaht_ybgiht_ssh").unwrap();
     
     let arp_scan = Command::new("arp-scan")
         .arg("--interface=virbr0") 

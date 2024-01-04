@@ -1,6 +1,6 @@
 extern crate simple_home_dir;
 
-use simple_home_dir::home_dir;
+use simple_home_dir::expand_tilde;
 
 use std::env;
 use std::process::{Command, ExitCode, Stdio};
@@ -20,7 +20,7 @@ fn main() -> ExitCode {
     let mac_address = &args[1];
     
     // File locations  
-    let path_ssh_key = format!("{}/.ssh/id_bas", home_dir().unwrap().display());
+    let path_ssh_key = expand_tilde("~/.ssh/id_bas").unwrap();
     
     // Scanning for VM network devices.
     let arp_scan = Command::new("arp-scan")
