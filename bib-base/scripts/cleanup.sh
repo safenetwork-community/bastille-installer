@@ -1,20 +1,24 @@
-#!/bin/ash
-set -euxo pipefail
+#!/usr/bin/env bash
 
 NAME_SH=cleanup.sh
 
-echo "==> ${NAME_SH}: Clean up script packages.."
-apk del curl efibootmgr moreutils rsync
+packer_msg() {
+  echo "==> ${NAME_SH}: $@.."
+}
 
-# NB prefer discard/trim (safer; faster) over creating a big zero filled file
-#    (somewhat unsafe as it has to fill the entire disk, which might trigger
-#    a disk (near) full alarm; slower; slightly better compression).
-echo "==> ${NAME_SH}: Zero the free disk space for better compression of the box file.."
-apk add util-linux
-root_dev="$(findmnt -no SOURCE /)"
-if [ "$(lsblk -no DISC-GRAN $root_dev | awk '{print $1}')" != '0B' ]; then
-    output="$(fstrim -v /)"
-    sync && sync && sync && blockdev --flushbufs $root_dev && sleep 15
-else
-    dd if=/dev/zero of=/EMPTY bs=1M || true && sync && rm -f /EMPTY && sync
-fi
+# stop on errors
+set -eu
+
+
+# Clean the pacman cache.
+packer_msg "Cleaning pacman cache"
+/usr/bin/pacman -Scc --noconfirm >/dev/null
+
+# Write zeros to improve virtual disk compaction.
+# if [[ $WRITE_ZEROS == "true" ]]; then
+#   packer_msg "Writing zeros to improve virtual disk compaction"
+#   zerofile=$(/usr/bin/mktemp /zerofile.XXXXX)
+#   /usr/bin/dd if=/dev/zero of="$zerofile" bs=1M >/dev/null
+#   /usr/bin/rm -f "$zerofile" >/dev/null
+#   /usr/bin/sync >/dev/null
+# fi

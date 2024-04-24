@@ -13,31 +13,33 @@ packer {
 
 locals {
   boot_command_qemu = [
-    "root<enter>",
-    "ifconfig eth0 up && udhcpc -i eth0<enter><wait5s>",
-    "wget -qO- http://{{ .HTTPIP }}:{{ .HTTPPort }}/${local.init_script} | LOCAL_PORT={{ .HTTPPort }} ash<enter>",
+    "<down><down><enter>",
+    "<wait15s>root<enter>",
+    "<wait1s>a<wait1s>r<wait1s>t<wait1s>i<wait1s>x<wait1s><enter><wait3s>",
+    "LOCAL_PORT={{ .HTTPPort }} bash <(curl -s http://{{ .HTTPIP }}:{{ .HTTPPort }}/${local.init_script})<enter>", 
   ]
   cpus                  = 1
   disk_size             = "4G"
   disk_size_vb          = "4000"
   format                = "qcow2"
-  headless              = "true"
+  headless              = "false"
   http_directory        = "srv"
   init_script           = "initLiveVM.sh"
-  iso_checksum          = "sha256:6bc7ff54f5249bfb67082e1cf261aaa6f307d05f64089d3909e18b2b0481467f"
-  iso_url               = "https://dl-cdn.alpinelinux.org/alpine/latest-stable/releases/x86_64/alpine-virt-3.18.2-x86_64.iso"
+  iso_checksum          = "sha256:3dd4f42741ea8fb7fd1d3713fbba7706a0250429d0a61eb16d93654a75a7ac2d"
+  iso_url               = "https://download.artixlinux.org/iso/artix-base-dinit-20230814-x86_64.iso"
   machine_type          = "q35"
   memory                = 4096
   ssh_private_key_file  = "~/.ssh/id_bas"
   ssh_timeout           = "20m"
   ssh_username          = "bas"
   vm_name               = "SE_bastille-installer-box"
+  write_zeros           = "true"
 }
 
-source "qemu" "alpinelinux" {
+source "qemu" "artixlinux" {
   accelerator             = "kvm"
   boot_command            = local.boot_command_qemu
-  boot_wait               = "40s"
+  boot_wait               = "2s"
   cpus                    = local.cpus
   disk_interface          = "virtio-scsi"
   disk_size               = local.disk_size
@@ -50,7 +52,7 @@ source "qemu" "alpinelinux" {
   machine_type            = local.machine_type
   memory                  = local.memory
   net_device              = "virtio-net" 
-  shutdown_command        = "doas poweroff"
+  shutdown_command        = "sudo poweroff"
   ssh_handshake_attempts  = 500
   ssh_port                = 22
   ssh_private_key_file    = local.ssh_private_key_file
@@ -63,7 +65,7 @@ source "qemu" "alpinelinux" {
 
 build {
   name = "SE_bastille-installer-box"
-  sources = ["source.qemu.alpinelinux"]
+  sources = ["source.qemu.artixlinux"]
   
   provisioner "file" {
     destination = "/tmp"
@@ -71,12 +73,16 @@ build {
   }
 
   provisioner "shell" {
-    execute_command = "doas '{{ .Path }}'"
+    execute_command = "sudo -E -S bash '{{ .Path }}'"
     expect_disconnect = true
     scripts           = [
-      "scripts/provision.sh",
+      "scripts/liveVM.sh",
+      "scripts/tables.sh",
+      "scripts/partitions.sh",
+      "scripts/base.sh",
       "scripts/bootloader.sh",
-      "scripts/cleanup.sh"
+      "scripts/pacman.sh",
+      "scripts/setup.sh"
     ]
   }
   
@@ -85,6 +91,11 @@ build {
     source      = "./files/user/"
   }
  
+  provisioner "shell" {
+    execute_command = "{{ .Vars }} WRITE_ZEROS=${local.write_zeros} sudo -E -S bash '{{ .Path }}'"
+    script = "scripts/cleanup.sh"
+  }
+
   post-processor "vagrant" {
     keep_input_artifact = true
     output = "output/${local.vm_name}-${formatdate("YYYY-MM", timestamp())}.box"

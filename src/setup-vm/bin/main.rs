@@ -47,5 +47,5 @@ fn main() -> ExitCode {
         .status()
         .expect("ssh failed");
 
-    return ExitCode::SUCCESS;
+    ExitCode::SUCCESS
 }

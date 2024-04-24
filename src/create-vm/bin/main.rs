@@ -1,34 +1,45 @@
 use std::path::Path;
 use std::process::{Command, exit};
 
+use const_format::formatcp;
+
+// command programs
+const PACKER: &str = "packer";
+const RM: &str = "rm";
+const SUDO: &str = "sudo";
+
+// arguments
+const ARG_R: &str = "-r";
+const BUILD: &str = "build";
+
+// VM names
+const VM_NAME: &str     = "SE_bastille-installer-box";
+const VM_HV: &str       = "qemu";
+const VM_OS: &str       = "artixlinux";
+const VM_FORMAT: &str   = "qcow2";
+const VMQ_NAME: &str    = formatcp!("{VM_NAME}.{VM_FORMAT}");
+ 
+// Path names
+const PATH_OUTPUT: &str         = formatcp!("./output");
+const PATH_OUTPUT_QEMU: &str    = formatcp!("{PATH_OUTPUT}-{VM_OS}");
+const PATH_LIBVIRT: &str        = "/var/lib/libvirt";
+const PATH_LV_IMAGES: &str      = formatcp!("{PATH_LIBVIRT}/images");
+
+// File LOCations
+const LOC_VMQ_OLD: &str     = formatcp!("{PATH_OUTPUT_QEMU}/{VMQ_NAME}");
+const LOC_VMQ_NEW: &str     = formatcp!("{PATH_LV_IMAGES}/{VMQ_NAME}");
+const LOC_TEMPLATE: &str    = formatcp!("{VM_NAME}.pkr.hcl");
+
+// VM options 
+const OPT_PACKER_ONLY: &str = formatcp!("-only={VM_NAME}.{VM_HV}.{VM_OS}");
+
 fn main() {
-
-    // VM names
-    let vm_name     = "SE_bastille-installer-box";
-    let vm_hv       = "qemu";
-    let vm_os       = "alpinelinux";
-    let vm_format   = "qcow2";
-    let vmq_name    = format!("{}.{}", vm_name, vm_format);
-    
-    // Path names
-    let path_output         = format!("./output");
-    let path_output_qemu    = format!("{}-{}", path_output, vm_os);
-    let path_libvirt        = "/var/lib/libvirt";
-    let path_lv_images      = format!("{}/images", path_libvirt);
-
-    // File locations
-    let loc_vmq_old        = format!("{}/{}", path_output_qemu, vmq_name);
-    let loc_vmq_new        = format!("{}/{}", path_lv_images, vmq_name);
-    let loc_template       = format!("{}.pkr.hcl", vm_name);
-
-    // VM options 
-    let opt_packer_only = format!("-only={}.{}.{}", vm_name, vm_hv, vm_os);
-
-    // delete output folder if it exists
-    if Path::new(&path_output).exists() { 
-        match Command::new("rm")
-            .arg("-r")
-            .arg(path_output.clone())
+   
+    // delete OUTPUT folder if it exists
+    if Path::new(&PATH_OUTPUT).exists() { 
+        match Command::new(RM)
+            .arg(ARG_R)
+            .arg(PATH_OUTPUT)
             .spawn().unwrap()
             .wait() {
             Ok(_) => (),
@@ -36,11 +47,11 @@ fn main() {
         }
     }
 
-    // delete os output folder if it exists
-    if Path::new(&path_output_qemu).exists() { 
-        match Command::new("rm")
-            .arg("-r")
-            .arg(path_output_qemu)
+    // delete os OUTPUT folder if it exists
+    if Path::new(&PATH_OUTPUT_QEMU).exists() { 
+        match Command::new(RM)
+            .arg(ARG_R)
+            .arg(PATH_OUTPUT_QEMU)
             .spawn().unwrap()
             .wait() {
             Ok(_) => (),
@@ -49,10 +60,10 @@ fn main() {
     }
 
     // Run packer
-    match Command::new("packer")
-        .arg("build")
-        .arg(opt_packer_only)
-        .arg(loc_template)
+    match Command::new(PACKER)
+        .arg(BUILD)
+        .arg(OPT_PACKER_ONLY)
+        .arg(LOC_TEMPLATE)
         .spawn()
         .expect("packer failed to start")
         .wait() {
@@ -61,11 +72,11 @@ fn main() {
     }
 
     // Run the VM
-    if Path::new(&path_output).exists() {
-        match Command::new("sudo")
+    if Path::new(&PATH_OUTPUT).exists() {
+        match Command::new(SUDO)
             .arg("chown")
             .arg("libvirt-qemu:libvirt-qemu")
-            .arg(loc_vmq_old.clone())
+            .arg(LOC_VMQ_OLD)
             .spawn()
             .expect("chown to libvirt-qemu fails")
             .wait() {
@@ -73,10 +84,10 @@ fn main() {
             Err(_) => exit(1),
         }
         
-        match Command::new("sudo")
+        match Command::new(SUDO)
             .arg("chmod")
             .arg("600")
-            .arg(loc_vmq_old.clone())
+            .arg(LOC_VMQ_OLD)
             .spawn()
             .expect("chmod to 600 fails")
             .wait() {
@@ -84,10 +95,10 @@ fn main() {
             Err(_) => exit(1),
         }
 
-        match Command::new("sudo")
+        match Command::new(SUDO)
             .arg("mv")
-            .arg(loc_vmq_old)
-            .arg(loc_vmq_new)
+            .arg(LOC_VMQ_OLD)
+            .arg(LOC_VMQ_NEW)
             .spawn()
             .expect("moving qcow file fails")
             .wait() {
