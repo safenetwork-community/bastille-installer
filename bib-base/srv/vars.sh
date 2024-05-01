@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# environment variabels
+# packer environment variabels
 
 TYPE_BUILDER_PACKER=${PACKER_BUILDER_TYPE} 
 
@@ -64,6 +64,8 @@ DIR_APP=${DIR_HOME_USER}/${NAME_FILE_APP}
 
 DIR_BOOT='/boot'
 LABEL_BOOTLOADER="ARTIX_BOOT"
+NAME_FILE_GOENV="goenv-linux-amd64.tar.gz"
+URL_FILE_GOENV="https://github.com/ankitcharolia/goenv/releases/latest/download/${NAME_FILE_GOENV}"
 
 # Other dirs
 
@@ -71,12 +73,21 @@ DIR_FILES_TMP='/tmp/files'
 DIR_INIT='/etc/dinit.d'
 
 # Packer scripts
-SCRIPT_CONFIG='/usr/local/bin/setup.sh'
+SCRIPT_CONFIG='/usr/local/bin/script.sh'
+
+# script environment variabels
+
+GOENV_ROOT=${DIR_HOME_ROOT}/.go
 
 # Command function
 chroot() {
   /usr/bin/artix-chroot ${DIR_MNT_ROOT} $@ 
 }
+
+rchroot() {
+  sudo -u root /usr/bin/artix-chroot ${DIR_MNT_ROOT} $@ 
+}
+
 
 packer_msg() {
   echo "==> ${NAME_SH}: $@.."

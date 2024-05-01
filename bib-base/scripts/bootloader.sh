@@ -11,44 +11,30 @@ packer_msg "Remove redundant fstab entries"
 sed -i '\@^/dev/cdrom@d;\@^/dev/fd@d;\@/dev/usbdisk@d' /etc/fstab
 
 packer_msg "Install the bootloader builder dependencies"
-chroot pacman -S --noconfirm moreutils go gptfdisk syslinux >/dev/null
+chroot pacman -S --noconfirm gptfdisk syslinux >/dev/null
 
-packer_msg "Configuring syslinux"
+packer_msg "Configure syslinux"
 chroot syslinux-install_update -i -a -m
 chroot /usr/bin/sed -e 's/root=\/dev\/sda./root='${PARTITION_ROOT////\\/}'/' \
-  -e 's/\(TIMEOUT[[:space:]]\)50/\110/' -i ${DIR_BOOT}/syslinux/syslinux.cfg
+-e 's/\(TIMEOUT[[:space:]]\)50/\110/' -i ${DIR_BOOT}/syslinux/syslinux.cfg
+  
+packer_msg "Configure u-root"
+HOME=${DIR_HOME_ROOT}
+chroot pacman -S --noconfirm git go moreutils sudo >/dev/null
 
-# packer_msg "Install goenv."
-# chroot ls -lha ~
-# chroot curl -q -o ${DIR_HOME_ROOT} https://github.com/ankitcharolia/goenv/releases/latest/download/goenv-linux-amd64.tar.gz
-# chroot mkdir ${DIR_HOME_ROOT}/goenv && tar -xzf goenv-linux-amd64.tar.gz -C ${DIR_HOME_ROOT}/goenv
-# chroot install -o root -g root ${DIR_HOME_ROOT}/goenv/goenv /usr/bin/
-# chroot goenv --install 1 &>/dev/null
+packer_msg "Install the bootloader builder"
+chroot /usr/bin/go install github.com/u-root/u-root@latest &>/dev/null
 
-# packer_msg "Install grub packages"
-# chroot pacman -S --noconfirm grub >/dev/null
+packer_msg "Generating the bootloader install script"
+/usr/bin/install --mode=0755 /dev/null "${DIR_MNT_ROOT}${SCRIPT_CONFIG}"
+tee "${DIR_MNT_ROOT}${SCRIPT_CONFIG}" &>/dev/null << EOF 
+   git -C ${DIR_HOME_ROOT} clone https://github.com/u-root/u-root &>/dev/null
+   cd ${DIR_HOME_ROOT}/u-root
+   ${DIR_HOME_ROOT}/go/bin/u-root core boot &>/dev/null
+   mv /tmp/initramfs.linux_amd64.cpio /boot/initramfs-linux.img
+EOF
 
-# packer_msg "Pre-configure grub"
-# chroot sed -i 's/#GRUB_DISABLE_OS_PROBER/GRUB_DISABLE_OS_PROBER/' /etc/default/grub
-
-# packer_msg "Install grub"
-# chroot grub-install --recheck ${DISK} 
-# chroot ls -lha /boot
-# chroot grub-mkconfig -o /boot/grub/grub.cfg
-# chroot ls -lha /boot/grub
-# chroot cat /etc/fstab 
-
-# packer_msg "Install the bootloader builder"
-# chroot go install github.com/u-root/u-root@latest >/dev/null
-# chroot ls -lha ~
-
-# packer_msg "Setup go version"
-# chroot sponge .envrc <<'EOF'
-# export GOROOT=~/.go/1.20.8
-# EOF
-
-# packer_msg "Install the bootloader"
-# chroot ~/.go/bin/u-root core boot
-# chroot mv /tmp/initramfs.linux_amd64.cpio /boot/initramfs-virt
-# chroot ls -lha /boot
-# chroot rm -rf ${DIR_HOME_ROOT}/u-root
+packer_msg "Entering bootloader install system"
+chroot ${SCRIPT_CONFIG}
+rm "${DIR_MNT_ROOT}${SCRIPT_CONFIG}"
+HOME=${DIR_HOME_USER}

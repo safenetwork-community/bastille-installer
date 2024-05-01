@@ -15,7 +15,7 @@ locals {
   boot_command_qemu = [
     "<down><down><enter>",
     "<wait15s>root<enter>",
-    "<wait1s>a<wait1s>r<wait1s>t<wait1s>i<wait1s>x<wait1s><enter><wait3s>",
+    "<wait5s>artix<wait7s><enter><wait3s>",
     "LOCAL_PORT={{ .HTTPPort }} bash <(curl -s http://{{ .HTTPIP }}:{{ .HTTPPort }}/${local.init_script})<enter>", 
   ]
   cpus                  = 1
@@ -89,6 +89,18 @@ build {
   provisioner "file" {
     destination = "~"
     source      = "./files/user/"
+  }
+   
+  provisioner "file" {
+    destination = "./output-artixlinux/initramfs-linux.img"
+    direction   = "download"
+    source      = "/boot/initramfs-linux.img"
+  }
+  
+  provisioner "file" {
+    destination = "./output-artixlinux/bzImage"
+    direction   = "download"
+    source      = "/boot/vmlinuz-linux"
   }
  
   provisioner "shell" {

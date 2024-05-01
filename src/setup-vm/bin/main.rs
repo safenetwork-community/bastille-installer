@@ -20,7 +20,7 @@ fn main() -> ExitCode {
     
     // File locations
     let path_ssh_key = format!("{}/.ssh/id_bas", home_dir().unwrap().display());
-    let path_github_key = format!("{}/.ssh/id_folaht_ybgiht_ssh", home_dir().unwrap().display());
+    let path_github_key = format!("{}/.ssh/id_folaht_ybgiht_sds", home_dir().unwrap().display());
     
     let arp_scan = Command::new("arp-scan")
         .arg("--interface=virbr0") 

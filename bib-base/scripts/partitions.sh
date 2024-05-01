@@ -8,7 +8,12 @@ NAME_SH=partitions.sh
 set -eu
 
 packer_msg "Writing Filesystem types"
-mkfs.ext4 -O ^64bit -F -m 0 -q -L ${LABEL_ROOT} ${PARTITION_ROOT} &>/dev/null
+if [ "${TYPE_FS}" = "btrfs" ]; then
+  mkfs.btrfs -m single -L ${LABEL_ROOT} ${PARTITION_ROOT} &>/dev/null
+elif [ "${TYPE_FS}" = "ext4" ]; then
+  mkfs.ext4 -O ^64bit -F -m 0 -q -L ${LABEL_ROOT} ${PARTITION_ROOT} &>/dev/null
+fi
+
 mkfs.fat -F32 ${PARTITION_BOOT} >/dev/null
 fatlabel ${PARTITION_BOOT} ${LABEL_BOOT}
 

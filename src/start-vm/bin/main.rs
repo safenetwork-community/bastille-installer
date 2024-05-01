@@ -24,7 +24,8 @@ const PATH_LV_DK: &str      = formatcp!("{PATH_LIBVIRT}/direct_kernel");
 const LOC_VMQ_NEW: &str     = formatcp!("{PATH_LV_IMAGES}/{VMQ_NAME}");
 
 // VM options 
-const OPT_VI_DISK: &str     = formatcp!("{LOC_VMQ_NEW},format={VM_FORMAT}");
+const SIZE_VM: u32          = 5; 
+const OPT_VI_DISK: &str     = formatcp!("{LOC_VMQ_NEW},format={VM_FORMAT},size={SIZE_VM}");
 const OPT_VI_KERNEL: &str   = formatcp!("kernel={PATH_LV_DK}/bzImage,initrd={PATH_LV_DK}/initramfs.linux_amd64.cpio,\
         kernel_args=\"root=/dev/vda2 ro console=tty0 consolettyS0,115200n8d\"");
 
@@ -37,7 +38,7 @@ fn main() {
             .arg("--vcpu").arg("2")
             .arg("--machine").arg("q35")
             .arg("--memory").arg("1024")
-            .arg("--osinfo").arg("linux2022")
+            .arg("--osinfo").arg("archlinux")
             .arg("--disk").arg(OPT_VI_DISK)
             .arg("--import").arg("--noautoconsole").arg("--boot")
             .arg(OPT_VI_KERNEL)
