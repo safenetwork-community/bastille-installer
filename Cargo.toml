@@ -16,10 +16,6 @@ name = "start-vm"
 path = "src/start-vm/bin/main.rs"
 
 [[bin]]
-name = "setup-vm"
-path = "src/setup-vm/bin/main.rs"
-
-[[bin]]
 name = "run-vm"
 path = "src/run-vm/bin/main.rs"
 

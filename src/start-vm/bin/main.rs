@@ -1,5 +1,5 @@
 use std::path::Path;
-use std::process::{Command, exit};
+use std::process::Command;
 
 use const_format::formatcp;
 
@@ -7,6 +7,7 @@ use const_format::formatcp;
 const SUDO: &str = "sudo";
 
 // arguments
+const OS: &str = "archlinux";
 const VIRT_INSTALL: &str = "virt-install";
 
 // VM names
@@ -26,27 +27,23 @@ const LOC_VMQ_NEW: &str     = formatcp!("{PATH_LV_IMAGES}/{VMQ_NAME}");
 // VM options 
 const SIZE_VM: u32          = 5; 
 const OPT_VI_DISK: &str     = formatcp!("{LOC_VMQ_NEW},format={VM_FORMAT},size={SIZE_VM}");
-const OPT_VI_KERNEL: &str   = formatcp!("kernel={PATH_LV_DK}/bzImage,initrd={PATH_LV_DK}/initramfs.linux_amd64.cpio,\
-        kernel_args=\"root=/dev/vda2 ro console=tty0 consolettyS0,115200n8d\"");
+const OPT_VI_KERNEL: &str   = formatcp!("kernel={PATH_LV_DK}/bzImage,initrd={PATH_LV_DK}/initramfs-linux.img,\
+        kernel_args=\"root=/dev/vda2 rw console=tty0 consolettyS0,115200n8d\"");
 
 fn main() {
     // Start the VM
     if Path::new(&PATH_OUTPUT).exists() {
-        match Command::new(SUDO)
-            .arg(VIRT_INSTALL)
-            .arg("--name").arg(VM_NAME)
-            .arg("--vcpu").arg("2")
-            .arg("--machine").arg("q35")
-            .arg("--memory").arg("1024")
-            .arg("--osinfo").arg("archlinux")
-            .arg("--disk").arg(OPT_VI_DISK)
-            .arg("--import").arg("--noautoconsole").arg("--boot")
-            .arg(OPT_VI_KERNEL)
-            .spawn()
-            .unwrap_or_else(|_| panic!("virt-install failed to start"))
-            .wait() {
-            Ok(_) => (),
-            Err(_) => exit(1),
-        }
+        Command::new(SUDO)
+        .arg(VIRT_INSTALL)
+        .arg("--name").arg(VM_NAME)
+        .arg("--vcpu").arg("2")
+        .arg("--machine").arg("q35")
+        .arg("--memory").arg("1024")
+        .arg("--osinfo").arg(OS)
+        .arg("--disk").arg(OPT_VI_DISK)
+        .arg("--import").arg("--noautoconsole").arg("--boot")
+        .arg(OPT_VI_KERNEL)
+        .status()
+        .unwrap_or_else(|e| panic!("virt-install failed to start\n{}", e));
     }
 }

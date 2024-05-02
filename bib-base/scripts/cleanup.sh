@@ -9,16 +9,13 @@ packer_msg() {
 # stop on errors
 set -eu
 
+packer_msg "Cleaning root dir"
+/usr/bin/rm -rf /root/go 
+/usr/bin/rm -rf /root/u-root 
+
+packer_msg "Cleaning boot"
+/usr/bin/pacman -Rcns --noconfirm syslinux linux linux-firmware >/dev/null
 
 # Clean the pacman cache.
 packer_msg "Cleaning pacman cache"
 /usr/bin/pacman -Scc --noconfirm >/dev/null
-
-# Write zeros to improve virtual disk compaction.
-# if [[ $WRITE_ZEROS == "true" ]]; then
-#   packer_msg "Writing zeros to improve virtual disk compaction"
-#   zerofile=$(/usr/bin/mktemp /zerofile.XXXXX)
-#   /usr/bin/dd if=/dev/zero of="$zerofile" bs=1M >/dev/null
-#   /usr/bin/rm -f "$zerofile" >/dev/null
-#   /usr/bin/sync >/dev/null
-# fi

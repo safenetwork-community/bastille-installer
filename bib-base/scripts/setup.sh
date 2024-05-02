@@ -7,10 +7,6 @@ NAME_SH=setup.sh
 # stop on errors
 set -eu
 
-echo "==> ${NAME_SH} Merge script system files.."
-/usr/bin/chown root:root -R /tmp/rootdir
-/usr/bin/rsync -a /tmp/rootdir/* ${DIR_HOME_ROOT} 
-
 packer_msg "Generating the system configuration script"
 /usr/bin/install --mode=0755 /dev/null "${DIR_MNT_ROOT}${SCRIPT_CONFIG}"
 tee "${DIR_MNT_ROOT}${SCRIPT_CONFIG}" &>/dev/null << EOF 
@@ -44,6 +40,9 @@ tee "${DIR_MNT_ROOT}${SCRIPT_CONFIG}" &>/dev/null << EOF
   echo "Defaults env_keep += \"SSH_AUTH_SOCK\"" | tee /etc/sudoers.d/10_${NAME_USER} &>/dev/null
   echo "${NAME_USER} ALL=(ALL) NOPASSWD: ALL" | tee -a /etc/sudoers.d/10_${NAME_USER} &>/dev/null
   /usr/bin/chmod 0440 /etc/sudoers.d/10_${NAME_USER}
+  echo "==> ${NAME_SH} Install ${NAME_TITLE_APP} Merge script system files.."
+  /usr/bin/chown root:root -R /tmp/rootdir
+  /usr/bin/rsync -a /tmp/rootdir/* ${DIR_HOME_ROOT} 
   echo "==> ${NAME_SH} Install ${NAME_TITLE_APP} non-AUR dependencies.."
   /usr/bin/pacman -S --noconfirm wget parted >/dev/null
   /usr/bin/pacman -S --noconfirm cargo dialog dosfstools f2fs-tools polkit qemu-user-static-binfmt >/dev/null 

@@ -15,7 +15,6 @@ fn main() -> ExitCode {
         return ExitCode::FAILURE;
     }
 
-
     // Mac address of SE_Bastille-installer_box network device.
     let mac_address = &args[1];
     
@@ -28,13 +27,13 @@ fn main() -> ExitCode {
         .arg("--localnet")
         .stdout(Stdio::piped())
         .spawn()
-        .expect("arp_scan failed");
+        .unwrap_or_else(|e| panic!("arp_scan failed\n{}", e));
     let grep_mac = Command::new("grep")
         .arg(mac_address)
         .stdin(Stdio::from(arp_scan.stdout.unwrap()))
         .stdout(Stdio::piped())
         .spawn()
-        .expect("grep failed");
+        .unwrap_or_else(|e| panic!("grep failed\n{}", e));
 
     let grep_output = grep_mac.wait_with_output().unwrap();
     let grep_string = String::from_utf8(grep_output.stdout).unwrap();
@@ -45,7 +44,7 @@ fn main() -> ExitCode {
         .arg(path_ssh_key)
         .arg(format!("bas@{}", ip_address))
         .status()
-        .expect("ssh failed");
+        .unwrap_or_else(|e| panic!("ssh failed\n{}", e));
 
     ExitCode::SUCCESS
 }
