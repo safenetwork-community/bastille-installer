@@ -12,9 +12,10 @@ set -eu
 packer_msg "Cleaning root dir"
 /usr/bin/rm -rf /root/go 
 /usr/bin/rm -rf /root/u-root 
+/usr/bin/rm -rf /boot/syslinux 
 
 packer_msg "Cleaning boot"
-/usr/bin/pacman -Rcns --noconfirm syslinux linux linux-firmware >/dev/null
+/usr/bin/pacman -Rcns --noconfirm syslinux >/dev/null
 
 # Clean the pacman cache.
 packer_msg "Cleaning pacman cache"
