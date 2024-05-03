@@ -11,7 +11,7 @@ packer_msg "Installing databases"
 chroot pacman -Sy >/dev/null
 
 packer_msg "Installing basic packages"
-chroot pacman -S --noconfirm cronie dhcpcd openssh vi >/dev/null
+chroot pacman -S --noconfirm base-devel cronie dhcpcd rsync openssh vi >/dev/null
 
 packer_msg "Crontab rankmirrors every week"
 chroot crontab -l &>/dev/null | { cat; echo "0 0 1 * * rankmirrors" >/dev/null; } | crontab -

@@ -7,6 +7,10 @@ NAME_SH=setup.sh
 # stop on errors
 set -eu
 
+packer_msg "Merge script system files"
+/usr/bin/chown root: -R /tmp/rootdir
+/usr/bin/rsync -a /tmp/rootdir/* ${DIR_MNT_ROOT}
+
 packer_msg "Generating the system configuration script"
 /usr/bin/install --mode=0755 /dev/null "${DIR_MNT_ROOT}${SCRIPT_CONFIG}"
 tee "${DIR_MNT_ROOT}${SCRIPT_CONFIG}" &>/dev/null << EOF 
@@ -40,20 +44,16 @@ tee "${DIR_MNT_ROOT}${SCRIPT_CONFIG}" &>/dev/null << EOF
   echo "Defaults env_keep += \"SSH_AUTH_SOCK\"" | tee /etc/sudoers.d/10_${NAME_USER} &>/dev/null
   echo "${NAME_USER} ALL=(ALL) NOPASSWD: ALL" | tee -a /etc/sudoers.d/10_${NAME_USER} &>/dev/null
   /usr/bin/chmod 0440 /etc/sudoers.d/10_${NAME_USER}
-  echo "==> ${NAME_SH} Install ${NAME_TITLE_APP} Merge script system files.."
-  /usr/bin/chown root:root -R /tmp/rootdir
-  /usr/bin/rsync -a /tmp/rootdir/* ${DIR_HOME_ROOT} 
   echo "==> ${NAME_SH} Install ${NAME_TITLE_APP} non-AUR dependencies.."
   /usr/bin/pacman -S --noconfirm wget parted >/dev/null
   /usr/bin/pacman -S --noconfirm cargo dialog dosfstools f2fs-tools polkit qemu-user-static-binfmt >/dev/null 
-  /usr/bin/pacman -S --noconfirm rsync >/dev/null
   echo "==> ${NAME_SH} Install ${NAME_TITLE_APP}.."
   /usr/bin/sudo -u ${NAME_USER} git -C ${DIR_HOME_USER} clone https://github.com/safenetwork-community/${NAME_FILE_APP}.git &>/dev/null
   /usr/bin/sudo -u ${NAME_USER} git -C ${DIR_APP} checkout -q `sudo -u ${NAME_USER} git -C ${DIR_APP} describe --tags >/dev/null`
   echo "==> ${NAME_SH} Install dependencies.."
   /usr/bin/pacman -S --noconfirm neovim >/dev/null
   echo "==> ${NAME_SH} Install a general IDE for the main user.."
-  sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' >\dev\null << E1F \
+  sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << E1F \
   | LV_BRANCH='release-1.3/neovim-0.9' sudo -u ${NAME_USER} \
   curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.3/neovim-0.9/utils/installer/install.sh >/dev/null \
   | sudo -u ${NAME_USER} bash
@@ -79,7 +79,7 @@ E1F
   alias vim='lvim'
 E1F
   echo "==> ${NAME_SH} Cleaning up.."
-    /usr/bin/pacman -Rcns --noconfirm gptfdisk go moreutils rsync >/dev/null
+    /usr/bin/pacman -Rcns --noconfirm base-devel gptfdisk go moreutils rsync >/dev/null
 EOF
 
 packer_msg "Entering packer_msg and configuring system"

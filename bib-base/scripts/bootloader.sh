@@ -14,7 +14,7 @@ packer_msg "Install the bootloader builder dependencies"
 chroot pacman -S --noconfirm gptfdisk syslinux >/dev/null
 
 packer_msg "Configure syslinux"
-chroot syslinux-install_update -i -a -m
+chroot syslinux-install_update -i -a -m >/dev/null
 chroot /usr/bin/sed -e 's/root=\/dev\/sda./root='${PARTITION_ROOT////\\/}'/' \
 -e 's/\(TIMEOUT[[:space:]]\)50/\110/' -i ${DIR_BOOT}/syslinux/syslinux.cfg
   
