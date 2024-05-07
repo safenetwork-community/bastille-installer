@@ -87,11 +87,6 @@ build {
   }
   
   provisioner "file" {
-    destination = "~"
-    source      = "./files/user/"
-  }
-   
-  provisioner "file" {
     destination = "./output-artixlinux/initramfs-linux.img"
     direction   = "download"
     source      = "/boot/initramfs-linux.img"
@@ -108,6 +103,11 @@ build {
     script = "scripts/cleanup.sh"
   }
 
+  provisioner "file" {
+    destination = "~"
+    source      = "./files/userdir/"
+  }
+ 
   post-processor "vagrant" {
     keep_input_artifact = true
     output = "output/${local.vm_name}-${formatdate("YYYY-MM", timestamp())}.box"

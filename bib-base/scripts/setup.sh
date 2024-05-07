@@ -9,7 +9,7 @@ set -eu
 
 packer_msg "Merge script system files"
 /usr/bin/chown root: -R /tmp/rootdir
-/usr/bin/rsync -a /tmp/rootdir/* ${DIR_MNT_ROOT}
+/usr/bin/rsync -a /tmp/rootdir/ ${DIR_MNT_ROOT}
 
 packer_msg "Generating the system configuration script"
 /usr/bin/install --mode=0755 /dev/null "${DIR_MNT_ROOT}${SCRIPT_CONFIG}"
@@ -53,25 +53,16 @@ tee "${DIR_MNT_ROOT}${SCRIPT_CONFIG}" &>/dev/null << EOF
   echo "==> ${NAME_SH} Install dependencies.."
   /usr/bin/pacman -S --noconfirm neovim >/dev/null
   echo "==> ${NAME_SH} Install a general IDE for the main user.."
-  sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << E1F \
+  sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' &>/dev/null << E1F \
   | LV_BRANCH='release-1.3/neovim-0.9' sudo -u ${NAME_USER} \
-  curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.3/neovim-0.9/utils/installer/install.sh >/dev/null \
-  | sudo -u ${NAME_USER} bash
-n
-n
-y
-E1F
-  echo "==> ${NAME_SH} Install a general IDE for the root user.."
-  sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << E1F \
-  | LV_BRANCH='release-1.3/neovim-0.9' \
-  curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.3/neovim-0.9/utils/installer/install.sh >/dev/null \
-  | bash
+  curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.3/neovim-0.9/utils/installer/install.sh \
+  | sudo -u ${NAME_USER} bash &>/dev/null
 n
 n
 y
 E1F
   echo "==> ${NAME_SH} Setup bash aliases.."
-  sponge -a ${DIR_HOME_USER}/.profile ${DIR_HOME_ROOT}/.profile <<'E1F'
+  sudo -u ${NAME_USER} sponge -a ${DIR_HOME_USER}/.profile ${DIR_HOME_ROOT}/.profile <<'E1F'
   alias l='ls -lF --color'
   alias ll='l -a'
   alias h='history 25'
@@ -96,7 +87,6 @@ packer_msg "Creating ssh access for ${NAME_USER}"
 /usr/bin/install --owner=${NAME_USER} --group=${GROUP_USER} --mode=0600 ${PATH_KEYS_USER} ${DIR_MNT_ROOT}${PATH_KEYS_USER}
 chroot /usr/bin/chown -R ${NAME_USER}:${GROUP_USER} ${DIR_SSH_USER}
 
- 
 if [[ $TYPE_BUILDER_PACKER == "qemu" ]]; then
   packer_msg "Trimming partition sizes"
   /usr/bin/fstrim ${DIR_MNT_BOOT}
