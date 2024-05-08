@@ -44,6 +44,8 @@ tee "${DIR_MNT_ROOT}${SCRIPT_CONFIG}" &>/dev/null << EOF
   echo "Defaults env_keep += \"SSH_AUTH_SOCK\"" | tee /etc/sudoers.d/10_${NAME_USER} &>/dev/null
   echo "${NAME_USER} ALL=(ALL) NOPASSWD: ALL" | tee -a /etc/sudoers.d/10_${NAME_USER} &>/dev/null
   /usr/bin/chmod 0440 /etc/sudoers.d/10_${NAME_USER}
+  echo "==> ${NAME_SH} Add autologin.."
+  /usr/bin/sed -i 's@/agetty-default tty1@/agetty-default -a ${NAME_USER} tty1@' /etc/dinit.d/tty1
   echo "==> ${NAME_SH} Install ${NAME_TITLE_APP} non-AUR dependencies.."
   /usr/bin/pacman -S --noconfirm wget parted >/dev/null
   /usr/bin/pacman -S --noconfirm cargo dialog dosfstools f2fs-tools polkit qemu-user-static-binfmt >/dev/null 
