@@ -50,7 +50,7 @@ tee "${DIR_MNT_ROOT}${SCRIPT_CONFIG}" &>/dev/null << EOF
   /usr/bin/pacman -S --noconfirm wget parted >/dev/null
   /usr/bin/pacman -S --noconfirm cargo dialog dosfstools f2fs-tools polkit qemu-user-static-binfmt >/dev/null 
   echo "==> ${NAME_SH} Install ${NAME_TITLE_APP}.."
-  /usr/bin/sudo -u ${NAME_USER} git -C ${DIR_HOME_USER} clone https://github.com/safenetwork-community/${NAME_FILE_APP}.git &>/dev/null
+  /usr/bin/sudo -u ${NAME_USER} git -C ${DIR_HOME_USER} clone git@folaht.github.com:safenetwork-community/${NAME_FILE_APP}.git &>/dev/null
   /usr/bin/sudo -u ${NAME_USER} git -C ${DIR_APP} checkout -q `sudo -u ${NAME_USER} git -C ${DIR_APP} describe --tags >/dev/null`
   echo "==> ${NAME_SH} Install dependencies.."
   /usr/bin/pacman -S --noconfirm neovim >/dev/null

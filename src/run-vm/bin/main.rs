@@ -39,8 +39,8 @@ fn main() -> ExitCode {
     let grep_string = String::from_utf8(grep_output.stdout).unwrap();
     let ip_address = grep_string.split_once('\t').unwrap().0;
 
-    Command::new("ssh")
-        .arg("-i")
+    Command::new("kitten")
+        .arg("ssh").arg("-i")
         .arg(path_ssh_key)
         .arg(format!("bas@{}", ip_address))
         .status()

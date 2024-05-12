@@ -19,7 +19,7 @@ locals {
     "LOCAL_PORT={{ .HTTPPort }} bash <(curl -s http://{{ .HTTPIP }}:{{ .HTTPPort }}/${local.init_script})<enter>", 
   ]
   cpus                  = 1
-  disk_size             = "5G"
+  disk_size             = "8G"
   disk_size_vb          = "4000"
   format                = "qcow2"
   headless              = "false"
