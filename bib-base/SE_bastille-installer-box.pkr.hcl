@@ -19,14 +19,14 @@ locals {
     "LOCAL_PORT={{ .HTTPPort }} bash <(curl -s http://{{ .HTTPIP }}:{{ .HTTPPort }}/${local.init_script})<enter>", 
   ]
   cpus                  = 1
-  disk_size             = "8G"
-  disk_size_vb          = "4000"
+  disk_size             = "32G"
+  disk_size_vb          = "6000"
   format                = "qcow2"
   headless              = "false"
   http_directory        = "srv"
   init_script           = "initLiveVM.sh"
   iso_checksum          = "sha256:3dd4f42741ea8fb7fd1d3713fbba7706a0250429d0a61eb16d93654a75a7ac2d"
-  iso_url               = "https://download.artixlinux.org/iso/artix-base-dinit-20230814-x86_64.iso"
+  iso_url               = "./packer_files/artix-base-dinit-20230814-x86_64.iso"
   machine_type          = "q35"
   memory                = 4096
   ssh_private_key_file  = "~/.ssh/id_bas"
@@ -39,7 +39,7 @@ locals {
 source "qemu" "artixlinux" {
   accelerator             = "kvm"
   boot_command            = local.boot_command_qemu
-  boot_wait               = "2s"
+  boot_wait               = "10s"
   cpus                    = local.cpus
   disk_interface          = "virtio-scsi"
   disk_size               = local.disk_size
@@ -85,7 +85,7 @@ build {
       "scripts/setup.sh"
     ]
   }
-  
+ 
   provisioner "file" {
     destination = "./output-artixlinux/initramfs-linux.img"
     direction   = "download"

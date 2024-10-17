@@ -39,6 +39,7 @@ fn main() {
         .arg("--vcpu").arg("2")
         .arg("--machine").arg("q35")
         .arg("--memory").arg("1024")
+        .arg("--network").arg("network=default,model=virtio-net,mac=52:54:00:53:b1:b0")
         .arg("--osinfo").arg(OS)
         .arg("--disk").arg(OPT_VI_DISK)
         .arg("--import").arg("--noautoconsole").arg("--boot")

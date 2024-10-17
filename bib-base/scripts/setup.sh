@@ -11,9 +11,14 @@ packer_msg "Merge script system files"
 /usr/bin/chown root: -R /tmp/rootdir
 /usr/bin/rsync -a /tmp/rootdir/ ${DIR_MNT_ROOT}
 
+packer_msg "Copying script variables to chroot"
+/usr/bin/rsync -a /root/vars.sh ${DIR_MNT_ROOT}/root
+
 packer_msg "Generating the system configuration script"
 /usr/bin/install --mode=0755 /dev/null "${DIR_MNT_ROOT}${SCRIPT_CONFIG}"
-tee "${DIR_MNT_ROOT}${SCRIPT_CONFIG}" &>/dev/null << EOF 
+tee "${DIR_MNT_ROOT}${SCRIPT_CONFIG}" &>/dev/null <<-EOF
+  echo "==> ${NAME_SH} Adding script variables.."
+  . /root/vars.sh
   echo "==> ${NAME_SH} Configuring hostname, timezone, and keymap.."
   echo '${HOSTNAME_BOX}' | tee /etc/hostname >/dev/null
   /usr/bin/ln -s /usr/share/zoneinfo/${TIMEZONE_BOX} /etc/localtime
@@ -47,8 +52,32 @@ tee "${DIR_MNT_ROOT}${SCRIPT_CONFIG}" &>/dev/null << EOF
   echo "==> ${NAME_SH} Add autologin.."
   /usr/bin/sed -i 's@/agetty-default tty1@/agetty-default -a ${NAME_USER} tty1@' /etc/dinit.d/tty1
   echo "==> ${NAME_SH} Install ${NAME_TITLE_APP} non-AUR dependencies.."
-  /usr/bin/pacman -S --noconfirm wget parted >/dev/null
-  /usr/bin/pacman -S --noconfirm cargo dialog dosfstools f2fs-tools polkit qemu-user-static-binfmt >/dev/null 
+  /usr/bin/pacman -S --noconfirm artools-base cargo dialog dosfstools f2fs-tools parted polkit qemu-user-static-binfmt wget >/dev/null 
+  echo "==> ${NAME_SH} Install AUR package manager.."
+  /usr/bin/pacman -S --noconfirm trizen >/dev/null 
+  echo "==> ${NAME_SH} Set default branch git.."
+  /usr/bin/git config --global init.defaultBranch main
+  # echo "==> ${NAME_SH} Install Toochchain builder dependencies.."
+  # /usr/bin/pacman -S --noconfirm help2man python unzip trizen >/dev/null 
+  echo "==> ${NAME_SH} Install Toolchain builder"
+  /usr/bin/sudo -u ${NAME_USER} /usr/bin/trizen -S --noconfirm crosstool-ng-git &>/dev/null 
+  # /usr/bin/sudo -u ${NAME_USER} env -C ${DIR_HOME_USER} git clone https://github.com/crosstool-ng/crosstool-ng.git &>/dev/null
+  # /usr/bin/sudo -u ${NAME_USER} env -C ${DIR_HOME_USER}/crosstool-ng ./bootstrap &>/dev/null
+  # /usr/bin/sudo -u ${NAME_USER} env -C ${DIR_HOME_USER}/crosstool-ng ./configure --prefix=/usr >/dev/null
+  # /usr/bin/sudo -u ${NAME_USER} env -C ${DIR_HOME_USER}/crosstool-ng make >/dev/null
+  # env -C ${DIR_HOME_USER}/crosstool-ng make install &>/dev/null
+  # /usr/bin/sudo -u ${NAME_USER} mkdir ${DIR_HOME_USER}/src
+  # /usr/bin/sudo -u ${NAME_USER} env -C ${DIR_HOME_USER}/crosstool-ng /usr/bin/ct-ng aarch64-rpi4-linux-gnu >/dev/null
+  # echo "==> ${NAME_SH} Build Toolchain"
+  # /usr/bin/sudo -u ${NAME_USER} env -C ${DIR_HOME_USER}/crosstool-ng /usr/bin/ct-ng build >/dev/null
+  # /usr/bin/rsync -a ${LOC_CROSS_COMPILE} ${DIR_LOCAL_BIN}
+  # echo "==> ${NAME_SH} Cleanup Toolchain build folders"
+  # /usr/bin/rm -rf ${DIR_HOME_USER}/src ${DIR_HOME_USER}/crosstool-ng ${DIR_HOME_USER}/x-tools
+  # echo "==> ${NAME_SH} Install Bootloader builder"
+  # /usr/bin/sudo -u ${NAME_USER} /usr/bin/git -C ${DIR_HOME_USER} clone git://git.denx.de/u-boot.git &>/dev/null
+  # /usr/bin/sudo -u ${NAME_USER} /usr/bin/env -C ${DIR_HOME_USER}/u-boot /usr/bin/make rpi_4_defconfig &>/dev/null
+  # /usr/bin/echo \$CROSS_COMPILE
+  # ARCH=arm CROSS_COMPILE=${DIR_HOME_USER}/.local/bin/aarch64-rpi4-linux-gnu- /usr/bin/sudo -u ${NAME_USER} /usr/bin/env -C ${DIR_HOME_USER}/u-boot /usr/bin/make
   echo "==> ${NAME_SH} Install ${NAME_TITLE_APP}.."
   /usr/bin/sudo -u ${NAME_USER} git -C ${DIR_HOME_USER} clone https://github.com/safenetwork-community/${NAME_FILE_APP}.git &>/dev/null
   /usr/bin/sudo -u ${NAME_USER} git -C ${DIR_APP} checkout -q `sudo -u ${NAME_USER} git -C ${DIR_APP} describe --tags` >/dev/null
@@ -56,13 +85,13 @@ tee "${DIR_MNT_ROOT}${SCRIPT_CONFIG}" &>/dev/null << EOF
   echo "==> ${NAME_SH} Install dependencies.."
   /usr/bin/pacman -S --noconfirm neovim >/dev/null
   echo "==> ${NAME_SH} Install a general IDE for the main user.."
-  sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' &>/dev/null << E1F \
+  sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' &>/dev/null <<-E1F \
   | LV_BRANCH='release-1.3/neovim-0.9' sudo -u ${NAME_USER} \
   curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.3/neovim-0.9/utils/installer/install.sh \
   | sudo -u ${NAME_USER} bash &>/dev/null
-n
-n
-y
+    n
+    n
+    y
 E1F
   echo "==> ${NAME_SH} Setup bash aliases.."
   sudo -u ${NAME_USER} sponge -a ${DIR_HOME_USER}/.profile ${DIR_HOME_ROOT}/.profile <<'E1F'
@@ -73,21 +102,21 @@ E1F
   alias vim='lvim'
 E1F
   echo "==> ${NAME_SH} Cleaning up.."
-    /usr/bin/pacman -Rcns --noconfirm base-devel gptfdisk go moreutils rsync >/dev/null
+  /usr/bin/pacman -Rcns --noconfirm base-devel gptfdisk go moreutils rsync trizen >/dev/null
 EOF
 
-packer_msg "Entering packer_msg and configuring system"
-chroot ${SCRIPT_CONFIG}
-rm "${DIR_MNT_ROOT}${SCRIPT_CONFIG}"
+  packer_msg "Entering packer_msg and configuring system"
+  chroot ${SCRIPT_CONFIG}
+  rm "${DIR_MNT_ROOT}${SCRIPT_CONFIG}"
 
-packer_msg "Enable ssh access manually for box"
-chroot ln -sf /etc/dinit.d/sshd /etc/dinit.d/boot.d/
-/usr/bin/install --owner=root --group=root --mode=644 ${DIR_INIT}/sshd ${DIR_MNT_ROOT}${DIR_INIT}/sshd
-/usr/bin/install --owner=root --group=root --mode=755 -D -t ${DIR_MNT_ROOT}${DIR_INIT}/scripts ${DIR_INIT}/scripts/sshd 
+  packer_msg "Enable ssh access manually for box"
+  chroot ln -sf /etc/dinit.d/sshd /etc/dinit.d/boot.d/
+  /usr/bin/install --owner=root --group=root --mode=644 ${DIR_INIT}/sshd ${DIR_MNT_ROOT}${DIR_INIT}/sshd
+  /usr/bin/install --owner=root --group=root --mode=755 -D -t ${DIR_MNT_ROOT}${DIR_INIT}/scripts ${DIR_INIT}/scripts/sshd 
 
-packer_msg "Creating ssh access for ${NAME_USER}"
-/usr/bin/install --directory --owner=${NAME_USER} --group=${GROUP_USER} --mode=0700 ${DIR_MNT_ROOT}${DIR_SSH_USER}
-/usr/bin/install --owner=${NAME_USER} --group=${GROUP_USER} --mode=0600 ${PATH_KEYS_USER} ${DIR_MNT_ROOT}${PATH_KEYS_USER}
+  packer_msg "Creating ssh access for ${NAME_USER}"
+  /usr/bin/install --directory --owner=${NAME_USER} --group=${GROUP_USER} --mode=0700 ${DIR_MNT_ROOT}${DIR_SSH_USER}
+  /usr/bin/install --owner=${NAME_USER} --group=${GROUP_USER} --mode=0600 ${PATH_KEYS_USER} ${DIR_MNT_ROOT}${PATH_KEYS_USER}
 chroot /usr/bin/chown -R ${NAME_USER}:${GROUP_USER} ${DIR_SSH_USER}
 
 if [[ $TYPE_BUILDER_PACKER == "qemu" ]]; then

@@ -21,7 +21,8 @@ path = "src/run-vm/bin/main.rs"
 
 [dependencies]
 const_format = { version = "0.2", features = ["rust_1_64"]}
-simple-home-dir = "0.2.0"
+regex = "1.10"
+simple-home-dir = "0.2"
 
 [profile.release]
 strip = true

@@ -13,7 +13,9 @@ sed -i '\@^/dev/cdrom@d;\@^/dev/fd@d;\@/dev/usbdisk@d' /etc/fstab
 packer_msg "Install the bootloader builder dependencies"
 chroot pacman -S --noconfirm gptfdisk syslinux >/dev/null
 
-packer_msg "Configure syslinux"
+packer_msg "Configure temporary syslinux for packer reboot"
+chroot mkdir /boot/syslinux 
+chroot mv /usr/share/syslinux/syslinux.cfg /boot/syslinux/syslinux.cfg
 chroot syslinux-install_update -i -a -m >/dev/null
 chroot /usr/bin/sed -e 's/root=\/dev\/sda./root='${PARTITION_ROOT////\\/}'/' \
 -e 's/\(TIMEOUT[[:space:]]\)50/\110/' -i ${DIR_BOOT}/syslinux/syslinux.cfg

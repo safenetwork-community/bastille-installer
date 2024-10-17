@@ -25,4 +25,5 @@ packer_msg "Installing kernel packages"
 chroot pacman -S --noconfirm linux linux-firmware >/dev/null
 
 packer_msg "Generating the filesystem table"
-/usr/bin/fstabgen -U ${DIR_MNT_ROOT} | tee -a "${DIR_MNT_ROOT}/etc/fstab" >/dev/null
+/usr/bin/fstabgen -U ${DIR_MNT_ROOT} | tee -a ${DIR_MNT_ROOT}/etc/fstab >/dev/null
+echo -e "#binfmt\nnone /proc/sys/fs/binfmt_misc binfmt_misc defaults 0 0" | tee -a ${DIR_MNT_ROOT}/etc/fstab >/dev/null 

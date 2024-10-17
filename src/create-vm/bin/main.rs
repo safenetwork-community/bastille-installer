@@ -9,6 +9,7 @@ const MKDIR: &str       = "mkdir";
 const PACKER: &str      = "packer";
 const RM: &str          = "rm";
 const SUDO: &str        = "sudo";
+const TRUE: &str        = "true";
 
 // arguments
 const ARG_R: &str       = "-r";
@@ -51,7 +52,12 @@ const INSTALL_KERNEL: [&str; 6] = [INSTALL, ARG_OWNER, ARG_GROUP, ARG_MODE_BL, L
 const INSTALL_RAMFS: [&str; 6]  = [INSTALL, ARG_OWNER, ARG_GROUP, ARG_MODE_BL, LOC_RAMFS_OLD, PATH_BOOTLOADERS_NEW];
 
 fn main() {
-   
+
+    Command::new(SUDO)
+    .arg(TRUE)
+    .status()
+    .unwrap_or_else(|e| panic!("true failed to start\n{}", e));
+    
     // delete OUTPUT folder if it exists
     if Path::new(&PATH_OUTPUT).exists() { 
         Command::new(RM)

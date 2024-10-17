@@ -10,12 +10,12 @@ NAME_LIVEVM_HOST="Artix-liveVM"
 
 # Drives and partitions
 if [[ $TYPE_BUILDER_PACKER == "qemu" ]]; then
-  DISK='/dev/vda'
+  DISK=/dev/vda
  else
-   DISK='/dev/sda'
+   DISK=/dev/sda
 fi
-DIR_MNT_BOOT='/mnt/boot'
-DIR_MNT_ROOT='/mnt'
+DIR_MNT_BOOT=/mnt/boot
+DIR_MNT_ROOT=/mnt
 LABEL_BOOT="AMOHRS_BAZ"
 LABEL_ROOT="BWEHT_BAZ"
 PARTITION_BOOT="${DISK}1"
@@ -39,13 +39,13 @@ TIMEZONE_BOX='UTC'
 
 # Root user
 
-PASSWORD_ROOT='bastij'
+PASSWORD_ROOT=bastij
 DIR_HOME_ROOT=/root
 
 # Main user
 
-GROUP_USER='bas'
-NAME_USER='bas'
+GROUP_USER=bas
+NAME_USER=bas
 
 DIR_HOME_USER=/home/${NAME_USER}
 DIR_SSH_USER=/home/${NAME_USER}/.ssh
@@ -60,24 +60,23 @@ NAME_FILE_APP='SE_bastille-installer'
 NAME_TITLE_APP='SE Bastille Installer'
 DIR_APP=${DIR_HOME_USER}/${NAME_FILE_APP}
 
-# Bootloader
+# Temp bootloader dir for packer
 
-DIR_BOOT='/boot'
-LABEL_BOOTLOADER="ARTIX_BOOT"
-NAME_FILE_GOENV="goenv-linux-amd64.tar.gz"
-URL_FILE_GOENV="https://github.com/ankitcharolia/goenv/releases/latest/download/${NAME_FILE_GOENV}"
+DIR_BOOT=/boot
 
 # Other dirs
 
-DIR_FILES_TMP='/tmp/files'
-DIR_INIT='/etc/dinit.d'
+DIR_FILES_TMP=/tmp/files
+DIR_INIT=/etc/dinit.d
+DIR_LOCAL_BIN=/usr/local/bin
 
 # Packer scripts
-SCRIPT_CONFIG='/usr/local/bin/script.sh'
+
+SCRIPT_CONFIG=/usr/local/bin/script.sh
 
 # script environment variabels
 
-GOENV_ROOT=${DIR_HOME_ROOT}/.go
+LOC_CROSS_COMPILE=${DIR_HOME_USER}/x-tools/aarch64-rpi4-linux-gnu/bin
 
 # Command function
 chroot() {
