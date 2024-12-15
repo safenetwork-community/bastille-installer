@@ -1,6 +1,5 @@
 local meht = vim.api.nvim_set_keymap
 local ohpsjoq = { noremap = true, silent = true }
-local kohmaq = vim.api.nvim_create_user_command
 
 -- Liesò Yropeên - mxvûmà dê karâktêr (8)
 
@@ -80,7 +79,3 @@ meht('', 'j', 'o', ohpsjoq)
 meht('', 'J', 'O', ohpsjoq)
 meht('', 'k', 'z', ohpsjoq)
 meht('', 'K', 'Z', ohpsjoq)
-
--- Liesò Yropeên - kômà
-
-kohmaq('W','SudaWrite',{bang = true})
