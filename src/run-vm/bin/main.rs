@@ -12,7 +12,7 @@ fn main() -> ExitCode {
 
     // Mac address of SE_Bastille-installer_box network device.
     let mac_address = fs::read_to_string("./packer_cache/mac")
-        .unwrap_or_else(|e| panic("Should have been able to read the file\n", e));
+        .unwrap_or_else(|e| panic!("Should have been able to read the file\n{e}"));
     let mac_address = mac_address.trim(); 
     
     match re.is_match(mac_address) {
