@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
     lv.driver = "kvm"
     lv.loader = "/usr/share/edk2/x64/OVMF_CODE.secboot.4m.fd"
     lv.machine_type = "q35"
-    lv.memory = 1024
+    lv.memory = 4096
     lv.format = "qemu"
     lv.title = "Bastille Flasher v0.5.0"
     lv.usb_controller :model => "qemu-xhci"
@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |vb|
     vb.cpus = 1
     vb.name = "Bastille Flasher v0.5.0"
-    vb.memory = 1024
+    vb.memory = 4096
   end
 
   config.vm.provision "shell", inline: <<-SHELL
